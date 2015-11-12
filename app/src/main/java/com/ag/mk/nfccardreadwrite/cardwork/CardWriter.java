@@ -109,7 +109,11 @@ public class CardWriter {
         return null;
     }
 
-
+    /**
+     * Message wird gebaut!
+     * @param content
+     * @return
+     */
     public NdefMessage createNdefMessage(String content) {
 
         NdefRecord ndefRecord = transformToHexCode(content);
