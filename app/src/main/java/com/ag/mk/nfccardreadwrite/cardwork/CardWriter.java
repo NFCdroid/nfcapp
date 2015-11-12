@@ -87,7 +87,7 @@ public class CardWriter {
     }
 
 
-    private NdefRecord transformToByteCode(String content) {
+    private NdefRecord transformToHexCode(String content) {
         try {
             byte[] language;
             language = Locale.getDefault().getLanguage().getBytes("UTF-8");
@@ -104,7 +104,7 @@ public class CardWriter {
             return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload.toByteArray());
 
         } catch (UnsupportedEncodingException e) {
-            Log.e("transformToByteCode", e.getMessage());
+            Log.e("transformToHexCode", e.getMessage());
         }
         return null;
     }
@@ -112,7 +112,7 @@ public class CardWriter {
 
     public NdefMessage createNdefMessage(String content) {
 
-        NdefRecord ndefRecord = transformToByteCode(content);
+        NdefRecord ndefRecord = transformToHexCode(content);
 
         NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
 
