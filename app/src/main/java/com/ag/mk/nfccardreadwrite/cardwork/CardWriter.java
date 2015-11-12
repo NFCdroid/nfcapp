@@ -76,7 +76,7 @@ public class CardWriter {
                 ndef.writeNdefMessage(ndefMessage);
                 ndef.close();
 
-                Toast.makeText(mainActivity, "Tag writen!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActivity, "Tag written!", Toast.LENGTH_SHORT).show();
 
             }
 
