@@ -65,6 +65,10 @@ public class MainActivity extends Activity {
         handleIntent(getIntent());
     }
 
+    /**Methode um den eintreffenden Intent zu handhaben.
+     * 
+     * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
+     */
     private void handleIntent(Intent intent) {
 
         Log.i(TAG, "Intent received");
@@ -85,7 +89,7 @@ public class MainActivity extends Activity {
         }
 
     }
-
+    
     private void initTextViews(){
         nfcFunctionTextView = (TextView) findViewById(R.id.nfcFunctionTextView);
         nfcOutputTextView = (TextView) findViewById(R.id.nfcOutputTextView);
@@ -128,9 +132,19 @@ public class MainActivity extends Activity {
         inputEditText = (EditText) findViewById(R.id.inputEditText);
     }
 
+
+    /**
+     * Initialisiert den Intent Filter für den NFC Intent.
+     * Initialisiert die Array Liste für die unterstützten NFC Technologien für den NFC Adapter.
+     * 
+     * Hinweis: Die Technologien werden hier noch nicht dem NFC Adapter hinzugefügt
+     * dies geschiet in der Metode onResume()
+     */
     private void initIntentFilter() {
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         intentFilters = new IntentFilter[] { tech, };
+        
+        // String Array wird mit den Namen der Technologien gefüllt.
         techLists = new String[][] { new String[] {
                 NfcA.class.getName(),
                 MifareUltralight.class.getName(),
