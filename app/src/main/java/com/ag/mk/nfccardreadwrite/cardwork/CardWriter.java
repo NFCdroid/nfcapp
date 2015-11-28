@@ -1,5 +1,6 @@
 package com.ag.mk.nfccardreadwrite.cardwork;
 
+import android.content.Context;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
@@ -7,8 +8,6 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -19,10 +18,10 @@ import java.util.Locale;
  */
 public class CardWriter {
 
-    private MainActivity mainActivity;
+    private Context context;
 
-    public CardWriter(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
+    public CardWriter(Context context){
+        this.context = context;
 
     }
 
@@ -32,7 +31,7 @@ public class CardWriter {
             NdefFormatable ndefFormatable = NdefFormatable.get(tag);
 
             if (ndefFormatable == null) {
-                Toast.makeText(mainActivity, "Tag is not ndef formatable!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tag is not ndef formatable!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -41,7 +40,7 @@ public class CardWriter {
             ndefFormatable.format(ndefMessage);
             ndefFormatable.close();
 
-            Toast.makeText(mainActivity, "Tag writen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Tag writen!", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Log.e("formatTag", e.getMessage());
@@ -54,7 +53,7 @@ public class CardWriter {
         try {
 
             if (tag == null) {
-                Toast.makeText(mainActivity, "Tag object cannot be null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tag object cannot be null", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -67,7 +66,7 @@ public class CardWriter {
                 ndef.connect();
 
                 if (!ndef.isWritable()) {
-                    Toast.makeText(mainActivity, "Tag is not writable!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Tag is not writable!", Toast.LENGTH_SHORT).show();
 
                     ndef.close();
                     return;
@@ -76,7 +75,7 @@ public class CardWriter {
                 ndef.writeNdefMessage(ndefMessage);
                 ndef.close();
 
-                Toast.makeText(mainActivity, "Tag written!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tag written!", Toast.LENGTH_SHORT).show();
 
             }
 

@@ -31,8 +31,30 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech" />
         </activity>
-        <activity android:name=".activity.EmulatorActivity"></activity>
-        <activity android:name=".activity.CreateVCardActivity"></activity>
+
+        <activity android:name=".activity.EmulatorActivity">
+
+        </activity>
+
+        <activity android:name=".activity.CreateVCardActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/tech" />
+
+        </activity>
     </application>
 
 </manifest>
