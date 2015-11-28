@@ -3,36 +3,37 @@ package com.ag.mk.nfccardreadwrite.activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
-import com.ag.mk.nfccardreadwrite.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Nfc Card App";
 
-    private TextView nfcFunctionTextView, nfcOutputTextView;
-    private Button writeButton,emulatorButton;
-    private EditText inputEditText;
+    private ListView vCardListView;
+
+    private Button emulatorButton, contactImportButton, createVCardActvivityButton;
 
     private NfcAdapter nfcAdapter;
 
-    private int countIntents = 0;
+    private ArrayAdapter<String> adapter;
 
     private IntentFilter[] intentFilters;
     private String[][] techLists;
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private CardWriter cardWriter;
 
     private Intent intent;
+
+    private List<String> cardList = new ArrayList<String>();
+    String[] values = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         initTextViews();
+        iniListViews();
         initButtons();
         initEditTexts();
 
@@ -78,45 +83,81 @@ public class MainActivity extends AppCompatActivity {
 
             this.intent = intent;
 
-           // Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
-            countIntents++;
-            nfcOutputTextView.setText("NFC Intent Received: " + countIntents);
-
             Log.i(TAG, "Discovered tag with intent: " + intent);
 
-            nfcOutputTextView.setText(cardReader.readTag(intent));
+            fillVCardListView(intent);
+
+            //TODO: Hier kommmt die Logik zum handeln hin
+
 
         }
 
     }
     
     private void initTextViews(){
-        nfcFunctionTextView = (TextView) findViewById(R.id.nfcFunctionTextView);
-        nfcOutputTextView = (TextView) findViewById(R.id.nfcOutputTextView);
+
+    }
+
+    private void iniListViews(){
+
+        vCardListView = (ListView)findViewById(R.id.vCardlistView);
+
+
+        values[0] = "Name: Max";
+        values[1] = "Telefon-Mobil: 012345678910";
+        values[2] = "Telefon-Festnetz: 09876543210";
+        values[3] = "E-Mail: max@mustermail.net";
+
+
+
+
+
+        /*for (int i=0; i<values.length;i++){
+            values[i] = deviceList.get(i);
+
+        };
+        */
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+        vCardListView.setAdapter(adapter);
+
+        //istView.invalidateViews();
+    }
+
+    private void fillVCardListView(Intent intent){
+
+        if(cardList.size()>0){
+
+            values = new String[cardList.size()+1];
+
+
+            for(int i= 0; i<cardList.size(); i++){
+                try {
+                    values[i] = cardList.get(i);
+                    System.out.println("CARDLIST: " + i + " INHALT: " + cardList.get(i));
+                }catch (IndexOutOfBoundsException e){
+                    e.printStackTrace();
+                }
+            }
+
+            values[cardList.size()] = cardReader.readTag(intent);
+
+        }else{
+
+            values[0] = cardReader.readTag(intent);
+
+        }
+       // adapter.notifyDataSetChanged();
+
+        cardList.add(values[0]);
+       // vCardListView.invalidate();
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        vCardListView.setAdapter(adapter);
+
     }
 
     private void initButtons(){
-        writeButton = (Button) findViewById(R.id.writeButton);
-        writeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-                if(tag != null){
-
-                    if(!inputEditText.getText().toString().equals("")){
-                        NdefMessage ndefMessage = cardWriter.createNdefMessage(inputEditText.getText().toString());
-                        cardWriter.writeNdefMessage(tag, ndefMessage);
-                        inputEditText.getText().clear();
-                    }else {
-                        Toast.makeText(MainActivity.this,"Text Field is empty!",Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    nfcOutputTextView.setText("Bitte Karte auflegen!");
-                }
-
-            }
-        });
 
         emulatorButton = (Button) findViewById(R.id.emulatorButton);
         emulatorButton.setOnClickListener(new View.OnClickListener() {
@@ -126,10 +167,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        createVCardActvivityButton = (Button) findViewById(R.id.CreateVCardActvivityButton);
+        createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initEditTexts(){
-        inputEditText = (EditText) findViewById(R.id.inputEditText);
+
     }
 
 
@@ -154,9 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkNFC() {
         if (nfcAdapter.isEnabled()) {
-            nfcFunctionTextView.setText("NFC is enabled.");
+            Log.i(TAG, "NFC is enabled.");
         } else {
-            nfcFunctionTextView.setText("NFC is disabled.");
+            Log.i(TAG, "NFC is disabled.");
         }
     }
 
