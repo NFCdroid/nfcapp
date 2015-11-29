@@ -3,6 +3,7 @@ package com.ag.mk.nfccardreadwrite.activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
@@ -14,18 +15,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
-import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "Nfc Card App";
+
+    private TextView isVCardTextView;
 
     private ListView vCardListView;
 
@@ -39,27 +39,21 @@ public class MainActivity extends AppCompatActivity {
     private String[][] techLists;
 
     private CardReader cardReader;
-    private CardWriter cardWriter;
 
-    private Intent intent;
-
-    private List<String> cardList = new ArrayList<String>();
-    String[] values = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         cardReader = new CardReader(this);
-        cardWriter = new CardWriter(this);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         initTextViews();
         initListViews();
         initButtons();
-        initEditTexts();
 
         checkNFCSupport();
 
@@ -76,12 +70,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleIntent(Intent intent) {
 
-        Log.i(TAG, "Intent received");
-        Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
+        //Log.i(TAG, "Intent received");
+        //Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-
-            this.intent = intent;
 
             Log.i(TAG, "Discovered tag with intent: " + intent);
 
@@ -96,46 +88,32 @@ public class MainActivity extends AppCompatActivity {
     
     private void initTextViews(){
 
+        isVCardTextView = (TextView) findViewById(R.id.startTextView);
+
     }
 
     private void initListViews(){
 
         vCardListView = (ListView)findViewById(R.id.vCardlistView);
 
-
-        values[0] = "Name: Max";
-        values[1] = "Telefon-Mobil: 012345678910";
-        values[2] = "Telefon-Festnetz: 09876543210";
-        values[3] = "E-Mail: max@mustermail.net";
-
-
-
-
-
-        /*for (int i=0; i<values.length;i++){
-            values[i] = deviceList.get(i);
-
-        };
-        */
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-
-        vCardListView.setAdapter(adapter);
-
-        //istView.invalidateViews();
     }
 
     private void fillVCardListView(Intent intent){
 
         String[] cardContent = cardReader.readTag(intent).split("\n"); // liest Tag und spaltet es auf
 
-
        // adapter.notifyDataSetChanged();
-
-       // cardList.add(values[0]);
        // vCardListView.invalidate();
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
         vCardListView.setAdapter(adapter);
+
+        if(vCardListView.getVisibility() == View.GONE){
+            vCardListView.setVisibility(View.VISIBLE);
+            isVCardTextView.setVisibility(View.GONE);
+        }
+
+
 
     }
 
@@ -159,9 +137,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        contactImportButton = (Button)findViewById(R.id.contactImportButton);
+        contactImportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    private void initEditTexts(){
+            }
+        });
 
     }
 
