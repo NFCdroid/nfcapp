@@ -57,7 +57,10 @@ public class CreateVCardActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                userNameEditText.setText("");
+                telefonMobileEditText.setText("");
+                telefonFestnetzEditText.setText("");
+                eMailEditText.setText("");
             }
         });
 
@@ -80,10 +83,10 @@ public class CreateVCardActivity extends AppCompatActivity {
 
 
                     NdefMessage ndefMessage = cardWriter.createNdefMessage(
-                            userNameEditText.getText().toString()+ "\n"
-                            + telefonMobileEditText.getText().toString()+ "\n"
-                            + telefonFestnetzEditText.getText().toString()+ "\n"
-                            + eMailEditText.getText().toString()
+                            "Name: " + userNameEditText.getText().toString()+ "\n"
+                            + "Telefon-Mobil: " + telefonMobileEditText.getText().toString()+ "\n"
+                            + "Telefon-Festnetz: " + telefonFestnetzEditText.getText().toString()+ "\n"
+                            + "E-Mail: " + eMailEditText.getText().toString()
 
                     );
                     cardWriter.writeNdefMessage(tag, ndefMessage);

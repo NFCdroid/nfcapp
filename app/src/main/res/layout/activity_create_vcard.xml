@@ -33,7 +33,7 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/writeVCardButton"
         android:layout_alignParentStart="true"
-        android:text="Name" />
+        android:hint="Name" />
 
     <Button
         android:layout_width="wrap_content"
@@ -50,7 +50,8 @@
         android:layout_below="@+id/userNameEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:text="Telefon-Mobil" />
+        android:hint="Telefon-Mobil"
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
         android:layout_below="@+id/telefonMobilEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:text="Telefon-Festnetz" />
+        android:hint="Telefon-Festnetz" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -68,6 +69,6 @@
         android:layout_below="@+id/telefonFestnetzEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:text="E-Mail" />
+        android:hint="E-Mail" />
 
 </RelativeLayout>

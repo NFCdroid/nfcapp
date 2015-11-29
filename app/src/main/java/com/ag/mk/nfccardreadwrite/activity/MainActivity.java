@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         initTextViews();
-        iniListViews();
+        initListViews();
         initButtons();
         initEditTexts();
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void iniListViews(){
+    private void initListViews(){
 
         vCardListView = (ListView)findViewById(R.id.vCardlistView);
 
@@ -126,33 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillVCardListView(Intent intent){
 
-        if(cardList.size()>0){
-
-            values = new String[cardList.size()+1];
+        String[] cardContent = cardReader.readTag(intent).split("\n"); // liest Tag und spaltet es auf
 
 
-            for(int i= 0; i<cardList.size(); i++){
-                try {
-                    values[i] = cardList.get(i);
-                    System.out.println("CARDLIST: " + i + " INHALT: " + cardList.get(i));
-                }catch (IndexOutOfBoundsException e){
-                    e.printStackTrace();
-                }
-            }
-
-            values[cardList.size()] = cardReader.readTag(intent);
-
-        }else{
-
-            values[0] = cardReader.readTag(intent);
-
-        }
        // adapter.notifyDataSetChanged();
 
-        cardList.add(values[0]);
+       // cardList.add(values[0]);
        // vCardListView.invalidate();
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
         vCardListView.setAdapter(adapter);
 
     }
