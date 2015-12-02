@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="V-Card erstellen"
+        android:text="beschreiben"
         android:id="@+id/writeVCardButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
@@ -51,6 +51,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:hint="Telefon-Mobil"
+        android:inputType="phone"
+        android:ems="10"
         />
 
     <EditText
@@ -60,7 +62,9 @@
         android:layout_below="@+id/telefonMobilEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:hint="Telefon-Festnetz" />
+        android:hint="Telefon-Festnetz"
+        android:inputType="phone"
+        android:ems="10"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -69,6 +73,8 @@
         android:layout_below="@+id/telefonFestnetzEditText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:hint="E-Mail" />
+        android:hint="E-Mail"
+        android:inputType="textEmailAddress"
+        android:ems="10"/>
 
 </RelativeLayout>

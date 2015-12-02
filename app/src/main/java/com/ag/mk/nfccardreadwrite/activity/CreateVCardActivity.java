@@ -10,8 +10,8 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
+
+import java.security.Timestamp;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CreateVCardActivity extends AppCompatActivity {
 
@@ -84,13 +89,7 @@ public class CreateVCardActivity extends AppCompatActivity {
                 if (tag != null) {
 
 
-                    NdefMessage ndefMessage = cardWriter.createNdefMessage(
-                            "Name: " + userNameEditText.getText().toString()+ "\n"
-                            + "Telefon-Mobil: " + telefonMobileEditText.getText().toString()+ "\n"
-                            + "Telefon-Festnetz: " + telefonFestnetzEditText.getText().toString()+ "\n"
-                            + "E-Mail: " + eMailEditText.getText().toString()
-
-                    );
+                    NdefMessage ndefMessage = cardWriter.createNdefMessage(getFormatedVCardString());
                     cardWriter.writeNdefMessage(tag, ndefMessage);
 
 
@@ -113,6 +112,29 @@ public class CreateVCardActivity extends AppCompatActivity {
         telefonFestnetzEditText = (EditText) findViewById(R.id.telefonFestnetzEditText);
         eMailEditText = (EditText) findViewById(R.id.eMailEditText);
 
+    }
+
+    private String getFormatedVCardString(){
+
+        String formatedVCardString =
+            "BEGIN:vcard\r\n"
+                + "VERSION:3.0\r\n"
+                + "N:" + userNameEditText.getText().toString().replace(" ",";") + "\r\n"
+                + "TEL;TYPE=WORK,VOICE:" + telefonMobileEditText.getText().toString() + "\r\n"
+                + "TEL;TYPE=HOME,VOICE:" + telefonFestnetzEditText.getText().toString() + "\r\n"
+                + "EMAIL;TYPE=PREF,INTERNET:" + eMailEditText.getText().toString() + "\r\n"
+                + "REV:" +getTimeStamp() + "\r\n"
+            + "END:vcard\r\n";
+
+        return formatedVCardString;
+    }
+
+    private String getTimeStamp(){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeStamp = (dateFormat.format(new Date()) + "Z").replace(" ", "T"); //REV:2014-03-01T22:11:10Z
+
+        return timeStamp;
     }
 
     @Override
