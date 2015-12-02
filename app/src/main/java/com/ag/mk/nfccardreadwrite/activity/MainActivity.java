@@ -20,9 +20,7 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillVCardListView(Intent intent){
 
-        String[] cardContent = extractCardInformation(cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
+        String[] cardContent = VCardFormatTool.extractCardInformation(cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
 
        // adapter.notifyDataSetChanged();
        // vCardListView.invalidate();
@@ -116,47 +114,6 @@ public class MainActivity extends AppCompatActivity {
             isVCardTextView.setVisibility(View.GONE);
         }
 
-    }
-
-    private String[] extractCardInformation(String[] cardContent){
-
-        List<String> tempList = new ArrayList<String>();
-
-        String NAME = "N:";
-        String MOBILEPHONE = "TEL;TYPE=WORK,VOICE:";
-        String HOMEPHONE = "TEL;TYPE=HOME,VOICE:";
-        String EMAIL = "EMAIL;TYPE=PREF,INTERNET:";
-
-        for(int i=0; i<cardContent.length; i++){
-
-            if(cardContent[i].startsWith(NAME)){
-
-                tempList.add("Name: " + cardContent[i].split(NAME)[1].replace(";"," "));
-
-            }else if(cardContent[i].startsWith(MOBILEPHONE)){
-
-                tempList.add("Telefon-Mobil: " + cardContent[i].split(MOBILEPHONE)[1]);
-
-            }else if(cardContent[i].startsWith(HOMEPHONE)){
-
-                tempList.add("Telefon-Festnetz: " + cardContent[i].split(HOMEPHONE)[1]);
-
-            }else if(cardContent[i].startsWith(EMAIL)){
-
-                tempList.add("E-Mail: " + cardContent[i].split(EMAIL)[1]);
-            }
-
-        }
-
-        if(tempList.size() > 0) { // TODO noch einen Standart Überlegen
-            String[] extractedCardContent = new String[tempList.size()];
-
-            for(int i=0;i<tempList.size();i++){
-                extractedCardContent[i] = tempList.get(i);
-            }
-            return extractedCardContent;
-        }
-        return  null;
     }
 
     private void initButtons(){

@@ -20,11 +20,7 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
-
-import java.security.Timestamp;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
 public class CreateVCardActivity extends AppCompatActivity {
 
@@ -87,9 +83,8 @@ public class CreateVCardActivity extends AppCompatActivity {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
                 if (tag != null) {
-
-
-                    NdefMessage ndefMessage = cardWriter.createNdefMessage(getFormatedVCardString());
+                    
+                    NdefMessage ndefMessage = cardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString(userNameEditText.getText().toString(), telefonMobileEditText.getText().toString(), telefonFestnetzEditText.getText().toString(), eMailEditText.getText().toString()));
                     cardWriter.writeNdefMessage(tag, ndefMessage);
 
 
@@ -112,29 +107,6 @@ public class CreateVCardActivity extends AppCompatActivity {
         telefonFestnetzEditText = (EditText) findViewById(R.id.telefonFestnetzEditText);
         eMailEditText = (EditText) findViewById(R.id.eMailEditText);
 
-    }
-
-    private String getFormatedVCardString(){
-
-        String formatedVCardString =
-            "BEGIN:vcard\r\n"
-                + "VERSION:3.0\r\n"
-                + "N:" + userNameEditText.getText().toString().replace(" ",";") + "\r\n"
-                + "TEL;TYPE=WORK,VOICE:" + telefonMobileEditText.getText().toString() + "\r\n"
-                + "TEL;TYPE=HOME,VOICE:" + telefonFestnetzEditText.getText().toString() + "\r\n"
-                + "EMAIL;TYPE=PREF,INTERNET:" + eMailEditText.getText().toString() + "\r\n"
-                + "REV:" +getTimeStamp() + "\r\n"
-            + "END:vcard\r\n";
-
-        return formatedVCardString;
-    }
-
-    private String getTimeStamp(){
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timeStamp = (dateFormat.format(new Date()) + "Z").replace(" ", "T"); //REV:2014-03-01T22:11:10Z
-
-        return timeStamp;
     }
 
     @Override
