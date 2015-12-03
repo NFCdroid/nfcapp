@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CardReader cardReader;
 
+    private String[] cardContent = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillVCardListView(Intent intent){
 
-        String[] cardContent = VCardFormatTool.extractCardInformation(cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
+        cardContent = VCardFormatTool.extractCardInformation(cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
 
        // adapter.notifyDataSetChanged();
        // vCardListView.invalidate();
