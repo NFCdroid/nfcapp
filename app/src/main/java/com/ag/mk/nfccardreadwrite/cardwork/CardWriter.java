@@ -40,7 +40,7 @@ public class CardWriter {
             ndefFormatable.format(ndefMessage);
             ndefFormatable.close();
 
-            Toast.makeText(context, "Tag writen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Tag written!", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Log.e("formatTag", e.getMessage());
@@ -114,6 +114,19 @@ public class CardWriter {
      * @return
      */
     public NdefMessage createNdefMessage(String content) {
+
+        /**
+         * ohli:
+         * Hier könnte man statt der Hexkonvertierung einfach einen Mime-Type schreiben.
+         * Praktisch wäre z.B. text/vcard (ab vCard v4)
+         */
+
+        /*
+        NdefMessage ndefMessage = new NdefMessage(
+                new NdefRecord[]{NdefRecord.createMime(
+                        "text/vcard", vCardArray)
+                });
+        */
 
         NdefRecord ndefRecord = transformToHexCode(content);
 

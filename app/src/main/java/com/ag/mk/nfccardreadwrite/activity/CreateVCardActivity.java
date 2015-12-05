@@ -88,7 +88,13 @@ public class CreateVCardActivity extends AppCompatActivity {
                     cardWriter.writeNdefMessage(tag, ndefMessage);
 
 
-                    Toast.makeText(CreateVCardActivity.this, "Text Field is empty!", Toast.LENGTH_SHORT).show();
+                    //TODO: Weiter Testen
+                    //Nur Name und Handynummer sind zwingend
+                    String uName = userNameEditText.getText().toString();
+                    String mobNum = telefonMobileEditText.getText().toString();
+
+                    if (uName.matches("") || mobNum.matches(""))
+                        Toast.makeText(CreateVCardActivity.this, "Text Field is empty!", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(CreateVCardActivity.this, "Bitte Karte auflegen!", Toast.LENGTH_SHORT).show();
