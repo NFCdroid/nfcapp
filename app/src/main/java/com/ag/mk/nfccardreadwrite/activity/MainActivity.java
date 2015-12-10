@@ -4,12 +4,14 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -77,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "MSG: "+cardReader.readTag(intent), Toast.LENGTH_SHORT);
-        Log.i(TAG, "Intent received"+ cardReader.readTag(intent));
+        //Toast.makeText(this, "MSG: " + cardReader.readTag(intent), Toast.LENGTH_SHORT);
+        //Log.i(TAG, "Intent received" + cardReader.readTag(intent));
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
 
@@ -91,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
             //TODO: Hier kommmt die Logik zum handeln hin
 
 
+        }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            //processIntent(getIntent());
+            fillVCardListView(intent);
         }
 
     }
@@ -109,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillVCardListView(Intent intent){
 
-        cardContent = VCardFormatTool.extractCardInformation(cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
+        cardContent = VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n"));
+                //cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
 
        // adapter.notifyDataSetChanged();
        // vCardListView.invalidate();
@@ -218,5 +224,18 @@ public class MainActivity extends AppCompatActivity {
 
         super.onPause();
     }
+
+    private String processIntent(Intent intent) {
+
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        String result = new String(msg.getRecords()[0].getPayload());
+        return  result;
+    }
+
+
 
 }
