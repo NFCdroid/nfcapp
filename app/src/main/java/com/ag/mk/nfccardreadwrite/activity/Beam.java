@@ -52,7 +52,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
                          * activity starts when receiving a beamed message. For now, this code
                          * uses the tag dispatch system.
                          */
-                        //,NdefRecord.createApplicationRecord("com.example.android.beam")
+                        ,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
                 });
         return msg;
     }
