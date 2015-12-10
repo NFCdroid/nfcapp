@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**Methode um den eintreffenden Intent zu handhaben.
-     * 
+     *
      * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
      */
     private void handleIntent(Intent intent) {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    
+
     private void initTextViews(){
 
         isVCardTextView = (TextView) findViewById(R.id.startTextView);
@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
         emulatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,EmulatorActivity.class);
+                //Intent intent = new Intent(MainActivity.this,EmulatorActivity.class);
+                Intent intent = new Intent(MainActivity.this,Beam.class);
                 startActivity(intent);
             }
         });
@@ -158,14 +159,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Initialisiert den Intent Filter für den NFC Intent.
      * Initialisiert die Array Liste für die unterstützten NFC Technologien für den NFC Adapter.
-     * 
+     *
      * Hinweis: Die Technologien werden hier noch nicht dem NFC Adapter hinzugefügt
      * dies geschiet in der Metode onResume()
      */
     private void initIntentFilter() {
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         intentFilters = new IntentFilter[] { tech, };
-        
+
         // String Array wird mit den Namen der Technologien gefüllt.
         techLists = new String[][] { new String[] {
                 NfcA.class.getName(),

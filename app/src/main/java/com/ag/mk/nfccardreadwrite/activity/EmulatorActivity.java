@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
+import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 
 /**
  * Diese Activity erlaubt eine P2P Verbindung mit anderen NFC-fähigen Handys.
@@ -29,6 +30,7 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
 
     private TextView emulationTextView;
 
+    private CardWriter emuWriterCardWriter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         initTextViews();
+        emuWriterCardWriter = new CardWriter(null);
 
         //Check for NFC adapter
         eNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -60,18 +63,19 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
         String emuText = ("Wenn du das lesen kannst, hat's geklappt!\n\n" +
                 "Beam Time: " + System.currentTimeMillis());
 
-        NdefMessage msg = new NdefMessage(
+        NdefMessage msg = emuWriterCardWriter.createNdefMessage(emuText);
+              /*  new NdefMessage(
                 new NdefRecord[]{NdefRecord.createMime(
-                        "application/vnd.com.ag.mk.nfccardreadwrite", emuText.getBytes()),
+                        "application/vnd.com.ag.mk.nfccardreadwrite", emuText.getBytes())
 
-                        /**
+                        /*
                          * Hier könnten wir auch einen Android Application Record (AAR) mit unserem Appnamen
                          * erstellen. Dadurch sucht das empfangende System nach der App und lädt sie bei
                          * Bedarf automatisch aus dem Play Store.
                          * das sähe dann so aus:
                          **/
-                        NdefRecord.createApplicationRecord("com.ag.mk.nfccardreadwrite")
-                });
+                        //,NdefRecord.createApplicationRecord("com.ag.mk.nfccardreadwrite")
+        //        });
         return msg;
     }
 

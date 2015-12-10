@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ag.mk.nfccardreadwrite">
+    package="com.ag.mk.nfccardreadwrite" >
 
     <uses-permission android:name="android.permission.NFC" />
 
@@ -13,8 +13,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,13 +31,14 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech" />
         </activity>
-
-        <activity android:name=".activity.EmulatorActivity">
-
+        <activity android:name=".activity.EmulatorActivity" >
         </activity>
-
-        <activity android:name=".activity.CreateVCardActivity">
-
+        <activity android:name=".activity.CreateVCardActivity" >
+        </activity>
+        <activity
+            android:name=".activity.Beam"
+            android:label="@string/title_activity_beam"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
