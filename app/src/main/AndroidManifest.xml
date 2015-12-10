@@ -26,11 +26,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/vnd.com.ag.mk.nfccardreadwrite.beam"/>
-            </intent-filter>
 
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
@@ -44,6 +39,12 @@
             android:name=".activity.Beam"
             android:label="@string/title_activity_beam"
             android:theme="@style/AppTheme.NoActionBar" >
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.com.ag.mk.nfccardreadwrite.beam"/>
+            </intent-filter>
         </activity>
     </application>
 
