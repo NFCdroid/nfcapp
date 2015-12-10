@@ -9,6 +9,9 @@ import android.nfc.tech.NdefFormatable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ag.mk.nfccardreadwrite.activity.CreateVCardActivity;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -113,7 +116,7 @@ public class CardWriter {
      * @param content
      * @return
      */
-    public NdefMessage createNdefMessage(String content) {
+    public NdefMessage createNdefMessage(String vname, String vnumber, String vhome, String vmail) {
 
         /**
          * ohli:
@@ -121,17 +124,18 @@ public class CardWriter {
          * Praktisch wäre z.B. text/vcard (ab vCard v4)
          */
 
-        /*
+
         NdefMessage ndefMessage = new NdefMessage(
                 new NdefRecord[]{NdefRecord.createMime(
-                        "text/vcard", vCardArray)
+                        "application/vnd.com.ag.mk.nfccardreadwrite.beam",
+                        VCardFormatTool.getFormatedVCardString(vname,vnumber,vhome,vmail).getBytes())
                 });
-        */
 
+/*
         NdefRecord ndefRecord = transformToHexCode(content);
 
         NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
-
+*/
         return ndefMessage;
     }
 }

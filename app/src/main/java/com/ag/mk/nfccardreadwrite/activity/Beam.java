@@ -17,13 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
+import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 
 import static android.nfc.NdefRecord.createMime;
 
+/**
+ * Diese Activity erlaubt eine P2P Verbindung mit anderen NFC-fähigen Handys.
+ * Statt den Lowlevel NFC-Funktionen wird hier Android Beam zum Austausch von NDEF-Nachrichten genutzt.
+ * Das Intent-Handling entfällt wenn Beam im Vordergrund läuft.
+ */
 
 public class Beam extends Activity implements CreateNdefMessageCallback {
-    NfcAdapter mNfcAdapter;
-    TextView textView;
+    private NfcAdapter mNfcAdapter;
+    private TextView textView;
+
+    private CardWriter emuWriterCardWriter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,8 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
         TextView textView = (TextView) findViewById(R.id.textView);
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        emuWriterCardWriter = new CardWriter(null);
+
         if (mNfcAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_LONG).show();
             finish();
@@ -41,23 +51,25 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
         mNfcAdapter.setNdefPushMessageCallback(this, this);
     }
 
+
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        String text = ("Beam me up, Android!\n\n" +
-                "Beam Time: " + System.currentTimeMillis());
-        NdefMessage msg = new NdefMessage(
+        //String text = ();
+        NdefMessage msg = emuWriterCardWriter.createNdefMessage("Hans","0815","12345","hans@wurst.de");
+
+                /*new NdefMessage(
                 new NdefRecord[] { createMime(
                         "application/vnd.com.ag.mk.nfccardreadwrite.beam", text.getBytes())
-                        /**
+                        /*
                          * The Android Application Record (AAR) is commented out. When a device
                          * receives a push with an AAR in it, the application specified in the AAR
                          * is guaranteed to run. The AAR overrides the tag dispatch system.
                          * You can add it back in to guarantee that this
                          * activity starts when receiving a beamed message. For now, this code
                          * uses the tag dispatch system..
-                         */
+
                         //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
-                });
+                });*/
         return msg;
     }
 

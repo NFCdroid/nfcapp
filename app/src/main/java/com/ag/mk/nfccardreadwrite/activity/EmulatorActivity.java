@@ -18,11 +18,7 @@ import android.widget.Toast;
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 
-/**
- * Diese Activity erlaubt eine P2P Verbindung mit anderen NFC-fähigen Handys.
- * Statt den Lowlevel NFC-Funktionen wird hier Android Beam zum Austausch von NDEF-Nachrichten genutzt.
- * Das Intent-Handling entfällt wenn Beam im Vordergrund läuft.
- */
+
 
 public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
     public static final String TAG = "TagTest";
