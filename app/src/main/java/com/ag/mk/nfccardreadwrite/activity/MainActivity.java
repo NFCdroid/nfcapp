@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.nfc.NfcAdapter;
+import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
@@ -73,12 +74,17 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleIntent(Intent intent) {
 
-        //Log.i(TAG, "Intent received");
+
         //Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "MSG: "+cardReader.readTag(intent), Toast.LENGTH_SHORT);
+        Log.i(TAG, "Intent received"+ cardReader.readTag(intent));
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
 
             Log.i(TAG, "Discovered tag with intent: " + intent);
+
+
 
             fillVCardListView(intent);
 
@@ -163,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         // String Array wird mit den Namen der Technologien gefüllt.
         techLists = new String[][] { new String[] {
                 NfcA.class.getName(),
+                IsoDep.class.getName(),
                 MifareUltralight.class.getName(),
                 Ndef.class.getName()}
                 };

@@ -62,7 +62,7 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
 
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[]{NdefRecord.createMime(
-                        "application/vnd.com.ag.mk.nfccardreadwrite", emuText.getBytes())
+                        "application/vnd.com.ag.mk.nfccardreadwrite", emuText.getBytes()),
 
                         /**
                          * Hier könnten wir auch einen Android Application Record (AAR) mit unserem Appnamen
@@ -70,7 +70,7 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
                          * Bedarf automatisch aus dem Play Store.
                          * das sähe dann so aus:
                          **/
-                        //,NdefRecord.createApplicationRecord("com.ag.mk.nfccardreadwrite")
+                        NdefRecord.createApplicationRecord("com.ag.mk.nfccardreadwrite")
                 });
         return msg;
     }
