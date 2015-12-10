@@ -83,9 +83,9 @@ public class CreateVCardActivity extends AppCompatActivity {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
                 if (tag != null) {
-                    
-                    //TODO NdefMessage ndefMessage = cardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString(userNameEditText.getText().toString(), telefonMobileEditText.getText().toString(), telefonFestnetzEditText.getText().toString(), eMailEditText.getText().toString()));
-                  //TODO cardWriter.writeNdefMessage(tag, ndefMessage);
+
+                    NdefMessage ndefMessage = cardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString(userNameEditText.getText().toString(), telefonMobileEditText.getText().toString(), telefonFestnetzEditText.getText().toString(), eMailEditText.getText().toString()));
+                    cardWriter.writeNdefMessage(tag, ndefMessage);
 
 
                     //TODO: Weiter Testen

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
 import static android.nfc.NdefRecord.createMime;
 
@@ -55,7 +56,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         //String text = ();
-        NdefMessage msg = emuWriterCardWriter.createNdefMessage("Hans","0815","12345","hans@wurst.de");
+        NdefMessage msg = emuWriterCardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString("Hans","0815","12345","hans@wurst.de"));
 
                 /*new NdefMessage(
                 new NdefRecord[] { createMime(

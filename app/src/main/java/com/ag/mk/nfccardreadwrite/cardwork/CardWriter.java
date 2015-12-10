@@ -116,7 +116,7 @@ public class CardWriter {
      * @param content
      * @return
      */
-    public NdefMessage createNdefMessage(String vname, String vnumber, String vhome, String vmail) {
+    public NdefMessage createNdefMessage(String content) {
 
         /**
          * ohli:
@@ -128,7 +128,7 @@ public class CardWriter {
         NdefMessage ndefMessage = new NdefMessage(
                 new NdefRecord[]{NdefRecord.createMime(
                         "application/vnd.com.ag.mk.nfccardreadwrite.beam",
-                        VCardFormatTool.getFormatedVCardString(vname,vnumber,vhome,vmail).getBytes())
+                        content.getBytes())
                 });
 
 /*
