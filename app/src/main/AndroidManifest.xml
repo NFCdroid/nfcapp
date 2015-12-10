@@ -37,8 +37,7 @@
         </activity>
         <activity
             android:name=".activity.Beam"
-            android:label="@string/title_activity_beam"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/title_activity_beam">
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
