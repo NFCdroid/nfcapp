@@ -47,7 +47,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
                 "Beam Time: " + System.currentTimeMillis());
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMime(
-                        "application/vnd.com.example.android.beam", text.getBytes())
+                        "application/vnd.com.ag.mk.nfccardreadwrite.beam", text.getBytes())
                         /**
                          * The Android Application Record (AAR) is commented out. When a device
                          * receives a push with an AAR in it, the application specified in the AAR
