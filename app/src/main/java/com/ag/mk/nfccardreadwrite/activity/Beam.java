@@ -1,3 +1,7 @@
+/*This example was taken from
+https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#p2p
+ */
+
 package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.Activity;
@@ -52,7 +56,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
                          * activity starts when receiving a beamed message. For now, this code
                          * uses the tag dispatch system.
                          */
-                        ,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
+                        //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
                 });
         return msg;
     }
