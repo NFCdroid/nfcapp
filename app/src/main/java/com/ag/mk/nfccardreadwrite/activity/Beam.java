@@ -54,7 +54,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
                          * is guaranteed to run. The AAR overrides the tag dispatch system.
                          * You can add it back in to guarantee that this
                          * activity starts when receiving a beamed message. For now, this code
-                         * uses the tag dispatch system.
+                         * uses the tag dispatch system..
                          */
                         //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
                 });
