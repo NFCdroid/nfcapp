@@ -20,7 +20,7 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 
 
 
-public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
+public class EmulatorActivity extends AppCompatActivity {
     public static final String TAG = "TagTest";
     private NfcAdapter eNfcAdapter;
 
@@ -46,7 +46,7 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
         }
 
         //Register Callback
-        eNfcAdapter.setNdefPushMessageCallback(this, this);
+        //eNfcAdapter.setNdefPushMessageCallback(this, this);
 
     }
 
@@ -54,12 +54,12 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
      * Hier bauen wir die NdefMessage zusammen.
      * Genutzt wird unser eigener Mimetype mit einem einfachen Text.
      **/
-    @Override
+    /*@Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         String emuText = ("Wenn du das lesen kannst, hat's geklappt!\n\n" +
                 "Beam Time: " + System.currentTimeMillis());
 
-        NdefMessage msg = emuWriterCardWriter.createNdefMessage(emuText);
+       /* NdefMessage msg = emuWriterCardWriter.createNdefMessage(emuText);
               /*  new NdefMessage(
                 new NdefRecord[]{NdefRecord.createMime(
                         "application/vnd.com.ag.mk.nfccardreadwrite", emuText.getBytes())
@@ -69,11 +69,11 @@ public class EmulatorActivity extends AppCompatActivity implements NfcAdapter.Cr
                          * erstellen. Dadurch sucht das empfangende System nach der App und lädt sie bei
                          * Bedarf automatisch aus dem Play Store.
                          * das sähe dann so aus:
-                         **/
+                         *
                         //,NdefRecord.createApplicationRecord("com.ag.mk.nfccardreadwrite")
         //        });
         return msg;
-    }
+    }*/
 
     @Override
     protected void onResume() {
