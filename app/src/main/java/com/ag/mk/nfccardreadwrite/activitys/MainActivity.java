@@ -1,4 +1,4 @@
-package com.ag.mk.nfccardreadwrite.activity;
+package com.ag.mk.nfccardreadwrite.activitys;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView vCardListView;
 
-    private Button emulatorButton, contactImportButton, createVCardActvivityButton;
+    private Button BeamActivityButton, contactImportButton, createVCardActvivityButton;
 
     private NfcAdapter nfcAdapter;
 
@@ -132,12 +132,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initButtons(){
 
-        emulatorButton = (Button) findViewById(R.id.emulatorButton);
-        emulatorButton.setOnClickListener(new View.OnClickListener() {
+        BeamActivityButton = (Button) findViewById(R.id.BeamActivityButton);
+        BeamActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this,EmulatorActivity.class);
-                Intent intent = new Intent(MainActivity.this,Beam.class);
+                Intent intent = new Intent(MainActivity.this, BeamActivity.class);
                 startActivity(intent);
             }
         });

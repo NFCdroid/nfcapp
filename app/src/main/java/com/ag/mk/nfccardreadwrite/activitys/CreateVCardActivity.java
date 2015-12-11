@@ -1,4 +1,4 @@
-package com.ag.mk.nfccardreadwrite.activity;
+package com.ag.mk.nfccardreadwrite.activitys;
 
 import android.app.PendingIntent;
 import android.content.Intent;

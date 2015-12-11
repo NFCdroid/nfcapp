@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Emulator"
-        android:id="@+id/emulatorButton"
+        android:id="@+id/BeamActivityButton"
         android:layout_above="@+id/CreateVCardActvivityButton"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/contactImportButton" />
@@ -40,7 +40,7 @@
         android:id="@+id/vCardlistView"
         android:layout_below="@+id/textView2"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/emulatorButton"
+        android:layout_above="@+id/BeamActivityButton"
         android:visibility="gone"/>
 
     <Button

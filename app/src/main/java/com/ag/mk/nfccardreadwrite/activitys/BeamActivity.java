@@ -2,17 +2,14 @@
 https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#p2p
  */
 
-package com.ag.mk.nfccardreadwrite.activity;
+package com.ag.mk.nfccardreadwrite.activitys;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,19 +17,19 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
-import static android.nfc.NdefRecord.createMime;
-
 /**
  * Diese Activity erlaubt eine P2P Verbindung mit anderen NFC-fähigen Handys.
- * Statt den Lowlevel NFC-Funktionen wird hier Android Beam zum Austausch von NDEF-Nachrichten genutzt.
- * Das Intent-Handling entfällt wenn Beam im Vordergrund läuft.
+ * Statt den Lowlevel NFC-Funktionen wird hier Android BeamActivity zum Austausch von NDEF-Nachrichten genutzt.
+ * Das Intent-Handling entfällt wenn BeamActivity im Vordergrund läuft.
  */
 
-public class Beam extends Activity implements CreateNdefMessageCallback {
+public class BeamActivity extends Activity implements CreateNdefMessageCallback {
     private NfcAdapter mNfcAdapter;
     private TextView textView;
 
-    private CardWriter emuWriterCardWriter;
+    private String vCardInformation = null;
+
+    private CardWriter cardWriter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +38,15 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
         TextView textView = (TextView) findViewById(R.id.textView);
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        emuWriterCardWriter = new CardWriter(null);
+        cardWriter = new CardWriter(this);
 
         if (mNfcAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
+
+        setVCardProfile(); //TODO zu Testzwecken kommt noch weg!
         // Register callback
         mNfcAdapter.setNdefPushMessageCallback(this, this);
     }
@@ -56,7 +55,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         //String text = ();
-        NdefMessage msg = emuWriterCardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString("Hans","0815","12345","hans@wurst.de"));
+        NdefMessage msg = cardWriter.createNdefMessage(vCardInformation);
 
                 /*new NdefMessage(
                 new NdefRecord[] { createMime(
@@ -74,31 +73,7 @@ public class Beam extends Activity implements CreateNdefMessageCallback {
         return msg;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Check to see that the Activity started due to an Android Beam
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            processIntent(getIntent());
-        }
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        // onResume gets called after this to handle the intent
-        setIntent(intent);
-    }
-
-    /**
-     * Parses the NDEF Message from the intent and prints to the TextView
-     */
-    void processIntent(Intent intent) {
-        textView = (TextView) findViewById(R.id.textView);
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-                NfcAdapter.EXTRA_NDEF_MESSAGES);
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-        // record 0 contains the MIME type, record 1 is the AAR, if present
-        textView.setText(new String(msg.getRecords()[0].getPayload()));
+    public void setVCardProfile(){
+        vCardInformation =VCardFormatTool.getFormatedVCardString("Hans","0815","12345","hans@wurst.de");
     }
 }

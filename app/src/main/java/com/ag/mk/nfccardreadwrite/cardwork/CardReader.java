@@ -7,7 +7,7 @@ import android.nfc.NfcAdapter;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.ag.mk.nfccardreadwrite.activity.MainActivity;
+import com.ag.mk.nfccardreadwrite.activitys.MainActivity;
 
 import java.io.UnsupportedEncodingException;
 

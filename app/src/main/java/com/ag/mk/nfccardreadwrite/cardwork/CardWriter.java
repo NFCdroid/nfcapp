@@ -9,9 +9,6 @@ import android.nfc.tech.NdefFormatable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ag.mk.nfccardreadwrite.activity.CreateVCardActivity;
-import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
