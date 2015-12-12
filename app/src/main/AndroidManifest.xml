@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activitys.MainActivity" >
+        <activity android:name=".activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,10 +39,12 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech" />
         </activity>
-        <activity android:name=".activitys.CreateVCardActivity" >
+        <activity android:name=".activity.CreateVCardActivity" >
+        </activity>
+        <activity android:name=".activity.ReadContactsActivity">
         </activity>
         <activity
-            android:name=".activitys.BeamActivity"
+            android:name=".activity.BeamActivity"
             android:label="@string/title_activity_beam">
         </activity>
     </application>

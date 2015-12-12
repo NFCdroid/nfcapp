@@ -2,7 +2,7 @@
 https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#p2p
  */
 
-package com.ag.mk.nfccardreadwrite.activitys;
+package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.Activity;
 import android.nfc.NdefMessage;

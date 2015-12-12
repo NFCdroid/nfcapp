@@ -1,4 +1,4 @@
-package com.ag.mk.nfccardreadwrite.activitys;
+package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.ListActivity;
 import android.content.ContentResolver;
@@ -72,6 +72,7 @@ public class ReadContactsActivity extends ListActivity {
             while (pCur.moveToNext()) {
                 int type = pCur.getInt(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
                 switch (type) {
+                    //TODO Strings müssen noch eine Instanz höher
                     case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
                         String homenumber = pCur.getString(pCur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_HOME)));
                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
