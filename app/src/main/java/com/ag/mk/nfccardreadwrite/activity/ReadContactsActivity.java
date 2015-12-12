@@ -51,6 +51,7 @@ public class ReadContactsActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+
         assert cur != null;
         cur.moveToPosition(position);
 
@@ -72,11 +73,14 @@ public class ReadContactsActivity extends ListActivity {
             while (pCur.moveToNext()) {
                 int type = pCur.getInt(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
                 switch (type) {
-                    //TODO Strings müssen noch eine Instanz höher
+                    //TODO Strings müssen noch eine Instanz höher oder den Klasseneigenschaften zugewiesen werden
                     case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
                         String homenumber = pCur.getString(pCur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_HOME)));
+
                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                        //TODO Exeption sagt, Curser möglicherweise nicht implementiert
                         String mobilenumber = pCur.getString(cur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)));
+                        Toast.makeText(this,"Mobile: "+mobilenumber, Toast.LENGTH_SHORT);
                     case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
                         // not yet implemented in VCardFormatTool
                         // String worknumber = pCur.getString(cur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_WORK)));
