@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
        // adapter.notifyDataSetChanged();
        // vCardListView.invalidate();
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
         vCardListView.setAdapter(adapter);
 
         if(vCardListView.getVisibility() == View.GONE){
@@ -153,8 +153,9 @@ public class MainActivity extends AppCompatActivity {
         contactImportButton = (Button)findViewById(R.id.contactImportButton);
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReadContactsActivity.class);
+                startActivity(intent);
             }
         });
 

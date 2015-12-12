@@ -3,6 +3,7 @@
     package="com.ag.mk.nfccardreadwrite" >
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <uses-feature
         android:name="android.hardware.nfc"
