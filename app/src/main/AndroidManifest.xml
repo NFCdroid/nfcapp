@@ -45,6 +45,8 @@
             android:name=".activitys.BeamActivity"
             android:label="@string/title_activity_beam">
         </activity>
+        <activity android:name=".activitys.ReadContactsActivity" >
+        </activity>
     </application>
 
 </manifest>
