@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,7 +23,10 @@ public class ReadContactsActivity extends ListActivity {
     private String vCardInformation = null;
     private String mobilenumber = null;
     private String homenumber = null;
+    private String worknumber = null;
     private String email = null;
+    private Cursor cur = null;
+    private Cursor pCur = null;
     //shamelessly stolen from elsewhere....
     private CardWriter cardWriter;
     private NfcAdapter mNfcAdapter;
@@ -50,7 +54,7 @@ public class ReadContactsActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         assert cur != null;
         cur.moveToPosition(position);
@@ -68,26 +72,31 @@ public class ReadContactsActivity extends ListActivity {
         */
 
         if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + _id, null, null);
-            while (pCur.moveToNext()) {
-                int type = pCur.getInt(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-                switch (type) {
-                    //TODO Strings müssen noch eine Instanz höher oder den Klasseneigenschaften zugewiesen werden
-                    case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                        String homenumber = pCur.getString(pCur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_HOME)));
-
-                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                        //TODO Exeption sagt, Curser möglicherweise nicht implementiert
-                        String mobilenumber = pCur.getString(cur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)));
-                        Toast.makeText(this,"Mobile: "+mobilenumber, Toast.LENGTH_SHORT);
-                    case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                        // not yet implemented in VCardFormatTool
-                        // String worknumber = pCur.getString(cur.getColumnIndex(String.valueOf(ContactsContract.CommonDataKinds.Phone.TYPE_WORK)));
+            pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{_id}, null);
+            if(pCur != null && pCur.getCount() > 0) {
+                while (pCur.moveToNext()) {
+                    String phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    int type = pCur.getInt(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                    // http://developer.android.com/reference/android/provider/ContactsContract.CommonDataKinds.Phone.html
+                    // TYPE values are static int so easy to switch.
+                    switch (type){
+                        case 2:
+                            mobilenumber = phone;
+                            break;
+                        case 3:
+                            worknumber = phone;
+                            break;
+                        case 1:
+                            homenumber = phone;
+                            break;
+                    }
                 }
+                pCur.close();
             }
-            pCur.close();
         }
+
+        //TODO: get email.
 
         vCardInformation = VCardFormatTool.getFormatedVCardString(name,mobilenumber,homenumber,email);
         //TODO: implement beam/write here
@@ -96,7 +105,7 @@ public class ReadContactsActivity extends ListActivity {
 
     private void displayContacts() {
         ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
