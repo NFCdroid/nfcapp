@@ -11,8 +11,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Emulator"
-        android:id="@+id/BeamActivityButton"
+        android:text="Kontakt Export."
+        android:id="@+id/ContactActivityButton"
         android:layout_above="@+id/CreateVCardActvivityButton"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/contactImportButton" />
@@ -32,7 +32,8 @@
         android:text="Kontakt importieren"
         android:id="@+id/contactImportButton"
         android:layout_above="@+id/CreateVCardActvivityButton"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ContactActivityButton" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
         android:id="@+id/vCardlistView"
         android:layout_below="@+id/textView2"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/BeamActivityButton"
+        android:layout_above="@+id/ContactActivityButton"
         android:visibility="gone"/>
 
     <Button

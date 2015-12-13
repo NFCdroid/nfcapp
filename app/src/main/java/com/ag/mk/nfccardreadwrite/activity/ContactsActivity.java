@@ -1,22 +1,30 @@
 package com.ag.mk.nfccardreadwrite.activity;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
+import com.ag.mk.nfccardreadwrite.tools.Dialogs;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+import com.ag.mk.nfccardreadwrite.tools.Vibration;
+
 import java.util.ArrayList;
 
-public class ReadContactsActivity extends ListActivity {
+public class ContactsActivity extends ListActivity implements NfcAdapter.CreateNdefMessageCallback {
 
 
     private ArrayList<String> listItems = new ArrayList<>();
@@ -29,26 +37,45 @@ public class ReadContactsActivity extends ListActivity {
     private Cursor pCur = null;
     //shamelessly stolen from elsewhere....
     private CardWriter cardWriter;
-    private NfcAdapter mNfcAdapter;
+    private NfcAdapter nfcAdapter;
+
+    private Button backButton;
+
+    Dialogs dialogs = new Dialogs();
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_read_contacts);
+
+        initButtons();
+
+
         ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItems);
         setListAdapter(adapter);
 
         // Check for available NFC Adapter
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         cardWriter = new CardWriter(this);
 
-        if (mNfcAdapter == null) {
+        if (nfcAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         displayContacts();
+    }
+
+    private void initButtons() {
+        backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Vibration.vibrate();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -99,7 +126,10 @@ public class ReadContactsActivity extends ListActivity {
         //TODO: get email.
 
         vCardInformation = VCardFormatTool.getFormatedVCardString(name,mobilenumber,homenumber,email);
-        //TODO: implement beam/write here
+
+        dialogs.showBeamOrWriteDialog(this, vCardInformation);
+
+        Vibration.vibrate();
 
     }
 
@@ -115,5 +145,34 @@ public class ReadContactsActivity extends ListActivity {
         }
     }
 
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent event) {
+
+        NdefMessage msg = cardWriter.createNdefMessage(vCardInformation);
+
+                /*new NdefMessage(
+                new NdefRecord[] { createMime(
+                        "application/vnd.com.ag.mk.nfccardreadwrite.beam", text.getBytes())
+                        /*
+                         * The Android Application Record (AAR) is commented out. When a device
+                         * receives a push with an AAR in it, the application specified in the AAR
+                         * is guaranteed to run. The AAR overrides the tag dispatch system.
+                         * You can add it back in to guarantee that this
+                         * activity starts when receiving a beamed message. For now, this code
+                         * uses the tag dispatch system..
+
+                        //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
+                });*/
+        return msg;
+    }
+    /*
+    public void setVCardInformation(){
+        vCardInformation =VCardFormatTool.getFormatedVCardString("Hans","0815","12345","hans@wurst.de");
+    }*/
+
+    public void startBeamMode(){
+        nfcAdapter.setNdefPushMessageCallback(this, this);
+    }
 
 }

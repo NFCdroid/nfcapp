@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView vCardListView;
 
-    private Button BeamActivityButton, contactImportButton, createVCardActvivityButton;
+    private Button contactsActivityButton, contactImportButton, createVCardActvivityButton;
 
     private NfcAdapter nfcAdapter;
 
@@ -132,12 +132,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initButtons(){
 
-        BeamActivityButton = (Button) findViewById(R.id.BeamActivityButton);
-        BeamActivityButton.setOnClickListener(new View.OnClickListener() {
+        //TODO einerfliegt noch raus!
+
+        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
+        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BeamActivity.class);
+                Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -154,8 +157,7 @@ public class MainActivity extends AppCompatActivity {
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ReadContactsActivity.class);
-                startActivity(intent);
+
             }
         });
 

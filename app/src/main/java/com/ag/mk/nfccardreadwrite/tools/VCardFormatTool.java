@@ -11,8 +11,8 @@ import java.util.List;
 public class VCardFormatTool {
 
     private static final String NAME = "N:";
-    private static final String MOBILEPHONE = "TEL;TYPE=WORK,VOICE:";
-    private static final String HOMEPHONE = "TEL;TYPE=HOME,VOICE:";
+    private static final String MOBILENUMBER = "TEL;TYPE=WORK,VOICE:";
+    private static final String HOMENUMBER = "TEL;TYPE=HOME,VOICE:";
     private static final String EMAIL = "EMAIL;TYPE=PREF,INTERNET:";
 
     public static String[] extractCardInformation(String[] cardContent){
@@ -25,13 +25,13 @@ public class VCardFormatTool {
 
                 tempList.add("Name: " + cardContent[i].split(NAME)[1].replace(";"," "));
 
-            }else if(cardContent[i].startsWith(MOBILEPHONE)){
+            }else if(cardContent[i].startsWith(MOBILENUMBER)){
 
-                tempList.add("Telefon-Mobil: " + cardContent[i].split(MOBILEPHONE)[1]);
+                tempList.add("Telefon-Mobil: " + cardContent[i].split(MOBILENUMBER)[1]);
 
-            }else if(cardContent[i].startsWith(HOMEPHONE)){
+            }else if(cardContent[i].startsWith(HOMENUMBER)){
 
-                tempList.add("Telefon-Festnetz: " + cardContent[i].split(HOMEPHONE)[1]);
+                tempList.add("Telefon-Festnetz: " + cardContent[i].split(HOMENUMBER)[1]);
 
             }else if(cardContent[i].startsWith(EMAIL)){
 

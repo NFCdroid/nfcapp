@@ -52,6 +52,14 @@ public class CreateVCardActivity extends AppCompatActivity {
 
         initButtons();
         initTextFields();
+
+        if(getIntent().hasExtra("vcardinformation")) {
+
+           String temp = getIntent().getStringExtra("vcardinformation");
+            System.out.println("INTENT: "+temp);
+
+        }
+
     }
 
     private void initButtons(){
