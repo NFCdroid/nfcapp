@@ -123,7 +123,14 @@ public class ContactsActivity extends ListActivity implements NfcAdapter.CreateN
             }
         }
 
-        //TODO: get email.
+        Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + _id, null, null);
+        if (emails != null) {
+            while (emails.moveToNext()) {
+                email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+            }
+        }
+        emails.close();
 
         vCardInformation = VCardFormatTool.getFormatedVCardString(name,mobilenumber,homenumber,email);
 
@@ -137,12 +144,13 @@ public class ContactsActivity extends ListActivity implements NfcAdapter.CreateN
         ContentResolver cr = getContentResolver();
         cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                listItems.add(name);
+        if (cur != null)
+            if (cur.getCount() > 0) {
+                while (cur.moveToNext()) {
+                    String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    listItems.add(name);
+                }
             }
-        }
     }
 
 
