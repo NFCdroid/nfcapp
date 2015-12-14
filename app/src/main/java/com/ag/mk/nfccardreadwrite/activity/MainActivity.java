@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private List<String> cardContent = null;
 
-    private ContactListDialog dialogs = new ContactListDialog();
+    private ContactListDialog contactListDialog;
 
     private String vCardInformation = null;
 
