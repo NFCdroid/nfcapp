@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private List<String> cardContent = null;
 
-    private ContactListDialog dialogs = new ContactListDialog();
+    private ContactListDialog contactListDialog;
 
     private String vCardInformation = null;
 
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         cardReader = new CardReader(this);
+        contactListDialog= new ContactListDialog(this);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogs.initContactDialog(MainActivity.this);
+                contactListDialog.showDialog();
 
 
             }
