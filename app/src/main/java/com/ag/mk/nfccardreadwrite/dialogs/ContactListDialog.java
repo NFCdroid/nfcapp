@@ -48,7 +48,7 @@ public class ContactListDialog {
         contactListDialog = new Dialog(mainActivity);
 
         LayoutInflater inflater = (LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.activity_read_contacts, (ViewGroup)mainActivity.findViewById(R.id.contactList));
+        View layout = inflater.inflate(R.layout.dialog_ContactList, (ViewGroup)mainActivity.findViewById(R.id.contactList));
 
         contactListDialog.setContentView(layout);
         contactListDialog.setTitle("Kontakte");

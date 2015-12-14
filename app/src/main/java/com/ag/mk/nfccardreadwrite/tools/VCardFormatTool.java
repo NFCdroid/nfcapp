@@ -3,7 +3,6 @@ package com.ag.mk.nfccardreadwrite.tools;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by marko on 02.12.15.
@@ -15,9 +14,9 @@ public class VCardFormatTool {
     private static final String HOMENUMBER = "TEL;TYPE=HOME,VOICE:";
     private static final String EMAIL = "EMAIL;TYPE=PREF,INTERNET:";
 
-    public static List<String> extractCardInformation(String[] cardContent){
+    public static ArrayList<String> extractCardInformation(String[] cardContent){
 
-        List<String> tempList = new ArrayList<String>();
+        ArrayList<String> tempList = new ArrayList<String>();
 
         for(int i=0; i<cardContent.length; i++){
 

@@ -13,7 +13,6 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +29,7 @@ import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback{
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private CardReader cardReader;
     private CardWriter cardWriter = new CardWriter(null);
 
-    private List<String> cardContent = null;
+    private ArrayList<String> cardContent = null;
 
     private ContactListDialog contactListDialog;
 
@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        initButtons();
         initTextViews();
         initListViews();
-        initButtons();
 
         checkNFCSupport();
 
@@ -82,33 +82,41 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         handleIntent(getIntent());
     }
 
-    /**Methode um den eintreffenden Intent zu handhaben.
-     *
-     * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
-     */
-    private void handleIntent(Intent intent) {
+    private void initButtons(){
 
+        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
+        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contactListDialog.showDialog();
+            }
+        });
 
-        //Toast.makeText(this, "NFC Received!", Toast.LENGTH_SHORT).show();
+        createVCardActvivityButton = (Button) findViewById(R.id.createVCardActvivityButton);
+        createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        //Toast.makeText(this, "MSG: " + cardReader.readTag(intent), Toast.LENGTH_SHORT);
-        //Log.i(TAG, "Intent received" + cardReader.readTag(intent));
+                startCreateVCardActivityIntent();
+            }
+        });
 
-        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+        contactImportButton = (Button)findViewById(R.id.contactImportButton);
+        contactImportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            Log.i(TAG, "Discovered tag with intent: " + intent);
+            }
+        });
 
-
-
-            fillVCardListView(VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n")));
-
-            //TODO: Hier kommmt die Logik zum handeln hin
-
-
-        }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            //processIntent(getIntent());
-            fillVCardListView(VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n")));
-        }
+        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
+        androidBeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startBeamMode();
+                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT);
+            }
+        });
 
     }
 
@@ -124,13 +132,26 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     }
 
+    /**Methode um den eintreffenden Intent zu handhaben.
+     *
+     * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
+     */
+    private void handleIntent(Intent intent) {
+
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+
+            Log.i(TAG, "Discovered tag with intent: " + intent);
+
+            fillVCardListView(VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n")));
+
+        }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            //processIntent(getIntent());
+            fillVCardListView(VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n")));
+        }
+
+    }
+
     private void fillVCardListView(List<String> cardContent){
-
-
-        //cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
-
-       // adapter.notifyDataSetChanged();
-       // vCardListView.invalidate();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
         vCardListView.setAdapter(adapter);
@@ -142,8 +163,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     }
 
-    private void initButtons(){
+    private void startCreateVCardActivityIntent() {
+        Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
 
+        if(cardContent!= null) {
+            intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
+            intent.putStringArrayListExtra("vci", cardContent);
+        }
+        startActivity(intent);
         //TODO einerfliegt noch raus! -- Klaus: Sehe ich nicht so.
 
         //Hier export in die Kontakte
@@ -224,6 +251,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         }
     }
 
+    public void setVCardInformationOnMainScreen(String vCardInformation) {
+        this.vCardInformation = vCardInformation;
+        cardContent = VCardFormatTool.extractCardInformation(vCardInformation.split("\r\n"));
+        fillVCardListView(cardContent);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -252,18 +285,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         super.onPause();
     }
 
-    private String processIntent(Intent intent) {
-
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-                NfcAdapter.EXTRA_NDEF_MESSAGES);
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-        // record 0 contains the MIME type, record 1 is the AAR, if present
-        String result = new String(msg.getRecords()[0].getPayload());
-        return  result;
-    }
-
-
     private void startBeamMode(){
         nfcAdapter.setNdefPushMessageCallback(this, this);
     }
@@ -287,11 +308,4 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 });*/
         return msg;
     }
-
-    public void setVCardInformationOnMainScreen(String vCardInformation) {
-        this.vCardInformation = vCardInformation;
-        cardContent = VCardFormatTool.extractCardInformation(vCardInformation.split("\r\n"));
-        fillVCardListView(cardContent);
-    }
-
 }

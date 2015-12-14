@@ -61,4 +61,15 @@ public class CardReader {
         }
         return tagContent;
     }
+
+    public String processIntent(Intent intent) {
+
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        String result = new String(msg.getRecords()[0].getPayload());
+        return  result;
+    }
 }

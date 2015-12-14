@@ -23,6 +23,8 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
+import java.util.ArrayList;
+
 public class CreateVCardActivity extends AppCompatActivity {
 
     private Button backButton, writeVCardButton, clearButton;
@@ -56,7 +58,7 @@ public class CreateVCardActivity extends AppCompatActivity {
         initTextFields();
 
         if(getIntent().hasExtra("vci")) {
-            fillTextFields(getIntent().getStringExtra("vci"));
+            fillTextFields(getIntent().getStringArrayListExtra("vci"));
         }
 
     }
@@ -146,12 +148,11 @@ public class CreateVCardActivity extends AppCompatActivity {
         };
     }
 
-    private void fillTextFields(String cardContent){
-        String temp[] = cardContent.split(";");
-        userNameEditText.setText(temp[0]);
-        telefonMobileEditText.setText(temp[1]);
-        telefonFestnetzEditText.setText(temp[2]);
-        eMailEditText.setText(temp[3]);
+    private void fillTextFields(ArrayList<String> cardContent){
+        userNameEditText.setText(cardContent.get(0));
+        telefonMobileEditText.setText(cardContent.get(1));
+        telefonFestnetzEditText.setText(cardContent.get(2));
+        eMailEditText.setText(cardContent.get(3));
 
     }
 
