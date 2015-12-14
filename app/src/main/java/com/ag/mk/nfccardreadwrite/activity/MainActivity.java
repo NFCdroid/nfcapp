@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogs.initContactDialog(MainActivity.this);
+                contactListDialog.showDialog();
             }
         });
 
