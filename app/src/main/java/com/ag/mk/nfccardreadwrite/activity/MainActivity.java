@@ -16,6 +16,7 @@ import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,11 +33,13 @@ import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.tools.Vibration;
+import com.ag.mk.nfccardreadwrite.tools.Voice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback{
+public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener{
 
     public static final String TAG = "Nfc Card App";
 
@@ -50,11 +53,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private ArrayAdapter<String> adapter;
 
+    private TextToSpeech textToSpeech;
+
     private IntentFilter[] intentFilters;
     private String[][] techLists;
 
     private CardReader cardReader;
     private CardWriter cardWriter = new CardWriter(null);
+    private Voice voice;
 
     private ArrayList<String> cardContent = null;
 
@@ -68,25 +74,32 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        new Vibration((Vibrator)getSystemService(Context.VIBRATOR_SERVICE));
-        Vibration.setVibration(true);
-
-        cardReader = new CardReader(this);
-        contactListDialog = new ContactListDialog(this);
-
+        initImportedClasses();
         initButtons();
         initTextViews();
         initListViews();
 
         checkNFCSupport();
-
         checkNFC();
 
         initIntentFilter();
 
         handleIntent(getIntent());
+    }
+
+    private void initImportedClasses() {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        new Vibration((Vibrator)getSystemService(Context.VIBRATOR_SERVICE));
+        Vibration.setVibration(true);
+
+        textToSpeech = new TextToSpeech(this, this);
+
+        cardReader = new CardReader(this);
+        contactListDialog = new ContactListDialog(this);
+        voice = new Voice(textToSpeech);
+        voice.setSound(true);
+
     }
 
     private void initButtons(){
@@ -106,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             public void onClick(View v) {
                 Vibration.vibrate();
                 startCreateVCardActivityIntent();
+
             }
         });
 
@@ -113,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                voice.speakOut("Wählen Sie einen Kontakt aus!");
                 Vibration.vibrate();
                 contactListDialog.showDialog();
             }
@@ -283,5 +298,33 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                         //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
                 });*/
         return msg;
+    }
+
+    @Override
+    public void onInit(int status) {
+
+        if (status == TextToSpeech.SUCCESS) {
+
+            int result = textToSpeech.setLanguage(Locale.GERMAN);
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                // speakOut("Sprachaktivierung erfolgreich!");
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }
