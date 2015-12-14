@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 startBeamMode();
-                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT);
+                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -153,9 +153,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     }
 
-    private void fillVCardListView(List<String> cardContent){
+    private void fillVCardListView(ArrayList<String> cardContent){
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
+        //TODO: Hier weniger dreckig...
+        this.cardContent = cardContent;
         vCardListView.setAdapter(adapter);
 
         if(vCardListView.getVisibility() == View.GONE){

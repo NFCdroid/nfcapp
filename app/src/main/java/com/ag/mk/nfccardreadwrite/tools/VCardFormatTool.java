@@ -4,9 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by marko on 02.12.15.
- */
+
 public class VCardFormatTool {
 
     private static final String NAME = "N:";
@@ -19,7 +17,7 @@ public class VCardFormatTool {
         ArrayList<String> tempList = new ArrayList<String>();
 
         for(int i=0; i<cardContent.length; i++){
-
+            //TODO: Hier die Strings "name", "telefon" etc rausnehmen.
             if(cardContent[i].startsWith(NAME)){
 
                 tempList.add("Name: " + cardContent[i].split(NAME)[1].replace(";"," "));
