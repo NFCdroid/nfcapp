@@ -27,6 +27,7 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
+import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
 import java.util.List;
@@ -143,15 +144,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private void initButtons(){
 
-        //TODO einerfliegt noch raus!
+        //TODO einerfliegt noch raus! -- Klaus: Sehe ich nicht so.
 
+        //Hier export in die Kontakte
         contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
         contactsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogs.initContactDialog(MainActivity.this);
-
-
+                ContactWrite.writecontact(MainActivity.this, cardContent);
             }
         });
 
@@ -168,11 +168,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             }
         });
 
+        //Hier Import aus Kontakten
         contactImportButton = (Button)findViewById(R.id.contactImportButton);
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialogs.initContactDialog(MainActivity.this);
             }
         });
 
