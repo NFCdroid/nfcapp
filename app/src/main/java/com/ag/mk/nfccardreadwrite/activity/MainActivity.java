@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        contactListDialog = new ContactListDialog(this);
+
         initButtons();
         initTextViews();
         initListViews();
