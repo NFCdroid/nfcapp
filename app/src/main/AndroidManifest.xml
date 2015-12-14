@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -45,8 +46,6 @@
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.ContactsActivity">
         </activity>
     </application>
 

@@ -15,7 +15,7 @@ public class VCardFormatTool {
     private static final String HOMENUMBER = "TEL;TYPE=HOME,VOICE:";
     private static final String EMAIL = "EMAIL;TYPE=PREF,INTERNET:";
 
-    public static String[] extractCardInformation(String[] cardContent){
+    public static List<String> extractCardInformation(String[] cardContent){
 
         List<String> tempList = new ArrayList<String>();
 
@@ -40,15 +40,15 @@ public class VCardFormatTool {
 
         }
 
-        if(tempList.size() > 0) { // TODO noch einen Standart Überlegen
+        /*if(tempList.size() > 0) { // TODO noch einen Standart Überlegen
             String[] extractedCardContent = new String[tempList.size()];
 
             for(int i=0;i<tempList.size();i++){
                 extractedCardContent[i] = tempList.get(i);
             }
             return extractedCardContent;
-        }
-        return  null;
+        }*/
+        return  tempList;
     }
 
     public static String getFormatedVCardString(String userName, String mobileNumber, String homeNumber, String eMail){

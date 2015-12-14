@@ -12,6 +12,7 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,6 +44,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vcard);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         cardWriter = new CardWriter(this);
@@ -53,11 +55,8 @@ public class CreateVCardActivity extends AppCompatActivity {
         initButtons();
         initTextFields();
 
-        if(getIntent().hasExtra("vcardinformation")) {
-
-           String temp = getIntent().getStringExtra("vcardinformation");
-            System.out.println("INTENT: "+temp);
-
+        if(getIntent().hasExtra("vci")) {
+            fillTextFields(getIntent().getStringExtra("vci"));
         }
 
     }
@@ -145,6 +144,15 @@ public class CreateVCardActivity extends AppCompatActivity {
                 MifareUltralight.class.getName(),
                 Ndef.class.getName()}
         };
+    }
+
+    private void fillTextFields(String cardContent){
+        String temp[] = cardContent.split(";");
+        userNameEditText.setText(temp[0]);
+        telefonMobileEditText.setText(temp[1]);
+        telefonFestnetzEditText.setText(temp[2]);
+        eMailEditText.setText(temp[3]);
+
     }
 
     @Override

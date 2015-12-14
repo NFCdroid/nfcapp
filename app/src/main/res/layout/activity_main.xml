@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Kontakt Export."
         android:id="@+id/ContactActivityButton"
-        android:layout_above="@+id/CreateVCardActvivityButton"
+        android:layout_above="@+id/createVCardActvivityButton"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/contactImportButton" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="Kontakt importieren"
         android:id="@+id/contactImportButton"
-        android:layout_above="@+id/CreateVCardActvivityButton"
+        android:layout_above="@+id/createVCardActvivityButton"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/ContactActivityButton" />
 
@@ -47,11 +47,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Eigene V-Card erstellen"
-        android:id="@+id/CreateVCardActvivityButton"
+        android:text="V-Card erstellen"
+        android:id="@+id/createVCardActvivityButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/contactImportButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,5 +61,14 @@
         android:id="@+id/startTextView"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Android Beam"
+        android:id="@+id/androidBeamButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/ContactActivityButton" />
 
 </RelativeLayout>

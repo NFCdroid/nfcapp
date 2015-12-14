@@ -1,11 +1,13 @@
 package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
@@ -23,9 +25,13 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
+import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
+import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback{
 
     public static final String TAG = "Nfc Card App";
 
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView vCardListView;
 
-    private Button contactsActivityButton, contactImportButton, createVCardActvivityButton;
+    private Button contactsActivityButton, contactImportButton, createVCardActvivityButton, androidBeamButton;
 
     private NfcAdapter nfcAdapter;
 
@@ -43,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
     private String[][] techLists;
 
     private CardReader cardReader;
+    private CardWriter cardWriter = new CardWriter(null);
 
-    private String[] cardContent = null;
+    private List<String> cardContent = null;
+
+    private ContactListDialog dialogs = new ContactListDialog();
+
+    private String vCardInformation = null;
 
 
     @Override
@@ -88,14 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            fillVCardListView(intent);
+            fillVCardListView(VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n")));
 
             //TODO: Hier kommmt die Logik zum handeln hin
 
 
         }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             //processIntent(getIntent());
-            fillVCardListView(intent);
+            fillVCardListView(VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n")));
         }
 
     }
@@ -112,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void fillVCardListView(Intent intent){
+    private void fillVCardListView(List<String> cardContent){
 
-        cardContent = VCardFormatTool.extractCardInformation(processIntent(intent).split("\r\n"));
-                //cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
+
+        //cardReader.readTag(intent).split("\r\n")); // liest Tag spaltet es auf und ruft karteninformationsextraktionsmethode auf
 
        // adapter.notifyDataSetChanged();
        // vCardListView.invalidate();
@@ -138,17 +149,21 @@ public class MainActivity extends AppCompatActivity {
         contactsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
-                startActivity(intent);
+                dialogs.initContactDialog(MainActivity.this);
+
 
             }
         });
 
-        createVCardActvivityButton = (Button) findViewById(R.id.CreateVCardActvivityButton);
+        createVCardActvivityButton = (Button) findViewById(R.id.createVCardActvivityButton);
         createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
+                if(cardContent!= null) {
+                    intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
+                    intent.putExtra("vci", cardContent.get(0) + ";" + cardContent.get(1) + ";" + cardContent.get(2) + ";" + cardContent.get(3));
+                }
                 startActivity(intent);
             }
         });
@@ -158,6 +173,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
+        androidBeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startBeamMode();
+                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT);
             }
         });
 
@@ -239,5 +263,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void startBeamMode(){
+        nfcAdapter.setNdefPushMessageCallback(this, this);
+    }
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent event) {
+        NdefMessage msg = cardWriter.createNdefMessage(vCardInformation);
+
+                /*new NdefMessage(
+                new NdefRecord[] { createMime(
+                        "application/vnd.com.ag.mk.nfccardreadwrite.beam", text.getBytes())
+                        /*
+                         * The Android Application Record (AAR) is commented out. When a device
+                         * receives a push with an AAR in it, the application specified in the AAR
+                         * is guaranteed to run. The AAR overrides the tag dispatch system.
+                         * You can add it back in to guarantee that this
+                         * activity starts when receiving a beamed message. For now, this code
+                         * uses the tag dispatch system..
+
+                        //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
+                });*/
+        return msg;
+    }
+
+    public void setVCardInformationOnMainScreen(String vCardInformation) {
+        this.vCardInformation = vCardInformation;
+        cardContent = VCardFormatTool.extractCardInformation(vCardInformation.split("\r\n"));
+        fillVCardListView(cardContent);
+    }
 
 }
