@@ -13,6 +13,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -116,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 startBeamMode();
-                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -213,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 startBeamMode();
-                Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT);
             }
         });
 
@@ -290,7 +289,16 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     private void startBeamMode(){
-        nfcAdapter.setNdefPushMessageCallback(this, this);
+        // Prüfe ob Beam aktiv ist
+        if (nfcAdapter.isNdefPushEnabled()) {
+            Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();
+            nfcAdapter.setNdefPushMessageCallback(this, this);
+        } else {
+            Toast.makeText(MainActivity.this, "Beam nicht aktiviert!\nBitte Beam in den Settings aktivieren.", Toast.LENGTH_SHORT).show();
+            //TODO: Dialog einfügen
+            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+            finish();
+        }
     }
 
     @Override
