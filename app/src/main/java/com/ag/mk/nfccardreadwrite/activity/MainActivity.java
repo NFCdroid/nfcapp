@@ -19,6 +19,8 @@ import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,12 +33,12 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
+import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.tools.Vibration;
 import com.ag.mk.nfccardreadwrite.tools.Voice;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener{
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         new Vibration((Vibrator)getSystemService(Context.VIBRATOR_SERVICE));
         Vibration.setVibration(true);
+
+        new DataWork(this);
 
         textToSpeech = new TextToSpeech(this, this);
 
@@ -326,5 +330,28 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             textToSpeech.shutdown();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.settings) {
+            //TODO hier noch Dialog für Einstellungen bauen
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
