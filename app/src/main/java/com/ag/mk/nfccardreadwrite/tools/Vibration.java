@@ -15,8 +15,8 @@ public class Vibration {
         this.vibrator = vibrator;
     }
 
-    public void setVibration(boolean vibration){
-        this.vibration = vibration;
+    public static void setVibration(boolean vibration){
+        Vibration.vibration = vibration;
     }
 
     public static boolean isVibration() {

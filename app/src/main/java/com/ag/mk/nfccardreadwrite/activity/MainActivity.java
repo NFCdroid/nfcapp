@@ -2,6 +2,7 @@ package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
@@ -13,6 +14,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,6 +31,7 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+import com.ag.mk.nfccardreadwrite.tools.Vibration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,17 +62,18 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private String vCardInformation = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        cardReader = new CardReader(this);
-
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        new Vibration((Vibrator)getSystemService(Context.VIBRATOR_SERVICE));
+        Vibration.setVibration(true);
+
+        cardReader = new CardReader(this);
         contactListDialog = new ContactListDialog(this);
 
         initButtons();
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibration.vibrate();
                 ContactWrite.writecontact(MainActivity.this, cardContent);
             }
         });
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Vibration.vibrate();
                 startCreateVCardActivityIntent();
             }
         });
@@ -108,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibration.vibrate();
                 contactListDialog.showDialog();
             }
         });
@@ -116,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         androidBeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibration.vibrate();
                 startBeamMode();
             }
         });
@@ -123,15 +130,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     private void initTextViews(){
-
         isVCardTextView = (TextView) findViewById(R.id.startTextView);
-
     }
 
     private void initListViews(){
-
         vCardListView = (ListView)findViewById(R.id.vCardlistView);
-
     }
 
     /**Methode um den eintreffenden Intent zu handhaben.
@@ -142,22 +145,24 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
 
-            Log.i(TAG, "Discovered tag with intent: " + intent);
-
-            fillVCardListView(VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n")));
+            setCardContentFromIntent(intent);
+            fillVCardListView(cardContent);
 
         }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            //processIntent(getIntent());
-            fillVCardListView(VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n")));
+
+            setCardContentFromIntent(intent);
+            fillVCardListView(cardContent);
         }
 
+    }
+
+    private void setCardContentFromIntent(Intent intent){
+        cardContent = VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n"));
     }
 
     private void fillVCardListView(ArrayList<String> cardContent){
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
-        //TODO: Hier weniger dreckig...
-        this.cardContent = cardContent;
         vCardListView.setAdapter(adapter);
 
         if(vCardListView.getVisibility() == View.GONE){
@@ -175,47 +180,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             intent.putStringArrayListExtra("vci", cardContent);
         }
         startActivity(intent);
-        //TODO einerfliegt noch raus! -- Klaus: Sehe ich nicht so.
-
-        //Hier export in die Kontakte
-        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
-        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContactWrite.writecontact(MainActivity.this, cardContent);
-            }
-        });
-
-        createVCardActvivityButton = (Button) findViewById(R.id.createVCardActvivityButton);
-        createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
-                if(cardContent!= null) {
-                    intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
-                    intent.putExtra("vci", cardContent.get(0) + ";" + cardContent.get(1) + ";" + cardContent.get(2) + ";" + cardContent.get(3));
-                }
-                startActivity(intent);
-            }
-        });
-
-        //Hier Import aus Kontakten
-        contactImportButton = (Button)findViewById(R.id.contactImportButton);
-        contactImportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactListDialog.showDialog();
-            }
-        });
-
-        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
-        androidBeamButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startBeamMode();
-            }
-        });
-
     }
 
 
