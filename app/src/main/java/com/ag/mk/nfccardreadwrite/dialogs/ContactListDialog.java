@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
+import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
@@ -119,6 +120,8 @@ public class ContactListDialog {
         mainActivity.setVCardInformationOnMainScreen(vCardInformation);
 
         contactListDialog.cancel();
+
+        Voice.speakOut(name + "wurde ausgewählt!");
 
         Vibration.vibrate();
     }

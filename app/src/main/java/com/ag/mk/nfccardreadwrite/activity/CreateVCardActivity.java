@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
+import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
@@ -137,8 +138,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
 
         Toast.makeText(CreateVCardActivity.this,"Karte erkannt!", Toast.LENGTH_SHORT).show();
-
-        System.out.println("Karte erkannt!");
+        Voice.speakOut("Es wurde ein zulässiges Medium erkannt!");
 
         this.intent = intent;
 

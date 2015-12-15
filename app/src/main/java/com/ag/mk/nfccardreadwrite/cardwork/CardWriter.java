@@ -9,6 +9,8 @@ import android.nfc.tech.NdefFormatable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ag.mk.nfccardreadwrite.addons.Voice;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -40,7 +42,8 @@ public class CardWriter {
             ndefFormatable.format(ndefMessage);
             ndefFormatable.close();
 
-            Toast.makeText(context, "Tag written!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Schreibvorgang erfolgreich!", Toast.LENGTH_SHORT).show();
+            Voice.speakOut("Schreibvorgang erfolgreich abgeschlossen!");
 
         } catch (Exception e) {
             Log.e("formatTag", e.getMessage());
@@ -75,8 +78,8 @@ public class CardWriter {
                 ndef.writeNdefMessage(ndefMessage);
                 ndef.close();
 
-                Toast.makeText(context, "Tag written!", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(context, "Schreibvorgang erfolgreich!", Toast.LENGTH_SHORT).show();
+                Voice.speakOut("Schreibvorgang erfolgreich abgeschlossen!");
             }
 
         } catch (Exception e) {

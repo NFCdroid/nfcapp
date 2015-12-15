@@ -215,46 +215,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             intent.putStringArrayListExtra("vci", cardContent);
         }
         startActivity(intent);
-
-        //Hier export in die Kontakte
-        contactExportButton = (Button) findViewById(R.id.contactExportButton);
-        contactExportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContactWrite.writecontact(MainActivity.this, cardContent);
-            }
-        });
-
-        createVCardActvivityButton = (Button) findViewById(R.id.createVCardActvivityButton);
-        createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
-                if(cardContent!= null) {
-                    intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
-                    intent.putExtra("vci", cardContent.get(0) + ";" + cardContent.get(1) + ";" + cardContent.get(2) + ";" + cardContent.get(3));
-                }
-                startActivity(intent);
-            }
-        });
-
-        //Hier Import aus Kontakten
-        contactImportButton = (Button)findViewById(R.id.contactImportButton);
-        contactImportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactListDialog.showDialog();
-            }
-        });
-
-        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
-        androidBeamButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startBeamMode();
-            }
-        });
-
     }
 
 
@@ -317,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
 
+        textToSpeech = new TextToSpeech(this, this);
+        new Voice(textToSpeech);
+
         super.onResume();
     }
 
@@ -331,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         // Prüfe ob Beam aktiv ist
         if (nfcAdapter.isNdefPushEnabled()) {
             Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();
+            Voice.speakOut("Beam Modus gestartet!");
             nfcAdapter.setNdefPushMessageCallback(this, this);
         } else {
             Toast.makeText(MainActivity.this, "Beam nicht aktiviert!\nBitte Beam in den Settings aktivieren.", Toast.LENGTH_SHORT).show();
@@ -343,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         NdefMessage ndefMessage = cardWriter.createNdefMessage(vCardInformation);
+        Voice.speakOut("Beam vorgang läuft!");
         return ndefMessage;
     }
 
