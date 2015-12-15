@@ -1,4 +1,4 @@
-package com.ag.mk.nfccardreadwrite.tools;
+package com.ag.mk.nfccardreadwrite.addons;
 
 import android.os.Vibrator;
 

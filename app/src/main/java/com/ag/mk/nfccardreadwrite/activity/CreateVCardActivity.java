@@ -1,7 +1,6 @@
 package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
@@ -12,9 +11,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +21,7 @@ import android.widget.Toast;
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-import com.ag.mk.nfccardreadwrite.tools.Vibration;
+import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
 import java.util.ArrayList;
 

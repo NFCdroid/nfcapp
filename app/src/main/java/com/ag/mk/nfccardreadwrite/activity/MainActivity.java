@@ -32,11 +32,12 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
+import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
 import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-import com.ag.mk.nfccardreadwrite.tools.Vibration;
-import com.ag.mk.nfccardreadwrite.tools.Voice;
+import com.ag.mk.nfccardreadwrite.addons.Vibration;
+import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private ArrayList<String> cardContent = null;
 
     private ContactListDialog contactListDialog;
+    private SettingsDialog settingsDialog;
 
     private String vCardInformation = null;
 
@@ -98,11 +100,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         new DataWork(this);
 
         textToSpeech = new TextToSpeech(this, this);
+        new Voice(textToSpeech);
 
         cardReader = new CardReader(this);
+
         contactListDialog = new ContactListDialog(this);
-        voice = new Voice(textToSpeech);
-        voice.setSound(true);
+        settingsDialog = new SettingsDialog(this);
 
     }
 
@@ -131,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voice.speakOut("Wählen Sie einen Kontakt aus!");
+                voice.speakOut("Bitte wählen Sie einen Kontakt aus!");
                 Vibration.vibrate();
                 contactListDialog.showDialog();
             }
@@ -388,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
-            //TODO hier noch Dialog für Einstellungen bauen
+            settingsDialog.showDialog();
             return true;
         }else if (id == R.id.close) {
             finish();

@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-import com.ag.mk.nfccardreadwrite.tools.Vibration;
+import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
 import java.util.ArrayList;
 
