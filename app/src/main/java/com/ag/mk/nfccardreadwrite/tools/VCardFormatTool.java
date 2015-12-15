@@ -17,22 +17,21 @@ public class VCardFormatTool {
         ArrayList<String> tempList = new ArrayList<String>();
 
         for(int i=0; i<cardContent.length; i++){
-            //TODO: Hier die Strings "name", "telefon" etc rausnehmen.
             if(cardContent[i].startsWith(NAME)){
 
-                tempList.add("Name: " + cardContent[i].split(NAME)[1].replace(";"," "));
+                tempList.add(0, getSplitResult(cardContent[i], NAME).replace(";", " "));
 
             }else if(cardContent[i].startsWith(MOBILENUMBER)){
 
-                tempList.add("Telefon-Mobil: " + cardContent[i].split(MOBILENUMBER)[1]);
+                tempList.add(1, getSplitResult(cardContent[i],MOBILENUMBER));
 
             }else if(cardContent[i].startsWith(HOMENUMBER)){
 
-                tempList.add("Telefon-Festnetz: " + cardContent[i].split(HOMENUMBER)[1]);
+                tempList.add(2, getSplitResult(cardContent[i], HOMENUMBER));
 
             }else if(cardContent[i].startsWith(EMAIL)){
 
-                tempList.add("E-Mail: " + cardContent[i].split(EMAIL)[1]);
+                tempList.add(3, getSplitResult(cardContent[i], EMAIL));
             }
 
         }
@@ -46,6 +45,16 @@ public class VCardFormatTool {
             return extractedCardContent;
         }*/
         return  tempList;
+    }
+
+    // Um Ein ArrayIndexOutofBound bei leeren Feldern zu vermeiden
+    private static String getSplitResult(String splitme, String Splitparam){
+        if (splitme.split(Splitparam).length > 1) {
+            return splitme.split(Splitparam)[1];
+        }
+        else {
+            return "";
+        }
     }
 
     public static String getFormatedVCardString(String userName, String mobileNumber, String homeNumber, String eMail){
@@ -70,6 +79,8 @@ public class VCardFormatTool {
 
         return timeStamp;
     }
+
+
 
 
 }

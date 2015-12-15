@@ -15,7 +15,7 @@ public class ContactWrite {
         if (cardContent!=null) {
             Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
-            //TODO: Catch empty fields.
+
             intent.putExtra(ContactsContract.Intents.Insert.NAME, cardContent.get(0));
             intent.putExtra(ContactsContract.Intents.Insert.PHONE, cardContent.get(1));
             intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);

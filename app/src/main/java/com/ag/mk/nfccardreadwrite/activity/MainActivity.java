@@ -199,6 +199,46 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             intent.putStringArrayListExtra("vci", cardContent);
         }
         startActivity(intent);
+
+        //Hier export in die Kontakte
+        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
+        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactWrite.writecontact(MainActivity.this, cardContent);
+            }
+        });
+
+        createVCardActvivityButton = (Button) findViewById(R.id.createVCardActvivityButton);
+        createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
+                if(cardContent!= null) {
+                    intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
+                    intent.putExtra("vci", cardContent.get(0) + ";" + cardContent.get(1) + ";" + cardContent.get(2) + ";" + cardContent.get(3));
+                }
+                startActivity(intent);
+            }
+        });
+
+        //Hier Import aus Kontakten
+        contactImportButton = (Button)findViewById(R.id.contactImportButton);
+        contactImportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contactListDialog.showDialog();
+            }
+        });
+
+        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
+        androidBeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startBeamMode();
+            }
+        });
+
     }
 
 
