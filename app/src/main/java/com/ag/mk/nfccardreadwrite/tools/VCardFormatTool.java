@@ -19,19 +19,19 @@ public class VCardFormatTool {
         for(int i=0; i<cardContent.length; i++){
             if(cardContent[i].startsWith(NAME)){
 
-                tempList.add(0, getSplitResult(cardContent[i], NAME).replace(";", " "));
+                tempList.add(0, "Name: " + getSplitResult(cardContent[i], NAME).replace(";", " "));
 
             }else if(cardContent[i].startsWith(MOBILENUMBER)){
 
-                tempList.add(1, getSplitResult(cardContent[i],MOBILENUMBER));
+                tempList.add(1, "Telefon-Mobil: " + getSplitResult(cardContent[i],MOBILENUMBER));
 
             }else if(cardContent[i].startsWith(HOMENUMBER)){
 
-                tempList.add(2, getSplitResult(cardContent[i], HOMENUMBER));
+                tempList.add(2, "Telefon-Festnetz: " + getSplitResult(cardContent[i], HOMENUMBER));
 
             }else if(cardContent[i].startsWith(EMAIL)){
 
-                tempList.add(3, getSplitResult(cardContent[i], EMAIL));
+                tempList.add(3, "E-Mail: " + getSplitResult(cardContent[i], EMAIL));
             }
 
         }
@@ -79,8 +79,4 @@ public class VCardFormatTool {
 
         return timeStamp;
     }
-
-
-
-
 }

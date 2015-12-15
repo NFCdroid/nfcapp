@@ -97,7 +97,12 @@ public class CreateVCardActivity extends AppCompatActivity {
 
                 if (tag != null) {
 
-                    NdefMessage ndefMessage = cardWriter.createNdefMessage(VCardFormatTool.getFormatedVCardString(userNameEditText.getText().toString(), telefonMobileEditText.getText().toString(), telefonFestnetzEditText.getText().toString(), eMailEditText.getText().toString()));
+                    NdefMessage ndefMessage = cardWriter.createNdefMessage(
+                            VCardFormatTool.getFormatedVCardString(
+                                    userNameEditText.getText().toString().replace("Name: ", ""),
+                                    telefonMobileEditText.getText().toString().replace("Telefon-Mobil: ", ""),
+                                    telefonFestnetzEditText.getText().toString().replace("Telefon-Festnetz: ", ""),
+                                    eMailEditText.getText().toString().replace("E-Mail: ", "")));
                     cardWriter.writeNdefMessage(tag, ndefMessage);
 
 
