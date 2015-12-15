@@ -10,7 +10,7 @@ import com.ag.mk.nfccardreadwrite.addons.Voice;
 import java.util.ArrayList;
 
 
-public class ContactWrite {
+public class AddressBookWriter {
 
     public static void writecontact(final Context context, final ArrayList<String> cardContent){
         //TODO: Implement Contact EDIT

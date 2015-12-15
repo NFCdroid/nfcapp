@@ -33,7 +33,7 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
-import com.ag.mk.nfccardreadwrite.tools.ContactWrite;
+import com.ag.mk.nfccardreadwrite.tools.AddressBookWriter;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private IntentFilter[] intentFilters;
     private String[][] techLists;
 
-    private CardReader cardReader;
     private CardWriter cardWriter = new CardWriter(null);
     private Voice voice;
 
@@ -104,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         textToSpeech = new TextToSpeech(this, this);
         new Voice(textToSpeech);
 
-        cardReader = new CardReader(this);
-
         contactListDialog = new ContactListDialog(this);
         settingsDialog = new SettingsDialog(this);
 
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 Vibration.vibrate();
-                ContactWrite.writecontact(MainActivity.this, cardContent);
+                AddressBookWriter.writecontact(MainActivity.this, cardContent);
             }
         });
 
@@ -192,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     private void setCardContentFromIntent(Intent intent){
-        cardContent = VCardFormatTool.extractCardInformation(cardReader.processIntent(intent).split("\r\n"));
+        cardContent = VCardFormatTool.extractCardInformation(CardReader.readTag(intent).split("\r\n"));
     }
 
     private void fillVCardListView(ArrayList<String> cardContent){

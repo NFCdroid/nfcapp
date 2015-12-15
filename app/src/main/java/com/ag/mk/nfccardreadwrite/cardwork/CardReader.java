@@ -16,13 +16,19 @@ import java.io.UnsupportedEncodingException;
  */
 public class CardReader {
 
-    private MainActivity mainActivity;
+    public static String readTag(Intent intent) {
 
-    public CardReader(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
-
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        String result = new String(msg.getRecords()[0].getPayload());
+        return  result;
     }
 
+    /*
+    // genauere Methoden aber nicht so elegant
     public String readTag(Intent intent){
 
         String tag = null;
@@ -60,16 +66,5 @@ public class CardReader {
             Log.e("getTextFromNdefRecord", e.getMessage(), e);
         }
         return tagContent;
-    }
-
-    public String processIntent(Intent intent) {
-
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-                NfcAdapter.EXTRA_NDEF_MESSAGES);
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-        // record 0 contains the MIME type, record 1 is the AAR, if present
-        String result = new String(msg.getRecords()[0].getPayload());
-        return  result;
-    }
+    }*/
 }

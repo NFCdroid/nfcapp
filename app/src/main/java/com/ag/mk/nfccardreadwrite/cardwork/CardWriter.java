@@ -88,7 +88,29 @@ public class CardWriter {
 
     }
 
+    /**
+     * Message wird gebaut!
+     * @param content
+     * @return
+     */
+    public NdefMessage createNdefMessage(String content) {
 
+        /**
+         * ohli:
+         * Hier könnte man statt der Hexkonvertierung einfach einen Mime-Type schreiben.
+         * Praktisch wäre z.B. text/vcard (ab vCard v4)
+         */
+
+        NdefMessage ndefMessage = new NdefMessage(
+                new NdefRecord[]{NdefRecord.createMime(
+                        "application/vnd.com.ag.mk.nfccardreadwrite.beam",
+                        content.getBytes())
+                });
+
+        return ndefMessage;
+    }
+
+    /* genauere Methode aber nicht so elegant
     private NdefRecord transformToHexCode(String content) {
         try {
             byte[] language;
@@ -109,33 +131,5 @@ public class CardWriter {
             Log.e("transformToHexCode", e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Message wird gebaut!
-     * @param content
-     * @return
-     */
-    public NdefMessage createNdefMessage(String content) {
-
-        /**
-         * ohli:
-         * Hier könnte man statt der Hexkonvertierung einfach einen Mime-Type schreiben.
-         * Praktisch wäre z.B. text/vcard (ab vCard v4)
-         */
-
-
-        NdefMessage ndefMessage = new NdefMessage(
-                new NdefRecord[]{NdefRecord.createMime(
-                        "application/vnd.com.ag.mk.nfccardreadwrite.beam",
-                        content.getBytes())
-                });
-
-/*
-        NdefRecord ndefRecord = transformToHexCode(content);
-
-        NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
-*/
-        return ndefMessage;
-    }
+    }*/
 }
