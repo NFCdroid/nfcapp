@@ -29,7 +29,7 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     private Button backButton, writeVCardButton, clearButton;
 
-    private EditText userNameEditText, telefonMobileEditText, telefonFestnetzEditText, eMailEditText;
+    private EditText userNameEditText, mobileNumberEditText, homeNumberEditText, eMailEditText;
 
     private Intent intent = new Intent();
 
@@ -71,8 +71,8 @@ public class CreateVCardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Vibration.vibrate();
                 userNameEditText.setText("");
-                telefonMobileEditText.setText("");
-                telefonFestnetzEditText.setText("");
+                mobileNumberEditText.setText("");
+                homeNumberEditText.setText("");
                 eMailEditText.setText("");
             }
         });
@@ -100,8 +100,8 @@ public class CreateVCardActivity extends AppCompatActivity {
                     NdefMessage ndefMessage = cardWriter.createNdefMessage(
                             VCardFormatTool.getFormatedVCardString(
                                     userNameEditText.getText().toString().replace("Name: ", ""),
-                                    telefonMobileEditText.getText().toString().replace("Telefon-Mobil: ", ""),
-                                    telefonFestnetzEditText.getText().toString().replace("Telefon-Festnetz: ", ""),
+                                    mobileNumberEditText.getText().toString().replace("Telefon-Mobil: ", ""),
+                                    homeNumberEditText.getText().toString().replace("Telefon-Festnetz: ", ""),
                                     eMailEditText.getText().toString().replace("E-Mail: ", "")));
                     cardWriter.writeNdefMessage(tag, ndefMessage);
 
@@ -109,7 +109,7 @@ public class CreateVCardActivity extends AppCompatActivity {
                     //TODO: Weiter Testen
                     //Nur Name und Handynummer sind zwingend
                     String uName = userNameEditText.getText().toString();
-                    String mobNum = telefonMobileEditText.getText().toString();
+                    String mobNum = mobileNumberEditText.getText().toString();
 
                     if (uName.matches("") || mobNum.matches(""))
                         Toast.makeText(CreateVCardActivity.this, "Text Field is empty!", Toast.LENGTH_SHORT).show();
@@ -127,8 +127,8 @@ public class CreateVCardActivity extends AppCompatActivity {
     private void initTextFields(){
 
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
-        telefonMobileEditText = (EditText) findViewById(R.id.telefonMobilEditText);
-        telefonFestnetzEditText = (EditText) findViewById(R.id.telefonFestnetzEditText);
+        mobileNumberEditText = (EditText) findViewById(R.id.telefonMobilEditText);
+        homeNumberEditText = (EditText) findViewById(R.id.telefonFestnetzEditText);
         eMailEditText = (EditText) findViewById(R.id.eMailEditText);
 
     }
@@ -159,8 +159,8 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     private void fillTextFields(ArrayList<String> cardContent){
         userNameEditText.setText(cardContent.get(0));
-        telefonMobileEditText.setText(cardContent.get(1));
-        telefonFestnetzEditText.setText(cardContent.get(2));
+        mobileNumberEditText.setText(cardContent.get(1));
+        homeNumberEditText.setText(cardContent.get(2));
         eMailEditText.setText(cardContent.get(3));
 
     }
