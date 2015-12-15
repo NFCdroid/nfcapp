@@ -13,6 +13,7 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
+import com.ag.mk.nfccardreadwrite.tools.DataWork;
 
 /**
  * Created by marko on 15.12.15.
@@ -21,7 +22,7 @@ public class SettingsDialog {
 
     private Button backButton;
 
-    private Switch vibrationSwitch, voiceSwitch;
+    private Switch voiceSwitch, vibrationSwitch;
 
     private Dialog settingsDialog;
 
@@ -66,13 +67,15 @@ public class SettingsDialog {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
+                if (isChecked) {
                     Vibration.setVibration(true);
                     Voice.speakOut("Vibration aktiviert.");
-                }else{
+                } else {
                     Vibration.setVibration(false);
                     Voice.speakOut("Vibration deaktiviert.");
                 }
+
+                DataWork.writeSingleLineFile("vibration", isChecked + "");
             }
         });
 
@@ -81,18 +84,28 @@ public class SettingsDialog {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                System.out.println("VOICE: "+isChecked);
+                System.out.println("VOICE: " + isChecked);
 
-                if(isChecked){
+                if (isChecked) {
                     Voice.setSound(true);
-                }else{
+                } else {
                     Voice.setSound(false);
                 }
+
+                DataWork.writeSingleLineFile("voice", isChecked + "");
             }
         });
     }
 
     public void showDialog(){
         settingsDialog.show();
+    }
+
+    public Switch getVibrationSwitch() {
+        return vibrationSwitch;
+    }
+
+    public Switch getVoiceSwitch() {
+        return voiceSwitch;
     }
 }

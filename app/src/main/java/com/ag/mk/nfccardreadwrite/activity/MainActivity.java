@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private ListView vCardListView;
 
-    private Button contactsActivityButton, contactImportButton, createVCardActvivityButton, androidBeamButton;
+    private Button contactExportButton, contactImportButton, createVCardActvivityButton, androidBeamButton;
 
     private NfcAdapter nfcAdapter;
 
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         initTextViews();
         initListViews();
 
+        loadSettings();
+
         checkNFCSupport();
         checkNFC();
 
@@ -111,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private void initButtons(){
 
-        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
-        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
+        contactExportButton = (Button) findViewById(R.id.contactExportButton);
+        contactExportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Vibration.vibrate();
@@ -159,6 +161,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         vCardListView = (ListView)findViewById(R.id.vCardlistView);
     }
 
+    private void loadSettings() {
+
+        boolean vibration = Boolean.valueOf(DataWork.readSingleLineFile("vibration"));
+        boolean voice = Boolean.valueOf(DataWork.readSingleLineFile("voice"));
+
+        settingsDialog.getVibrationSwitch().setChecked(vibration);
+        settingsDialog.getVoiceSwitch().setChecked(voice);
+
+        Vibration.setVibration(vibration);
+        Voice.setSound(voice);
+    }
     /**Methode um den eintreffenden Intent zu handhaben.
      *
      * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
@@ -204,8 +217,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         startActivity(intent);
 
         //Hier export in die Kontakte
-        contactsActivityButton = (Button) findViewById(R.id.ContactActivityButton);
-        contactsActivityButton.setOnClickListener(new View.OnClickListener() {
+        contactExportButton = (Button) findViewById(R.id.contactExportButton);
+        contactExportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContactWrite.writecontact(MainActivity.this, cardContent);
@@ -329,22 +342,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        NdefMessage msg = cardWriter.createNdefMessage(vCardInformation);
-
-                /*new NdefMessage(
-                new NdefRecord[] { createMime(
-                        "application/vnd.com.ag.mk.nfccardreadwrite.beam", text.getBytes())
-                        /*
-                         * The Android Application Record (AAR) is commented out. When a device
-                         * receives a push with an AAR in it, the application specified in the AAR
-                         * is guaranteed to run. The AAR overrides the tag dispatch system.
-                         * You can add it back in to guarantee that this
-                         * activity starts when receiving a beamed message. For now, this code
-                         * uses the tag dispatch system..
-
-                        //,NdefRecord.createApplicationRecord("package com.ag.mk.nfccardreadwrite.MainActivity")
-                });*/
-        return msg;
+        NdefMessage ndefMessage = cardWriter.createNdefMessage(vCardInformation);
+        return ndefMessage;
     }
 
     @Override
@@ -384,12 +383,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
             settingsDialog.showDialog();
             return true;
