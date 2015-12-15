@@ -350,6 +350,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         if (id == R.id.settings) {
             //TODO hier noch Dialog für Einstellungen bauen
             return true;
+        }else if (id == R.id.close) {
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="Einstellungen"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/close"
+        android:orderInCategory="100"
+        android:title="Schließen"
+        app:showAsAction="never" />
 </menu>
