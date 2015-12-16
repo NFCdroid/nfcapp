@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -34,7 +35,9 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
 import com.ag.mk.nfccardreadwrite.tools.AddressBookWriter;
+import com.ag.mk.nfccardreadwrite.tools.ContactTools;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
+import com.ag.mk.nfccardreadwrite.tools.NfcTools;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private String[][] techLists;
 
     private CardWriter cardWriter = new CardWriter(null);
+    private ContactTools contactTools;
+    private NfcTools nfcTools;
 
     private ArrayList<String> cardContent = null;
 
@@ -83,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         loadSettings();
 
-        checkNFCSupport();
-        checkNFC();
+        nfcTools.checkNFCSupport();
+        nfcTools.checkNFC();
 
         initIntentFilter();
 
@@ -104,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         contactListDialog = new ContactListDialog(this);
         settingsDialog = new SettingsDialog(this);
+        contactTools = new ContactTools(this);
+        nfcTools = new NfcTools(this, nfcAdapter);
 
     }
 
@@ -155,6 +162,19 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     private void initListViews(){
         vCardListView = (ListView)findViewById(R.id.vCardlistView);
+        vCardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+                    contactTools.easterEgg(cardContent.get(0).split(" ")[1]);
+                }else if (position == 1 || position == 2) {
+                    contactTools.callContact(cardContent.get(0).split(" ")[1],cardContent.get(position).split(" ")[1]);
+                }else if(position == 3){
+                    contactTools.mailContact(cardContent.get(position).split(" ")[1]);
+                }
+            }
+        });
     }
 
     private void loadSettings() {
@@ -186,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             fillVCardListView(cardContent);
             Voice.speakOut("Beam vorgang abgeschlossen.");
         }
-
     }
 
     private void setCardContentFromIntent(Intent intent){
@@ -236,21 +255,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 };
     }
 
-    private void checkNFC() {
-        if (nfcAdapter.isEnabled()) {
-            Log.i(TAG, "NFC is enabled.");
-        } else {
-            Log.i(TAG, "NFC is disabled.");
-        }
-    }
-
-    private void checkNFCSupport() {
-        if (nfcAdapter == null) {
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-        }
-    }
-
     public void setVCardInformationOnMainScreen(String vCardInformation) {
         this.vCardInformation = vCardInformation;
         cardContent = VCardFormatTool.extractCardInformation(vCardInformation.split("\r\n"));
@@ -274,12 +278,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         //IntentFilter[] intentFilters = new IntentFilter[]{};
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
-
-
-        /*
-        textToSpeech.setLanguage(Locale.getDefault());
-        textToSpeech = new TextToSpeech(this, this);
-        new Voice(textToSpeech);*/
 
         super.onResume();
     }
