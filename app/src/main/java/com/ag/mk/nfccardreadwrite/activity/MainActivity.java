@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
-            Voice.speakOut("Beam vorgang abgeschlossen.");
+            Voice.speakOut("NFC Chip erkannt.");
         }
     }
 
