@@ -18,7 +18,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,13 +39,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- Hier wird die App für den Kontakte-teilen Button registriert. -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/x-vcard"/>
-            </intent-filter>
-
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech" />
@@ -52,7 +47,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
-                <category android:name="android.intent.category.default" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- Hier wird die App für den Kontakte-teilen Button registriert. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/x-vcard"/>
             </intent-filter>
         </activity>
     </application>
