@@ -28,7 +28,7 @@ public class ContactListDialog {
 
     private ArrayList<String> listItems = new ArrayList<>();
 
-    private String vCardInformation, mobilenumber, homenumber, worknumber, email;
+    private String vCardInformation, mobilenumber = "---", homenumber = "---", worknumber = "---", email = "---";
 
     private Cursor mainCursor, phoneCursor;
 

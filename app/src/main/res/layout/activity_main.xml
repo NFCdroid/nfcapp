@@ -11,11 +11,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kontakt Export."
+        android:text="Kontakt Export"
         android:id="@+id/contactExportButton"
         android:layout_above="@+id/createVCardActvivityButton"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/contactImportButton" />
+        android:layout_toEndOf="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,11 +29,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kontakt importieren"
+        android:text="Kontakt Import"
         android:id="@+id/contactImportButton"
-        android:layout_above="@+id/createVCardActvivityButton"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/contactExportButton" />
+        android:layout_alignTop="@+id/contactExportButton"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -70,5 +70,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/contactExportButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

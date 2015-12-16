@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private String[][] techLists;
 
     private CardWriter cardWriter = new CardWriter(null);
-    private Voice voice;
 
     private ArrayList<String> cardContent = null;
 
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voice.speakOut("Bitte wählen Sie einen Kontakt aus!");
+                Voice.speakOut("Bitte wählen Sie einen Kontakt aus!");
                 Vibration.vibrate();
                 contactListDialog.showDialog();
             }
@@ -179,11 +178,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
+            Voice.speakOut("Ein neuer Kontakt wurde erkannt.");
 
         }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
+            Voice.speakOut("Beam vorgang abgeschlossen.");
         }
 
     }
@@ -274,8 +275,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
 
+
+        /*
+        textToSpeech.setLanguage(Locale.getDefault());
         textToSpeech = new TextToSpeech(this, this);
-        new Voice(textToSpeech);
+        new Voice(textToSpeech);*/
 
         super.onResume();
     }
@@ -313,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         if (status == TextToSpeech.SUCCESS) {
 
-            int result = textToSpeech.setLanguage(Locale.GERMAN);
+            int result = textToSpeech.setLanguage(Locale.getDefault());
 
             if (result == TextToSpeech.LANG_MISSING_DATA
                     || result == TextToSpeech.LANG_NOT_SUPPORTED) {
