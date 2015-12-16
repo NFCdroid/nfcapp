@@ -12,10 +12,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="beschreiben"
+        android:text="Karte beschreiben"
         android:id="@+id/writeVCardButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/backToMainAcrivtyButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -24,57 +25,74 @@
         android:id="@+id/backToMainAcrivtyButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/clearButton" />
+        android:layout_toEndOf="@+id/textView4" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userNameEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/writeVCardButton"
+        android:hint="Name"
+        android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
-        android:hint="Name" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="löschen"
         android:id="@+id/clearButton"
-        android:layout_alignBottom="@+id/writeVCardButton"
-        android:layout_toEndOf="@+id/writeVCardButton" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/textView4" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/telefonMobilEditText"
-        android:layout_below="@+id/userNameEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:hint="Telefon-Mobil"
         android:inputType="phone"
         android:ems="10"
-        />
+        android:layout_below="@+id/userNameEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/telefonFestnetzEditText"
-        android:layout_below="@+id/telefonMobilEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:hint="Telefon-Festnetz"
         android:inputType="phone"
-        android:ems="10"/>
+        android:ems="10"
+        android:layout_below="@+id/telefonMobilEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eMailEditText"
-        android:layout_below="@+id/telefonFestnetzEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
-        android:ems="10"/>
+        android:ems="10"
+        android:layout_below="@+id/telefonFestnetzEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kontaktdaten\n"
+        android:textSize="25dp"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--Nicht Anfassen! Nicht elegant aber wirksam! -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
