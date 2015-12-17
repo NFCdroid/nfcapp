@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class AddressBookWriter {
 
     public static void writecontact(final Context context, final ArrayList<String> cardContent){
-        //TODO: Implement Contact EDIT
+
         if (cardContent!=null) {
-            Intent intent = new Intent(Intent.ACTION_INSERT);
-            intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+            Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+            intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
 
             intent.putExtra(ContactsContract.Intents.Insert.NAME, cardContent.get(0).replace("Name: ", ""));
             intent.putExtra(ContactsContract.Intents.Insert.PHONE, cardContent.get(1).replace("Telefon-Mobil: ", ""));
