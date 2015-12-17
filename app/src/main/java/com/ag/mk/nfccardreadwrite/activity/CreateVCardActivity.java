@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -12,6 +13,7 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -53,6 +55,7 @@ public class CreateVCardActivity extends AppCompatActivity {
         cardWriter = new CardWriter(this);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         initIntentFilter();
 
         initButtons();
@@ -63,6 +66,7 @@ public class CreateVCardActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void initButtons(){
 
@@ -136,7 +140,6 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-
         Toast.makeText(CreateVCardActivity.this,"Karte erkannt!", Toast.LENGTH_SHORT).show();
         Voice.speakOut("Es wurde ein zulässiges Medium erkannt!");
 

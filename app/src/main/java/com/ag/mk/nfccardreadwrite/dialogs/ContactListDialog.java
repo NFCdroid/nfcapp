@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,7 @@ public class ContactListDialog {
 
         assert mainCursor != null;
         mainCursor.moveToPosition(position);
+        Log.d(MainActivity.TAG, String.valueOf(position));
 
         String contactID = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts._ID));
         String name = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));

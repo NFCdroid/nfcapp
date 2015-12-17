@@ -2,10 +2,13 @@ package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -15,6 +18,7 @@ import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +46,9 @@ import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         initIntentFilter();
 
         handleIntent(getIntent());
+
     }
 
     private void initImportedClasses() {
@@ -193,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * @param intent empfangener NFC Intent --> enthält alle gelesenen Daten auf der Karte (insofern auslesbar)
      */
     private void handleIntent(Intent intent) {
-
+        Log.d(TAG, intent.getAction());
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
 
             setCardContentFromIntent(intent);
@@ -205,7 +213,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
             Voice.speakOut("NFC Chip erkannt.");
+        }else if (Intent.ACTION_SEND.equals(intent.getAction())) {
+            //TODO..
+            checkContactIntent(intent);
         }
+
     }
 
     private void setCardContentFromIntent(Intent intent){
@@ -261,6 +273,22 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         fillVCardListView(cardContent);
     }
 
+    private void checkContactIntent(Intent conIntent) {
+        conIntent = getIntent();
+        Uri uri = (Uri) conIntent.getExtras().get(Intent.EXTRA_STREAM);
+        Log.d(MainActivity.TAG, uri.toString());
+        String contactID = uri.toString().split("as_vcard/")[1];
+        Log.d(TAG,contactID);
+
+        ContentResolver cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactID, null, null);
+
+
+        //setVCardInformationOnMainScreen(data);
+
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -273,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
-
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         //IntentFilter[] intentFilters = new IntentFilter[]{};
 
