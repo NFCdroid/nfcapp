@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
+import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 import java.io.UnsupportedEncodingException;
 
@@ -18,18 +19,24 @@ public class CardReader {
 
     public static String readTag(Intent intent) {
 
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-                NfcAdapter.EXTRA_NDEF_MESSAGES);
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-        // record 0 contains the MIME type, record 1 is the AAR, if present
-        String result = new String(msg.getRecords()[0].getPayload());
-        return  result;
+        try {
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                    NfcAdapter.EXTRA_NDEF_MESSAGES);
+            // only one message sent during the beam
+            NdefMessage msg = (NdefMessage) rawMsgs[0];
+            // record 0 contains the MIME type, record 1 is the AAR, if present
+            return new String(msg.getRecords()[0].getPayload());
+
+        }catch (Exception e){
+            Log.e("ERROR", "Read error in CardReader Class");
+            Voice.speakOut("Lesefehler, bitte versuchen Sie es erneut!");
+        }
+
+        return  null;
     }
 
-    /*
-    // genauere Methoden aber nicht so elegant
-    public String readTag(Intent intent){
+
+   /* public static String readTag(Intent intent){
 
         String tag = null;
 
@@ -54,7 +61,7 @@ public class CardReader {
         return tag;
     }
 
-    private String getTextFromNdefRecord(NdefRecord ndefRecord){
+   /* private static String getTextFromNdefRecord(NdefRecord ndefRecord){
         String tagContent = null;
         try {
             byte[] payload = ndefRecord.getPayload();

@@ -102,7 +102,11 @@ public class CardWriter {
          */
 
         NdefMessage ndefMessage = new NdefMessage(
-                new NdefRecord[]{NdefRecord.createMime(
+                new NdefRecord[]{
+
+                        //transformToHexCode(content)
+
+                        NdefRecord.createMime(
                         "application/vnd.com.ag.mk.nfccardreadwrite.beam",
                         content.getBytes())
                 });
@@ -110,7 +114,7 @@ public class CardWriter {
         return ndefMessage;
     }
 
-    /* genauere Methode aber nicht so elegant
+    // genauere Methode aber nicht so elegant
     private NdefRecord transformToHexCode(String content) {
         try {
             byte[] language;
@@ -131,5 +135,5 @@ public class CardWriter {
             Log.e("transformToHexCode", e.getMessage());
         }
         return null;
-    }*/
+    }
 }

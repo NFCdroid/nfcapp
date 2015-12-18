@@ -166,11 +166,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
+                if (position == 0) {
                     contactTools.easterEgg(cardContent.get(0).split(" ")[1]);
-                }else if (position == 1 || position == 2) {
-                    contactTools.callContact(cardContent.get(0).split(" ")[1],cardContent.get(position).split(" ")[1]);
-                }else if(position == 3){
+                } else if (position == 1 || position == 2) {
+                    contactTools.callContact(cardContent.get(0).split(" ")[1], cardContent.get(position).split(" ")[1]);
+                } else if (position == 3) {
                     contactTools.mailContact(cardContent.get(position).split(" ")[1]);
                 }
             }
@@ -209,7 +209,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     private void setCardContentFromIntent(Intent intent){
-        cardContent = VCardFormatTool.extractCardInformation(CardReader.readTag(intent).split("\r\n"));
+        try {
+            cardContent = VCardFormatTool.extractCardInformation(CardReader.readTag(intent).split("\r\n"));
+        }catch (Exception e){
+            Log.e("ERROR", "Read Error");
+            e.printStackTrace();
+        }
     }
 
     private void fillVCardListView(ArrayList<String> cardContent){
@@ -249,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         // String Array wird mit den Namen der Technologien gefüllt.
         techLists = new String[][] { new String[] {
                 NfcA.class.getName(),
-                IsoDep.class.getName(),
+        //        IsoDep.class.getName(), Warum zum Geier ist diese Klasse dafür verantwortlich dafür das das verdammte teil ständig neu startet???!!!
                 MifareUltralight.class.getName(),
                 Ndef.class.getName()}
                 };
