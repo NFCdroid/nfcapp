@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">V-CARD</string>
+    <string name="app_name">NFC Tagger</string>
     <string name="title_activity_beam">Beam</string>
     <string name="title_activity_main2">Main2Activity</string>
 </resources>
