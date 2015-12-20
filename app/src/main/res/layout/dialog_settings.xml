@@ -6,31 +6,31 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vibration"
+        android:text="@string/menu_settings_vibration"
         android:id="@+id/vibrationSwitch"
         android:checked="false"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/voiceSwitch"
         android:layout_alignEnd="@+id/voiceSwitch"
-        android:layout_marginTop="25px"/>
+        android:layout_marginTop="10dp"/>
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sprachausgabe"
+        android:text="@string/menu_settings_voice"
         android:id="@+id/voiceSwitch"
         android:checked="false"
         android:layout_below="@+id/vibrationSwitch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25px"/>
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="zurück"
+        android:text="@string/button_back"
         android:id="@+id/settingsBackButton"
         android:layout_below="@+id/voiceSwitch"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="25px"/>
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>

@@ -6,8 +6,6 @@ import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 
-import java.security.PublicKey;
-
 /**
  * Created by marko on 16.12.15.
  */

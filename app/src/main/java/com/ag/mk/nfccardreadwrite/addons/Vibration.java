@@ -25,7 +25,7 @@ public class Vibration {
 
     public static void vibrate(){
 
-        if(vibration == true){
+        if(vibration){
             vibrator.vibrate(25);
         }
     }

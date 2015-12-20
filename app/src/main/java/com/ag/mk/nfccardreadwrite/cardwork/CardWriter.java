@@ -94,24 +94,18 @@ public class CardWriter {
      * @return
      */
     public NdefMessage createNdefMessage(String content) {
-
         /**
          * ohli:
          * Hier könnte man statt der Hexkonvertierung einfach einen Mime-Type schreiben.
          * Praktisch wäre z.B. text/vcard (ab vCard v4)
          */
-
-        NdefMessage ndefMessage = new NdefMessage(
+        return new NdefMessage(
                 new NdefRecord[]{
-
                         //transformToHexCode(content)
-
                         NdefRecord.createMime(
-                        "application/vnd.com.ag.mk.nfccardreadwrite.beam",
-                        content.getBytes())
+                                "application/vnd.com.ag.mk.nfccardreadwrite.beam",
+                                content.getBytes())
                 });
-
-        return ndefMessage;
     }
 
     // genauere Methode aber nicht so elegant

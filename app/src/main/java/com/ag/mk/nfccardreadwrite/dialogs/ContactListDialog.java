@@ -137,7 +137,7 @@ public class ContactListDialog {
             }
         }
 
-        emails.close();
+        if(emails != null)emails.close();
     }
 
     private void getPhoneNumbers(ContentResolver contentResolver, String contactID) {

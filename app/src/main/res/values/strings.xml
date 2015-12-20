@@ -1,5 +1,37 @@
 <resources>
     <string name="app_name">NFC Tagger</string>
-    <string name="title_activity_beam">Beam</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <!--MainActivity -->
+    <string name="button_export_contacts">Kontakt Export</string>
+    <string name="button_import_contacts">Kontakt Import</string>
+    <string name="button_create_vcard">V-Card erstellen</string>
+
+    <string name="button_start_beam">Android Beam</string>
+
+    <string name="textview_main_main_activity">Visiten-Karte\n\n</string>
+    <string name="textview_startview">Bitte V-Card auflegen...</string>
+
+
+    <!--MainActivity Menu -->
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_settings_vibration">Vibration</string>
+    <string name="menu_settings_voice">Sprachausgabe</string>
+    <string name="menu_settings_close">Schließen</string>
+
+
+    <!--CreateVCardActivity -->
+    <string name="button_write">Karte beschreiben</string>
+    <string name="button_delete">löschen</string>
+
+    <string name="textview_main_create_vcard_activity">Kontaktdaten\n</string>
+
+    <string name="edittext_hint_name">Name</string>
+    <string name="edittext_hint_mobile_number">Telefon-Mobil</string>
+    <string name="edittext_hint_home_number">Telefon-Festnetz</string>
+    <string name="edittext_hint_email">E-mail</string>
+
+
+    <!--Global Button-Names -->
+    <string name="button_back">zurück</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.ag.mk.nfccardreadwrite.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,14 +30,15 @@ public class DataWork {
             read = new BufferedReader(new InputStreamReader(context.openFileInput(
                     dataName+".txt")));
             String line;
-            StringBuffer buffer = new StringBuffer();
+           // StringBuffer buffer = new StringBuffer();
             while((line=read.readLine()) !=null){
 
-                buffer.append(line);
+                //buffer.append(line);
                 value = line;
             }
 
         } catch (Exception e) {
+            Log.e("ERROR", "File Error, may be not found!");
            // e.printStackTrace();
         }
         finally{
@@ -60,14 +62,15 @@ public class DataWork {
             read = new BufferedReader(new InputStreamReader(context.openFileInput(
                     dataName + ".txt")));
             String zeile;
-            StringBuffer buffer = new StringBuffer();
+           // StringBuffer buffer = new StringBuffer();
             while((zeile=read.readLine()) !=null){
 
-                buffer.append(zeile);
+              //  buffer.append(zeile);
                 values.add(zeile);
             }
 
         } catch (Exception e) {
+            Log.e("ERROR", "File Error, may be not found!");
             //e.printStackTrace();
         }
         finally{

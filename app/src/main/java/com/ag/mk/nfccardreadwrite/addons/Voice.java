@@ -17,7 +17,7 @@ public class Voice {
     }
 
     public static void speakOut(String message) {
-        if(sound == true) {
+        if(sound) {
             textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
@@ -29,7 +29,7 @@ public class Voice {
     public static void setSound(boolean sound){
         Voice.sound = sound;
 
-        if (sound == false){
+        if (!sound){
             textToSpeech.speak("Sprachausgabe deaktiviert.", TextToSpeech.QUEUE_FLUSH, null);
         }else {
             textToSpeech.speak("Sprachausgabe aktiviert.", TextToSpeech.QUEUE_FLUSH, null);

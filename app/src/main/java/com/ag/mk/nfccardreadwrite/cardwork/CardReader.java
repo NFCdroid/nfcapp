@@ -2,15 +2,11 @@ package com.ag.mk.nfccardreadwrite.cardwork;
 
 import android.content.Intent;
 import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by Marko on 07.11.2015.

@@ -20,7 +20,7 @@ public class ContactTools {
     }
 
     public void mailContact(final String email) {
-        if(!email.equals("") && !email.equals("---") && !email.equals(" ") && email != null) {
+        if(!email.equals("") && !email.equals("---") && !email.equals(" ")) {
             Voice.speakOut("E-Mail Programm wird gerufen.");
             new Thread() {
                 public void run() {
@@ -83,7 +83,7 @@ public class ContactTools {
 
     public void callContact(String name, final String number){
 
-        if(!number.equals("") && !number.equals("---") && !number.equals(" ") && number != null) {
+        if(!number.equals("") && !number.equals("---") && !number.equals(" ")) {
             Voice.speakOut(name + " wird angerufen.");
             new Thread() {
                 public void run() {

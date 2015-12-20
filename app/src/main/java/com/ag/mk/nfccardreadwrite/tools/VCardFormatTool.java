@@ -59,24 +59,19 @@ public class VCardFormatTool {
 
     public static String getFormatedVCardString(String userName, String mobileNumber, String homeNumber, String eMail){
 
-        String formatedVCardString =
-                "BEGIN:vcard\r\n"
-                        + "VERSION:3.0\r\n"
-                        + "N:" + userName.replace(" ",";") + "\r\n"
-                        + "TEL;TYPE=WORK,VOICE:" + mobileNumber + "\r\n"
-                        + "TEL;TYPE=HOME,VOICE:" + homeNumber + "\r\n"
-                        + "EMAIL;TYPE=PREF,INTERNET:" + eMail + "\r\n"
-                        + "REV:" + VCardFormatTool.getTimeStamp() + "\r\n"
-                        + "END:vcard\r\n";
-
-        return formatedVCardString;
+        return "BEGIN:vcard\r\n"
+                + "VERSION:3.0\r\n"
+                + "N:" + userName.replace(" ",";") + "\r\n"
+                + "TEL;TYPE=WORK,VOICE:" + mobileNumber + "\r\n"
+                + "TEL;TYPE=HOME,VOICE:" + homeNumber + "\r\n"
+                + "EMAIL;TYPE=PREF,INTERNET:" + eMail + "\r\n"
+                + "REV:" + VCardFormatTool.getTimeStamp() + "\r\n"
+                + "END:vcard\r\n";
     }
 
     private static String getTimeStamp(){
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timeStamp = (dateFormat.format(new Date()) + "Z").replace(" ", "T"); //REV:2014-03-01T22:11:10Z
 
-        return timeStamp;
+        return (dateFormat.format(new Date()) + "Z").replace(" ", "T");//REV:2014-03-01T22:11:10Z
     }
 }

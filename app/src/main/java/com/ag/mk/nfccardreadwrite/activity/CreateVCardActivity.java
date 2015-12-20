@@ -13,16 +13,15 @@ import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
+import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
 import java.util.ArrayList;
 
@@ -37,8 +36,6 @@ public class CreateVCardActivity extends AppCompatActivity {
     private CardWriter cardWriter;
 
     private NfcAdapter nfcAdapter;
-
-    private ArrayAdapter<String> adapter;
 
     private IntentFilter[] intentFilters;
     private String[][] techLists;

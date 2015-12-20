@@ -11,7 +11,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kontakt Export"
+        android:text="@string/button_export_contacts"
         android:id="@+id/contactExportButton"
         android:layout_above="@+id/createVCardActvivityButton"
         android:layout_alignParentEnd="true"
@@ -20,8 +20,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Visiten-Karte\n\n"
-        android:textSize="25dp"
+        android:text="@string/textview_main_main_activity"
+        android:textSize="25sp"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -29,7 +29,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kontakt Import"
+        android:text="@string/button_import_contacts"
         android:id="@+id/contactImportButton"
         android:layout_alignTop="@+id/contactExportButton"
         android:layout_alignEnd="@+id/textView"
@@ -47,7 +47,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="V-Card erstellen"
+        android:text="@string/button_create_vcard"
         android:id="@+id/createVCardActvivityButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
@@ -56,8 +56,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bitte V-Card auflegen..."
-        android:textSize="20dp"
+        android:text="@string/textview_startview"
+        android:textSize="20sp"
         android:id="@+id/startTextView"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
@@ -65,7 +65,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Android Beam"
+        android:text="@string/button_start_beam"
         android:id="@+id/androidBeamButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

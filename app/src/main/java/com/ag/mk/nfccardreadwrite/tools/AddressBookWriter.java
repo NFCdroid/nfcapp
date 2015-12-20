@@ -3,9 +3,6 @@ package com.ag.mk.nfccardreadwrite.tools;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
-import android.util.Log;
-import com.ag.mk.nfccardreadwrite.activity.MainActivity;
-import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 import java.util.ArrayList;
 

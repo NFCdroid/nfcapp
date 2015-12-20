@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="zurück"
+        android:text="@string/button_back"
         android:id="@+id/backButton"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"

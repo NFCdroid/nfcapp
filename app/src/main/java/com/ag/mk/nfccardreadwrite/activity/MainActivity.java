@@ -9,7 +9,6 @@ import android.content.pm.ActivityInfo;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
@@ -30,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ag.mk.nfccardreadwrite.R;
+import com.ag.mk.nfccardreadwrite.addons.Vibration;
+import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
@@ -39,8 +40,6 @@ import com.ag.mk.nfccardreadwrite.tools.ContactTools;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.NfcTools;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
-import com.ag.mk.nfccardreadwrite.addons.Vibration;
-import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
-            Voice.speakOut("Ein neuer Kontakt wurde erkannt.");
+            Voice.speakOut("Ein neuer Kontakt wurde eingelesen.");
 
         }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 
@@ -209,11 +208,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     private void setCardContentFromIntent(Intent intent){
-        try {
-            cardContent = VCardFormatTool.extractCardInformation(CardReader.readTag(intent).split("\r\n"));
-        }catch (Exception e){
-            Log.e("ERROR", "Read Error");
-            e.printStackTrace();
+
+        String tempCardInformation = CardReader.readTag(intent);
+        if(tempCardInformation!= null) {
+            cardContent = VCardFormatTool.extractCardInformation(tempCardInformation.split("\r\n"));
         }
     }
 
@@ -325,8 +323,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             if (result == TextToSpeech.LANG_MISSING_DATA
                     || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e("TTS", "This Language is not supported");
-            } else {
-                // speakOut("Sprachaktivierung erfolgreich!");
             }
 
         } else {
