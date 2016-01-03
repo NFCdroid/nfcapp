@@ -26,6 +26,11 @@ import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
 import java.util.ArrayList;
 
 /**
+ * Diese Activity beinhaltet die Logik zu den GUI Elementen,
+ * die benötigt werden um NFC Medien zu beschrieben.<br><br>
+ *
+ * Zusätzlich beinhaltet sie eine Methode zum einlesen gülter NFC Medien.
+ *
  * @author Marko Klepatz, Olivier Friedrich
  */
 public class CreateVCardActivity extends AppCompatActivity {
@@ -43,11 +48,21 @@ public class CreateVCardActivity extends AppCompatActivity {
     private IntentFilter[] intentFilters;
     private String[][] techLists;
 
+    /**
+     * Diese Methode setzt alle relevanten Eigentschaften für die GUI
+     * und leitet die Initialisierungen aller Objekte ein.<br><br>
+     *
+     * Zusätzlich nimmt sie den aufrufenden Intent von der MainActivty entgegen
+     * und Prüft ob dieser Daten zum beschreiben auf ein NFC Medium enthält und leitet diese weiter,
+     * an die GUI Objekte.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_vcard);
 
+        setContentView(R.layout.activity_create_vcard);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         cardWriter = new CardWriter(this);
@@ -58,12 +73,16 @@ public class CreateVCardActivity extends AppCompatActivity {
         initButtons();
         initTextFields();
 
+        //Prüft ob Kontakt Daten enthalten sind
         if(getIntent().hasExtra("vci")) {
             fillTextFields(getIntent().getStringArrayListExtra("vci"));
         }
 
     }
 
+    /**
+     * Diese Methode inititialisiert alle Button Objekte und deren Logik.
+     */
     private void initButtons(){
 
         clearButton = (Button) findViewById(R.id.clearButton);
@@ -125,6 +144,9 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Diese Methode inititialisiert alle TextField Objekte.
+     */
     private void initTextFields(){
 
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
@@ -134,6 +156,17 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Diese Methode empfängt einen von dem Manifest gefilterten Intent,
+     * welcher nur dann in dieser ankommt wenn das NFC Medium,
+     * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist.<br><br>
+     *
+     * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
+     * <b>AndroidManifest.xml</b><br>
+     * <b>tech.xml</b>
+     *
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
 
@@ -145,6 +178,11 @@ public class CreateVCardActivity extends AppCompatActivity {
         super.onNewIntent(intent);
     }
 
+    /**
+     * Diese Methode initialisiert den Intentfilter für den NFC Adapter.
+     * Zusätzlich zum Manifest-Filter überprüft dieser auch noch einmal,
+     * ob die richitgen Technologien gefiltert wurden.
+     */
     private void initIntentFilter() {
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         intentFilters = new IntentFilter[] { tech, };
@@ -157,6 +195,11 @@ public class CreateVCardActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Diese Methode befüllt alle Textfelder mit den Kontakt-Daten die von der MainActivity gesendet wurden.
+     *
+     * @param cardContent übergibt die Kontakt daten von der MainActivtity
+     */
     private void fillTextFields(ArrayList<String> cardContent){
         userNameEditText.setText(cardContent.get(0));
         mobileNumberEditText.setText(cardContent.get(1));
@@ -165,6 +208,9 @@ public class CreateVCardActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Diese Methode konfiguriert und aktiviert bei Aufruf den NFC Adapter.
+     */
     @Override
     protected void onResume() {
 
@@ -179,6 +225,9 @@ public class CreateVCardActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    /**
+     * Diese Methode deaktiviert den NFC Adapter.
+     */
     @Override
     protected void onPause() {
         nfcAdapter.disableForegroundDispatch(this);

@@ -32,6 +32,11 @@ public class ContactListDialog {
     private AddressBookReader addressBookReader;
     private MainActivity mainActivity;
 
+    /**
+     * Dieser Konstruktor leitet alle Inititalisierungen die für den ContactListDialog ein.
+     *
+     * @param mainActivity übergibt die Klasse MainActivity für den Context der GUI Elemente
+     */
     public ContactListDialog(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.addressBookReader = new AddressBookReader(mainActivity);
@@ -39,6 +44,9 @@ public class ContactListDialog {
         initContactDialog();
     }
 
+    /**
+     * Diese Methode inititialisiert den Dialog und leitet die Initialisierung aller GUI Objekte ein.
+     */
     private void initContactDialog(){
 
         contactListDialog = new Dialog(mainActivity);
@@ -55,6 +63,9 @@ public class ContactListDialog {
 
     }
 
+    /**
+     * Diese Methode inititialisiert alle Listview Objekte und deren Logik.
+     */
     private void initListviews(View layout) {
         listView = (ListView) layout.findViewById(R.id.contactList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,6 +87,9 @@ public class ContactListDialog {
         });
     }
 
+    /**
+     * Diese Methode inititialisiert alle Buttons Objekte und deren Logik.
+     */
     private void initButtons(View layout) {
         backButton = (Button) layout.findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +101,9 @@ public class ContactListDialog {
         });
     }
 
+    /**
+     * Diese Methode leitet das auslesen der Kontakte ein und ruft die Anzeige Methode für den ContactListDialog.
+     */
     public void showDialog(){
         addressBookReader.readAllContacts(mainActivity.getContentResolver());
         contactListDialog.show();

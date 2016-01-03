@@ -17,6 +17,9 @@ import com.ag.mk.nfccardreadwrite.tools.DataWork;
 
 /**
  * Diese Klasse beinhaltet alle Methoden zum generieren und Anzeigen des Einstellungs-Dialogs.
+ * Weiterführend werden hier auch alle Einstellungen direkt in Datein auf dem Handy geschrieben.
+ *
+ * @see DataWork
  *
  * @author Marko Klepatz
  */
@@ -30,11 +33,19 @@ public class SettingsDialog {
 
     private MainActivity mainActivity;
 
+    /**
+     * Dieser Konstruktor leitet alle Inititalisierungen die für den SettingsDialog ein.
+     *
+     * @param mainActivity übergibt die Klasse MainActivity für den Context der GUI Elemente
+     */
     public SettingsDialog(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         initContactDialog();
     }
 
+    /**
+     * Diese Methode inititialisiert den Dialog und leitet die Initialisierung aller GUI Objekte ein.
+     */
     private void initContactDialog(){
 
         settingsDialog = new Dialog(mainActivity);
@@ -51,6 +62,9 @@ public class SettingsDialog {
     }
 
 
+    /**
+     * Diese Methode inititialisiert alle Button Objekte und deren Logik.
+     */
     private void initButtons(View layout) {
         backButton = (Button) layout.findViewById(R.id.settingsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +76,9 @@ public class SettingsDialog {
         });
     }
 
+    /**
+     * Diese Methode inititialisiert alle Switch Objekte und deren Logik.
+     */
     private void initSwitches(View layout){
 
         vibrationSwitch = (Switch) layout.findViewById(R.id.vibrationSwitch);

@@ -8,7 +8,7 @@ import android.os.Vibrator;
  *
  * Sie muss einmal über ihren Konstruktor initialisiert werden
  * und ist dann für alle Klassen, durch ihren
- * statischen Charackter verfügbar.<br><br>
+ * statischen Charakter verfügbar.<br><br>
  *
  * Vibrator ist die zu initialisierende Klasse mit der die Vibrationsfunktion ausgeführt werden kann. <br><br>
  *
@@ -20,6 +20,12 @@ public class Vibration {
 
     private static boolean vibration = false;
 
+    /**
+     * Dieser Konstruktor nimmt die in der MainActivity initialisierte Vibrator Klasse entgegen,
+     * die hier benötigt wird um die Vibration auszuführen.
+     *
+     * @param vibrator übergibt die benötigte Vibrator Klasse zum ausführen der Vibration
+     */
     public Vibration(Vibrator vibrator){
         Vibration.vibrator = vibrator;
     }
