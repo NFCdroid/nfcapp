@@ -16,7 +16,9 @@ import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 
 /**
- * Created by marko on 15.12.15.
+ * Diese Klasse beinhaltet alle Methoden zum generieren und Anzeigen des Einstellungs-Dialogs.
+ *
+ * @author Marko Klepatz
  */
 public class SettingsDialog {
 
@@ -33,7 +35,7 @@ public class SettingsDialog {
         initContactDialog();
     }
 
-    public void initContactDialog(){
+    private void initContactDialog(){
 
         settingsDialog = new Dialog(mainActivity);
 

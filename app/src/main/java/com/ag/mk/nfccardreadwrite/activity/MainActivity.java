@@ -35,15 +35,18 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardReader;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
-import com.ag.mk.nfccardreadwrite.tools.AddressBookWriter;
+import com.ag.mk.nfccardreadwrite.addressbookwork.AddressBookWriter;
 import com.ag.mk.nfccardreadwrite.tools.ContactTools;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.NfcTools;
-import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ *@author Marko Klepatz, Oliver Friedrich
+ */
 public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener{
 
     public static final String TAG = "Nfc Card App";
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 Vibration.vibrate();
-                AddressBookWriter.writecontact(MainActivity.this, cardContent);
+                AddressBookWriter.writeContact(MainActivity.this, cardContent);
             }
         });
 
@@ -211,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         String tempCardInformation = CardReader.readTag(intent);
         if(tempCardInformation!= null) {
-            cardContent = VCardFormatTool.extractCardInformation(tempCardInformation.split("\r\n"));
+            cardContent = VCardFormatTools.extractCardInformation(tempCardInformation.split("\r\n"));
         }
     }
 
@@ -260,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     public void setVCardInformationOnMainScreen(String vCardInformation) {
         this.vCardInformation = vCardInformation;
-        cardContent = VCardFormatTool.extractCardInformation(vCardInformation.split("\r\n"));
+        cardContent = VCardFormatTools.extractCardInformation(vCardInformation.split("\r\n"));
         fillVCardListView(cardContent);
     }
 
@@ -341,7 +344,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }

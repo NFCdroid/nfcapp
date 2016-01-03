@@ -7,18 +7,28 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Created by marko on 16.12.15.
+ * Diese Klasse beinhaltet verschiedene Methoden,
+ * um die Kontakt Daten direkt an andere Andwendungen im Gerät zu übergeben.
+ *
+ * @author Marko Klepatz
  */
 public class ContactTools {
 
     private int hitCounter = 0;
 
-    private MainActivity activity;
+    private MainActivity mainActivity;
 
-    public ContactTools(MainActivity activity){
-        this.activity = activity;
+    public ContactTools(MainActivity mainActivity){
+        this.mainActivity = mainActivity;
     }
 
+    /**
+     * Diese Methode generiert einen Intent,
+     * der die E-Mail Adresse des aktuell ausgewählten Kontakts übergibt
+     * und startet eine Auswahl mit allen potenziel einsetzbaren E-Mail Programmen auf dem Gerät.
+     *
+     * @param email übergibt die E-Mail Adresse des aktuell ausgewählten Kontakts
+     */
     public void mailContact(final String email) {
         if(!email.equals("") && !email.equals("---") && !email.equals(" ")) {
             Voice.speakOut("E-Mail Programm wird gerufen.");
@@ -32,7 +42,7 @@ public class ContactTools {
                         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
                         intent.putExtra(Intent.EXTRA_SUBJECT, "");
                         intent.putExtra(Intent.EXTRA_TEXT, "");
-                        activity.startActivity(intent);
+                        mainActivity.startActivity(intent);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -81,6 +91,14 @@ public class ContactTools {
         }
     }
 
+    /**
+     * Diese Methode generiert einen Intent,
+     * welcher die Nummer die des Kontaktes übergibt
+     * und ruft mit diesem direkt das Programm zum anrufen von Kontakten auf und ruft diesen an.
+     *
+     * @param name übergibt den Namen des ausgewählten Kontakts für die Sprachausgabe
+     * @param number übergibt die Nummer des ausgewählten Kontakts zum anrufen
+     */
     public void callContact(String name, final String number){
 
         if(!number.equals("") && !number.equals("---") && !number.equals(" ")) {
@@ -91,7 +109,7 @@ public class ContactTools {
                         if(Voice.isSound())Thread.sleep(1300);
 
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
-                        activity.startActivity(intent);
+                        mainActivity.startActivity(intent);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();

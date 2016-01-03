@@ -21,10 +21,13 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
-import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
 
 import java.util.ArrayList;
 
+/**
+ * @author Marko Klepatz, Olivier Friedrich
+ */
 public class CreateVCardActivity extends AppCompatActivity {
 
     private Button backButton, writeVCardButton, clearButton;
@@ -96,7 +99,7 @@ public class CreateVCardActivity extends AppCompatActivity {
                 if (tag != null) {
 
                     NdefMessage ndefMessage = cardWriter.createNdefMessage(
-                            VCardFormatTool.getFormatedVCardString(
+                            VCardFormatTools.getFormatedVCardString(
                                     userNameEditText.getText().toString().replace("Name: ", ""),
                                     mobileNumberEditText.getText().toString().replace("Telefon-Mobil: ", ""),
                                     homeNumberEditText.getText().toString().replace("Telefon-Festnetz: ", ""),
@@ -106,10 +109,10 @@ public class CreateVCardActivity extends AppCompatActivity {
 
                     //TODO: Weiter Testen
                     //Nur Name und Handynummer sind zwingend
-                    String uName = userNameEditText.getText().toString();
-                    String mobNum = mobileNumberEditText.getText().toString();
+                    String name = userNameEditText.getText().toString();
+                    String mobileNumber = mobileNumberEditText.getText().toString();
 
-                    if (uName.matches("") || mobNum.matches(""))
+                    if (name.matches("") || mobileNumber.matches(""))
                         Toast.makeText(CreateVCardActivity.this, "Text Field is empty!", Toast.LENGTH_SHORT).show();
 
                 } else {

@@ -1,10 +1,7 @@
 package com.ag.mk.nfccardreadwrite.dialogs;
 
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,36 +12,34 @@ import android.widget.ListView;
 
 import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
-import com.ag.mk.nfccardreadwrite.addons.Voice;
-import com.ag.mk.nfccardreadwrite.tools.VCardFormatTool;
+import com.ag.mk.nfccardreadwrite.addressbookwork.AddressBookReader;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
 import java.util.ArrayList;
 
 /**
- * Created by marko on 13.12.15.
+ * Diese Klasse beinhaltet die Methoden zum initialisieren und Anzeigen des Kontakt-Listen-Dialogs.
+ *
+ * @author Marko Klepatz
  */
 public class ContactListDialog {
-
-    private ArrayList<String> listItems = new ArrayList<>();
-
-    private String vCardInformation, mobilenumber = "---", homenumber = "---", worknumber = "---", email = "---";
-
-    private Cursor mainCursor, phoneCursor;
 
     private ListView listView;
 
     private Button backButton;
 
     private Dialog contactListDialog;
+    private AddressBookReader addressBookReader;
     private MainActivity mainActivity;
 
     public ContactListDialog(MainActivity mainActivity){
         this.mainActivity = mainActivity;
+        this.addressBookReader = new AddressBookReader(mainActivity);
+
         initContactDialog();
     }
 
-    public void initContactDialog(){
+    private void initContactDialog(){
 
         contactListDialog = new Dialog(mainActivity);
 
@@ -65,12 +60,13 @@ public class ContactListDialog {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getAdressbookData(position);
+                addressBookReader.getAdressbookData(position);
+                contactListDialog.cancel();
 
             }
         });
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity, android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(mainActivity, android.R.layout.simple_list_item_1, android.R.id.text1, addressBookReader.getListItems());
 
         mainActivity.runOnUiThread(new Runnable() {
             @Override
@@ -91,103 +87,8 @@ public class ContactListDialog {
         });
     }
 
-    private void getAdressbookData(int position) {
-
-        ContentResolver contentResolver = mainActivity.getContentResolver();
-        mainCursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        assert mainCursor != null;
-        mainCursor.moveToPosition(position);
-
-        String contactID = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts._ID));
-        String name = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-
-        // Not yet implemented in VCardFormatTool
-        // This could be user to read address data..
-        /*
-        String street = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));
-        String city = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));
-        String state = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION));
-        String postalCode = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE));
-        */
-
-        getPhoneNumbers(contentResolver, contactID);
-
-        getEmails(contentResolver, contactID);
-
-        vCardInformation = VCardFormatTool.getFormatedVCardString(name, mobilenumber, homenumber, email);
-
-        mainActivity.setVCardInformationOnMainScreen(vCardInformation);
-
-        contactListDialog.cancel();
-
-        Voice.speakOut(name + "wurde ausgewählt!");
-
-        Vibration.vibrate();
-    }
-
-    private void getEmails(ContentResolver contentResolver, String contactID) {
-
-        Cursor emails = contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactID, null, null);
-
-        if (emails != null) {
-            while (emails.moveToNext()) {
-                email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-            }
-        }
-
-        if(emails != null)emails.close();
-    }
-
-    private void getPhoneNumbers(ContentResolver contentResolver, String contactID) {
-
-        if (Integer.parseInt(mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-
-            phoneCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{contactID}, null);
-
-            if (phoneCursor != null && phoneCursor.getCount() > 0) {
-                while (phoneCursor.moveToNext()) {
-                    String phone = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    int type = phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-                    // http://developer.android.com/reference/android/provider/ContactsContract.CommonDataKinds.Phone.html
-                    // TYPE values are static int so easy to switch.
-                    switch (type) {
-                        case 2:
-                            mobilenumber = phone;
-                            break;
-                        case 3:
-                            worknumber = phone;
-                            break;
-                        case 1:
-                            homenumber = phone;
-                            break;
-                    }
-                }
-                phoneCursor.close();
-            }
-        }
-    }
-
-    private void displayContacts(MainActivity mainActivity) {
-        ContentResolver contentResolver = mainActivity.getContentResolver();
-        mainCursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        if (mainCursor != null) {
-
-            if (mainCursor.getCount() > 0) {
-
-                while (mainCursor.moveToNext()) {
-                    String name = mainCursor.getString(mainCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    listItems.add(name);
-                }
-            }
-        }
-    }
-
     public void showDialog(){
+        addressBookReader.readAllContacts(mainActivity.getContentResolver());
         contactListDialog.show();
-        displayContacts(mainActivity);
     }
 }

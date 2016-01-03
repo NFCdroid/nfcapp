@@ -1,4 +1,4 @@
-package com.ag.mk.nfccardreadwrite.tools;
+package com.ag.mk.nfccardreadwrite.addressbookwork;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,10 +6,21 @@ import android.provider.ContactsContract;
 
 import java.util.ArrayList;
 
-
+/**
+ * Diese Klasse beinhaltet die Methode zum Schreiben von Address-Daten in das Adressbuch.
+ *
+ * @author Klaus Steinhauer, Marko Klepatz
+ */
 public class AddressBookWriter {
 
-    public static void writecontact(final Context context, final ArrayList<String> cardContent){
+    /**
+     * Diese Methode generiert einen Intent welcher alle zu schriebenden Address-Daten enthält
+     * und ruft im Anschluss das Adressbuch über diesen Intent auf und übergibt die Daten.
+     *
+     * @param context übergibt den Context der rufenden Activity
+     * @param cardContent übergibt die zu schreibenden Daten in Form einer Array List
+     */
+    public static void writeContact(final Context context, final ArrayList<String> cardContent){
 
         if (cardContent!=null) {
             Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);

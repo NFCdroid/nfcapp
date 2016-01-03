@@ -12,16 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Marko on 18.09.2015.
+ * Diese Klasse beinhaltet die Methoden zum lesen und schreiben von Dateien für die Anwendung.
+ *
+ * @author Marko Klepatz
  */
 public class DataWork {
 
     private static Context context;
 
     public DataWork(Context context){
-        this.context = context;
+        DataWork.context = context;
     }
 
+    /**
+     * Diese Methode liest eine Datei mit einer Zeile aus und gibt den Inhalt on Form eines Strings zurück.
+     *
+     * @param dataName übergibt den Namen der zu lesenden Datei
+     * @return gibt den ausgelesenen String zurück
+     */
     public static String readSingleLineFile(String dataName) {
 
         BufferedReader read = null;
@@ -53,6 +61,13 @@ public class DataWork {
         return value;
     }
 
+    /**
+     * Diese Methode liest eine Datei mit mehreren Zeilen aus
+     * und gibt den Inhalt on Form einer Liste vom Typ String zurück.
+     *
+     * @param dataName übergibt den Namen der zu lesenden Datei
+     * @return values gibt die Liste mit dem Inhalt jeder Zeile zurück
+     */
     public static List<String> readMultiLineFile(String dataName) {
 
         BufferedReader read = null;
@@ -85,6 +100,12 @@ public class DataWork {
         return values;
     }
 
+    /**
+     * Diese Methode schreibt eine einzeilige Information in eine Datei ohne Umbrüche
+     *
+     * @param dataName übergibt den Namen der in zu schreibenden Datei
+     * @param information übergibt die zu schreibende Information
+     */
     public static void writeSingleLineFile(String dataName, String information) {
 
         BufferedWriter writer = null;
@@ -109,6 +130,12 @@ public class DataWork {
         }
     }
 
+    /**
+     * Diese Methode schreibt eine mehrzeilige Information in eine Datei mit Umbrüchen
+     *
+     * @param dataName übergibt den Namen der in zu schreibenden Datei
+     * @param informationList übergibt die zu schreibenden Informationen
+     */
     public static void writeMultiLineFile(String dataName, List<String> informationList) {
 
         BufferedWriter writer = null;

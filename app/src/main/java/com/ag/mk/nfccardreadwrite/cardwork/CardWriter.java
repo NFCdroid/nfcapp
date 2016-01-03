@@ -16,7 +16,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 /**
- * Created by Marko on 07.11.2015.
+ * Diese Klasse beinhaltet die Methoden die für das Beschreiben eines NFC Chips benötigt werden.
+ *
+ *
+ * @author Oliver Friedrich, Marko Klepatz
  */
 public class CardWriter {
 
@@ -27,6 +30,13 @@ public class CardWriter {
 
     }
 
+    /**
+     * Diese Methode formatiert beim Aufruf den Speicher auf dem NFC Chip in das NDEF Format
+     * und schreibt danach die Nachricht auf den Chip.
+     *
+     * @param tag übergibt das Tag-Format
+     * @param ndefMessage übergibt die NDEF Nachricht zum beschreiben auf den NFC Chip
+     */
     private void formatTag(Tag tag, NdefMessage ndefMessage) {
         try {
 
@@ -51,6 +61,12 @@ public class CardWriter {
 
     }
 
+    /**
+     * Diese Methode schreibt die NDEF Nachricht auf den NFC Chip.
+     *
+     * @param tag übergibt das Tag-Format
+     * @param ndefMessage übergibt die NDEF Nachricht zum beschreiben auf den NFC Chip
+     */
     public void writeNdefMessage(Tag tag, NdefMessage ndefMessage) {
 
         try {
@@ -83,32 +99,31 @@ public class CardWriter {
             }
 
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
 
     }
 
     /**
-     * Message wird gebaut!
-     * @param content
-     * @return
+     * Diese Methode generiert die NDEF Message mit dem speziellen Mime Type für diese App.
+     *
+     * @param content übergibt den Inhalt der auf die Karte geschrieben werden soll
+     * @return gibt die generierte NDEF Message zurück
      */
     public NdefMessage createNdefMessage(String content) {
-        /**
-         * ohli:
-         * Hier könnte man statt der Hexkonvertierung einfach einen Mime-Type schreiben.
-         * Praktisch wäre z.B. text/vcard (ab vCard v4)
-         */
         return new NdefMessage(
                 new NdefRecord[]{
-                        //transformToHexCode(content)
                         NdefRecord.createMime(
                                 "application/vnd.com.ag.mk.nfccardreadwrite.beam",
                                 content.getBytes())
                 });
     }
 
-    // genauere Methode aber nicht so elegant
+    /**
+     * Hier folgt noch eine Methode die, die Daten in ein universelleres Format bringt allerings nicht so elegant.
+     */
+
+    /*
     private NdefRecord transformToHexCode(String content) {
         try {
             byte[] language;
@@ -130,4 +145,5 @@ public class CardWriter {
         }
         return null;
     }
+    */
 }
