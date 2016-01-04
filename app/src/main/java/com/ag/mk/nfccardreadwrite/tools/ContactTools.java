@@ -7,8 +7,9 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Diese Klasse beinhaltet verschiedene Methoden,
- * um die Kontakt Daten direkt an andere Andwendungen im Gerät zu übergeben.
+ * Diese Klasse beinhaltet die Methoden,
+ * um die Kontakt Daten direkt an andere Andwendungen im Gerät zu übergeben
+ * und zu starten.
  *
  * @author Marko Klepatz
  */

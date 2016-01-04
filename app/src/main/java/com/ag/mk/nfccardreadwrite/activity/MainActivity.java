@@ -55,6 +55,7 @@ import java.util.Locale;
  * Weiterführend wird immer diese Activity gerufen,
  * wenn eine für diese App gültige NFC Technologie
  * oder der spezielle Mime Type dieser App erkannt wird.
+ * (Der Mime Type ist in der Klasse <b>CardWriter</b> einsehbar)
  *
  * @see CardWriter
  *
