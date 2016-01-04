@@ -29,9 +29,9 @@ import java.util.ArrayList;
  * Diese Activity beinhaltet die Logik zu den GUI Elementen,
  * die benötigt werden um NFC Medien zu beschrieben.<br><br>
  *
- * Zusätzlich beinhaltet sie eine Methode zum einlesen gülter NFC Medien.
+ * Zusätzlich beinhaltet sie eine Methode zum einlesen gültiger NFC Medien.
  *
- * @author Marko Klepatz, Olivier Friedrich
+ * @author Marko Klepatz, Oliver Friedrich
  */
 public class CreateVCardActivity extends AppCompatActivity {
 

@@ -49,7 +49,7 @@ import java.util.Locale;
  * die benötigt werden um NFC Medien zu Lesen und anzuzeigen.<br>
  * Zusätzlich wird hier das Anzeigen von Kontakten aus dem Adressbuch
  * und das Importieren von neuen Konakten,
- * sowie die Android Beam-Funktion, eingeletet.
+ * sowie die Android Beam-Funktion eingeletet.
  * Ebenso wird hier auch die CreateVCardActivity gerufen.<br><br>
  *
  * Weiterführend wird immer diese Activity gerufen,
@@ -59,7 +59,7 @@ import java.util.Locale;
  *
  * @see CardWriter
  *
- * @author Marko Klepatz, Olivier Friedrich
+ * @author Marko Klepatz, Oliver Friedrich
  */
 public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener{
 
