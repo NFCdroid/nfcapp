@@ -36,6 +36,9 @@ public class ContactListDialog {
      * Dieser Konstruktor leitet alle Inititalisierungen die für den ContactListDialog ein.
      *
      * @param mainActivity übergibt die Klasse MainActivity für den Context der GUI Elemente
+     *
+     * @see MainActivity
+     * @see AddressBookReader
      */
     public ContactListDialog(MainActivity mainActivity){
         this.mainActivity = mainActivity;

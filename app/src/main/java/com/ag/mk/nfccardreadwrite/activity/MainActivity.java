@@ -128,6 +128,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode initialisiert alle zusätzlich importierten Klassen.
+     *
+     * @see Vibration
+     * @see DataWork
+     * @see TextToSpeech
+     * @see Voice
+     * @see ContactListDialog
+     * @see SettingsDialog
+     * @see ContactListDialog
+     * @see NfcTools
+     * @see NfcAdapter
+     *
      */
     private void initImportedClasses() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);

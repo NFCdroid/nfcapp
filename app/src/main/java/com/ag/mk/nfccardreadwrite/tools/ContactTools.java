@@ -18,6 +18,12 @@ public class ContactTools {
 
     private MainActivity mainActivity;
 
+    /**
+     *
+     * @param mainActivity übergibt die MainActivity für den Context zum ausführen von Code der nur auf dieser ausgeführt werden kann
+     *
+     * @see MainActivity
+     */
     public ContactTools(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }

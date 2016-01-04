@@ -37,6 +37,8 @@ public class SettingsDialog {
      * Dieser Konstruktor leitet alle Inititalisierungen die für den SettingsDialog ein.
      *
      * @param mainActivity übergibt die Klasse MainActivity für den Context der GUI Elemente
+     *
+     * @see MainActivity
      */
     public SettingsDialog(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -45,6 +47,7 @@ public class SettingsDialog {
 
     /**
      * Diese Methode inititialisiert den Dialog und leitet die Initialisierung aller GUI Objekte ein.
+     *
      */
     private void initContactDialog(){
 
@@ -78,6 +81,8 @@ public class SettingsDialog {
 
     /**
      * Diese Methode inititialisiert alle Switch Objekte und deren Logik.
+     *
+     * @see DataWork
      */
     private void initSwitches(View layout){
 
