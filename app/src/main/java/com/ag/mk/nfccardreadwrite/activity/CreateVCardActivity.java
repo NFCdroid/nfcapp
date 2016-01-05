@@ -49,7 +49,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     private String[][] techLists;
 
     /**
-     * Diese Methode setzt alle relevanten Eigentschaften für die GUI
+     * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
      *
      * Zusätzlich nimmt sie den aufrufenden Intent von der MainActivty entgegen

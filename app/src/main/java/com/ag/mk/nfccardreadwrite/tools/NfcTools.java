@@ -20,7 +20,7 @@ public class NfcTools {
     /**
      *
      * @param mainActivity übergibt die MainActivity für den Context
-     * @param nfcAdapter übergibt den NfcAdapter zur überprüfung
+     * @param nfcAdapter übergibt den NfcAdapter zur Überprüfung
      *
      * @see MainActivity
      * @see NfcAdapter
