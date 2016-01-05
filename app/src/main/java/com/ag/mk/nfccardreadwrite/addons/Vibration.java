@@ -3,7 +3,7 @@ package com.ag.mk.nfccardreadwrite.addons;
 import android.os.Vibrator;
 
 /**
- * Diese Klasse ist für die Vibrationsfunktion, in sofern aktiviert,
+ * Diese Klasse ist für die Vibrationsfunktion, insofern aktiviert,
  * für alle Klassen und Activities zuständig. <br><br>
  *
  * Sie muss einmal über ihren Konstruktor initialisiert werden
@@ -24,7 +24,7 @@ public class Vibration {
      * Dieser Konstruktor nimmt die in der MainActivity initialisierte Vibrator Klasse entgegen,
      * die hier benötigt wird um die Vibration auszuführen.
      *
-     * @param vibrator übergibt die benötigte Vibrator Klasse zum ausführen der Vibration
+     * @param vibrator übergibt die benötigte Vibrator Klasse zum Ausführen der Vibration
      */
     public Vibration(Vibrator vibrator){
         Vibration.vibrator = vibrator;
@@ -39,7 +39,7 @@ public class Vibration {
     }
 
     /**
-     * Diese Methode ist beim aufruf dafür zuständig das, dass Gerät 25 Millisekunden vibriert.<br><br>
+     * Diese Methode ist beim Aufruf dafür zuständig, dass das Gerät 25 Millisekunden vibriert.<br><br>
      *
      * Zusätzlich wird geprüft ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
      *

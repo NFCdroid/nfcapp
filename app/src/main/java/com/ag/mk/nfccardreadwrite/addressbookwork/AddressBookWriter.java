@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class AddressBookWriter {
 
     /**
-     * Diese Methode generiert einen Intent welcher alle zu schriebenden Address-Daten enthält
+     * Diese Methode generiert einen Intent welcher alle zu schreibenden Address-Daten enthält
      * und ruft im Anschluss das Adressbuch über diesen Intent auf und übergibt die Daten.
      *
      * @param context übergibt den Context der rufenden Activity

@@ -3,7 +3,7 @@ package com.ag.mk.nfccardreadwrite.addons;
 import android.speech.tts.TextToSpeech;
 
 /**
- * Diese Klasse ist für die Sprachausgabe, in sofern aktiviert,
+ * Diese Klasse ist für die Sprachausgabe, insofern aktiviert,
  * für alle Klassen und Activities zuständig. <br><br>
  *
  * Sie muss einmal über ihren Konstruktor initialisiert werden
@@ -24,14 +24,14 @@ public class Voice {
      * Dieser Konstruktor nimmt die in der MainActivity initialisierte TextToSpeech Klasse entgegen,
      * die hier benötigt wird um die Sprachausgabe auszuführen.
      *
-     * @param textToSpeech übergibt die benötigte TextToSpeech Klasse zum ausführen der Sprachausgabe
+     * @param textToSpeech übergibt die benötigte TextToSpeech Klasse zum Ausführen der Sprachausgabe
      */
     public Voice(TextToSpeech textToSpeech){
         Voice.textToSpeech = textToSpeech;
     }
 
     /**
-     * Diese Methode ist beim aufruf für die Sprachausgabe zuständig.<br><br>
+     * Diese Methode ist beim Aufruf für die Sprachausgabe zuständig.<br><br>
      *
      * Zusätzlich wird geprüft ob die Variable <b>sound</b> auf true oder false gestellt ist.<br><br>
      *

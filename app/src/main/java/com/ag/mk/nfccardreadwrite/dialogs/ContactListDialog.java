@@ -18,7 +18,7 @@ import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import java.util.ArrayList;
 
 /**
- * Diese Klasse beinhaltet die Methoden zum initialisieren und Anzeigen des Kontakt-Listen-Dialogs.
+ * Diese Klasse beinhaltet die Methoden zum Initialisieren und Anzeigen des Kontakt-Listen-Dialogs.
  *
  * @author Marko Klepatz
  */
@@ -33,7 +33,7 @@ public class ContactListDialog {
     private MainActivity mainActivity;
 
     /**
-     * Dieser Konstruktor leitet alle Inititalisierungen die für den ContactListDialog ein.
+     * Dieser Konstruktor leitet alle Initialisierungen für den ContactListDialog ein.
      *
      * @param mainActivity übergibt die Klasse MainActivity für den Context der GUI Elemente
      */
@@ -45,7 +45,7 @@ public class ContactListDialog {
     }
 
     /**
-     * Diese Methode inititialisiert den Dialog und leitet die Initialisierung aller GUI Objekte ein.
+     * Diese Methode initialisiert den Dialog und leitet die Initialisierung aller GUI Objekte ein.
      */
     private void initContactDialog(){
 
@@ -64,7 +64,7 @@ public class ContactListDialog {
     }
 
     /**
-     * Diese Methode inititialisiert alle Listview Objekte und deren Logik.
+     * Diese Methode initialisiert alle Listview Objekte und deren Logik.
      */
     private void initListviews(View layout) {
         listView = (ListView) layout.findViewById(R.id.contactList);
@@ -88,7 +88,7 @@ public class ContactListDialog {
     }
 
     /**
-     * Diese Methode inititialisiert alle Buttons Objekte und deren Logik.
+     * Diese Methode initialisiert alle Buttons Objekte und deren Logik.
      */
     private void initButtons(View layout) {
         backButton = (Button) layout.findViewById(R.id.backButton);
@@ -102,7 +102,7 @@ public class ContactListDialog {
     }
 
     /**
-     * Diese Methode leitet das auslesen der Kontakte ein und ruft die Anzeige Methode für den ContactListDialog.
+     * Diese Methode leitet das Auslesen der Kontakte ein und ruft die Anzeigemethode für den ContactListDialog.
      */
     public void showDialog(){
         addressBookReader.readAllContacts(mainActivity.getContentResolver());

@@ -13,7 +13,7 @@ import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
 import java.util.ArrayList;
 
 /**
- * Diese Klasse beinhaltet alle Methoden zum auslesen eines Kontaktes aus dem Adressbuch.
+ * Diese Klasse beinhaltet alle Methoden zum Auslesen eines Kontaktes aus dem Adressbuch.
  *
  * @author Klaus Steinhauer, Marko Klepatz
  */
@@ -34,7 +34,7 @@ public class AddressBookReader {
     /**
      * Diese Methode sammelt beim Aufruf alle benötigten Daten zum ausgewählten Kontakt.
      *
-     * @param position übergibt die Position aus der Namen-ListView zum localisieren des Kontaktes im Adressbuch
+     * @param position übergibt die Position aus der Namen-ListView zum lokalisieren des Kontaktes im Adressbuch
      */
     public void getAdressbookData(int position) {
 
@@ -73,7 +73,7 @@ public class AddressBookReader {
      * Diese Methode liest die E-Mail Adressen des ausgewählten Kontakts aus.
      *
      * @param contentResolver
-     * @param contactID übergibt die ID des Ausgewählten Kontakts
+     * @param contactID übergibt die ID des ausgewählten Kontakts
      */
     private void getEmails(ContentResolver contentResolver, String contactID) {
 
@@ -93,7 +93,7 @@ public class AddressBookReader {
      * Diese Methode liest die Telefon-Nummern des ausgewählten Kontakts aus.
      *
      * @param contentResolver
-     * @param contactID übergibt die ID des Ausgewählten Kontakts
+     * @param contactID übergibt die ID des ausgewählten Kontakts
      */
     private void getPhoneNumbers(ContentResolver contentResolver, String contactID) {
 
@@ -126,8 +126,8 @@ public class AddressBookReader {
     }
 
     /**
-     * Diese Methode liest alle Contakte im Adressbuch aus
-     * und Schreibt die Namen in die statische <b>listItems</b> Liste aus der <b>ContactListDialog</b> Klasse.
+     * Diese Methode liest alle Kontakte im Adressbuch aus
+     * und schreibt die Namen in die statische <b>listItems</b> Liste aus der <b>ContactListDialog</b> Klasse.
      *
      * @param contentResolver
      *

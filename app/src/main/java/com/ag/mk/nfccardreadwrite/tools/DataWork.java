@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Diese Klasse beinhaltet die Methoden zum lesen und schreiben von Dateien für die Anwendung.
+ * Diese Klasse beinhaltet die Methoden zum Lesen und Schreiben von Dateien für die Anwendung.
  *
  * @author Marko Klepatz
  */
@@ -103,7 +103,7 @@ public class DataWork {
     /**
      * Diese Methode schreibt eine einzeilige Information in eine Datei ohne Umbrüche
      *
-     * @param dataName übergibt den Namen der in zu schreibenden Datei
+     * @param dataName übergibt den Namen der zu schreibenden Datei
      * @param information übergibt die zu schreibende Information
      */
     public static void writeSingleLineFile(String dataName, String information) {
@@ -133,7 +133,7 @@ public class DataWork {
     /**
      * Diese Methode schreibt eine mehrzeilige Information in eine Datei mit Umbrüchen
      *
-     * @param dataName übergibt den Namen der in zu schreibenden Datei
+     * @param dataName übergibt den Namen der zu schreibenden Datei
      * @param informationList übergibt die zu schreibenden Informationen
      */
     public static void writeMultiLineFile(String dataName, List<String> informationList) {

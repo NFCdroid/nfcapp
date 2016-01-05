@@ -27,11 +27,11 @@ import java.util.ArrayList;
 
 /**
  * Diese Activity beinhaltet die Logik zu den GUI Elementen,
- * die benötigt werden um NFC Medien zu beschrieben.<br><br>
+ * die benötigt werden um NFC Medien zu beschreiben.<br><br>
  *
- * Zusätzlich beinhaltet sie eine Methode zum einlesen gülter NFC Medien.
+ * Zusätzlich beinhaltet sie eine Methode zum Einlesen gültiger NFC Medien.
  *
- * @author Marko Klepatz, Olivier Friedrich
+ * @author Marko Klepatz, Oliver Friedrich
  */
 public class CreateVCardActivity extends AppCompatActivity {
 
@@ -53,7 +53,7 @@ public class CreateVCardActivity extends AppCompatActivity {
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
      *
      * Zusätzlich nimmt sie den aufrufenden Intent von der MainActivty entgegen
-     * und Prüft ob dieser Daten zum beschreiben auf ein NFC Medium enthält und leitet diese weiter,
+     * und prüft ob dieser Daten zum Beschreiben auf ein NFC Medium enthält und leitet diese weiter,
      * an die GUI Objekte.
      *
      * @param savedInstanceState
@@ -81,7 +81,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     }
 
     /**
-     * Diese Methode inititialisiert alle Button Objekte und deren Logik.
+     * Diese Methode initialisiert alle Button Objekte und deren Logik.
      */
     private void initButtons(){
 
@@ -145,7 +145,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     }
 
     /**
-     * Diese Methode inititialisiert alle TextField Objekte.
+     * Diese Methode initialisiert alle TextField Objekte.
      */
     private void initTextFields(){
 
@@ -181,7 +181,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     /**
      * Diese Methode initialisiert den Intentfilter für den NFC Adapter.
      * Zusätzlich zum Manifest-Filter überprüft dieser auch noch einmal,
-     * ob die richitgen Technologien gefiltert wurden.
+     * ob die richtigen Technologien gefiltert wurden.
      */
     private void initIntentFilter() {
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
@@ -198,7 +198,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     /**
      * Diese Methode befüllt alle Textfelder mit den Kontakt-Daten die von der MainActivity gesendet wurden.
      *
-     * @param cardContent übergibt die Kontakt daten von der MainActivtity
+     * @param cardContent übergibt die Kontaktdaten von der MainActivtity
      */
     private void fillTextFields(ArrayList<String> cardContent){
         userNameEditText.setText(cardContent.get(0));

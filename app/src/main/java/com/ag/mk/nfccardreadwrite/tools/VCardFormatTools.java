@@ -55,8 +55,8 @@ public class VCardFormatTools {
      * Diese Methode wird gerufen um eine ArrayIndexOutOfBounds Exception bei leeren Feldern zu vermeiden.
      * Ist das Feld leer so wird ein String mit dem Inhalt "" zurück gegeben.
      *
-     * @param result übergibt die rohen V-Card daten zum überprüfen
-     * @param checkParameter übergibt den Prüfparameter zum überprüfen der V-Card Rohdaten
+     * @param result übergibt die rohen V-Card Daten zum Überprüfen
+     * @param checkParameter übergibt den Prüfparameter zum Überprüfen der V-Card Rohdaten
      * @return gibt das Resultat zurück
      */
     private static String checkResult(String result, String checkParameter){

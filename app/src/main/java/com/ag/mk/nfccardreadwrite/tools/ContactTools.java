@@ -7,8 +7,8 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Diese Klasse beinhaltet verschiedene Methoden,
- * um die Kontakt Daten direkt an andere Andwendungen im Gerät zu übergeben.
+ * Diese Klasse beinhaltet verschiedene Methoden
+ * um die Kontakt Daten direkt an andere Anwendungen im Gerät zu übergeben.
  *
  * @author Marko Klepatz
  */
@@ -23,9 +23,9 @@ public class ContactTools {
     }
 
     /**
-     * Diese Methode generiert einen Intent,
+     * Diese Methode generiert einen Intent
      * der die E-Mail Adresse des aktuell ausgewählten Kontakts übergibt
-     * und startet eine Auswahl mit allen potenziel einsetzbaren E-Mail Programmen auf dem Gerät.
+     * und startet eine Auswahl mit allen potenziell einsetzbaren E-Mail Programmen auf dem Gerät.
      *
      * @param email übergibt die E-Mail Adresse des aktuell ausgewählten Kontakts
      */
@@ -92,12 +92,12 @@ public class ContactTools {
     }
 
     /**
-     * Diese Methode generiert einen Intent,
-     * welcher die Nummer die des Kontaktes übergibt
-     * und ruft mit diesem direkt das Programm zum anrufen von Kontakten auf und ruft diesen an.
+     * Diese Methode generiert einen Intent
+     * welcher die Nummer des Kontaktes übergibt
+     * und ruft mit diesem direkt das Programm zum Anrufen von Kontakten auf und ruft diesen an.
      *
      * @param name übergibt den Namen des ausgewählten Kontakts für die Sprachausgabe
-     * @param number übergibt die Nummer des ausgewählten Kontakts zum anrufen
+     * @param number übergibt die Nummer des ausgewählten Kontakts zum Anrufen
      */
     public void callContact(String name, final String number){
 

@@ -9,14 +9,14 @@ import android.util.Log;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Diese Klasse beinhaltet die Methode zum auslesen der Karten Daten. <br><br>
+ * Diese Klasse beinhaltet die Methode zum Auslesen der Kartendaten. <br><br>
  *
- * @author Olivier Friedrich,  Marko Klepatz
+ * @author Oliver Friedrich,  Marko Klepatz
  */
 public class CardReader {
 
     /**
-     * Diese Methode liest aus dem übergebenen Intent die Daten aus,
+     * Diese Methode liest aus dem übergebenem Intent die Daten aus,
      * die sich auf der Karte befinden und wandelt sie in einen String um.<br><br>
      *
      * @param intent enthält die Daten die auf der Karte sind
@@ -42,7 +42,7 @@ public class CardReader {
 
 
     /**
-     * Hier folgen noch 2 Methoden die etwas individueller die daten ausslesen allderings sind nicht so elegant.
+     * Hier folgen noch 2 Methoden die etwas individueller die Daten auslesen allerdings sind sie nicht so elegant.
      */
 
    /* public static String readTag(Intent intent){
