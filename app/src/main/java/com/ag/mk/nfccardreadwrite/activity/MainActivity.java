@@ -46,15 +46,16 @@ import java.util.Locale;
 
 /**
  * Diese Activity beinhaltet die Logik zu den GUI Elementen
- * die benötigt werden um NFC Medien zu Lesen und anzuzeigen.<br>
+ * die benötigt werden um NFC Medien zu lesen und anzuzeigen.<br>
  * Zusätzlich werden hier das Anzeigen von Kontakten aus dem Adressbuch
- * und das Importieren von neuen Konakten,
+ * und das Importieren von neuen Kontakten,
  * sowie die Android Beam-Funktion, eingeleitet.
  * Ebenso wird hier auch die CreateVCardActivity gerufen.<br><br>
  *
  * Weiterführend wird immer diese Activity gerufen,
  * wenn eine für diese App gültige NFC Technologie
  * oder der spezielle Mime Type dieser App erkannt wird.
+ * (Der Mime Type ist in der Klasse <b>CardWriter</b> einsehbar)
  *
  * @see CardWriter
  *
@@ -128,6 +129,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode initialisiert alle zusätzlich importierten Klassen.
+     *
+     * @see Vibration
+     * @see DataWork
+     * @see TextToSpeech
+     * @see Voice
+     * @see ContactListDialog
+     * @see SettingsDialog
+     * @see ContactListDialog
+     * @see NfcTools
+     * @see NfcAdapter
+     *
      */
     private void initImportedClasses() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);

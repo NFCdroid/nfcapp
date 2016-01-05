@@ -8,7 +8,8 @@ import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
  * Diese Klasse beinhaltet verschiedene Methoden
- * um die Kontakt Daten direkt an andere Anwendungen im Gerät zu übergeben.
+ * um die Kontakt Daten direkt an andere Anwendungen im Gerät zu übergeben
+ * und zu starten.
  *
  * @author Marko Klepatz
  */
@@ -18,6 +19,12 @@ public class ContactTools {
 
     private MainActivity mainActivity;
 
+    /**
+     *
+     * @param mainActivity übergibt die MainActivity für den Context zum ausführen von Code der nur auf dieser ausgeführt werden kann
+     *
+     * @see MainActivity
+     */
     public ContactTools(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }

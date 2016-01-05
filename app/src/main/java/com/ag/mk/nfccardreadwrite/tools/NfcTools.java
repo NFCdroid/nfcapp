@@ -17,6 +17,14 @@ public class NfcTools {
     private MainActivity mainActivity;
     private NfcAdapter nfcAdapter;
 
+    /**
+     *
+     * @param mainActivity übergibt die MainActivity für den Context
+     * @param nfcAdapter übergibt den NfcAdapter zur überprüfung
+     *
+     * @see MainActivity
+     * @see NfcAdapter
+     */
     public NfcTools(MainActivity mainActivity, NfcAdapter nfcAdapter){
         this.mainActivity = mainActivity;
         this.nfcAdapter = nfcAdapter;

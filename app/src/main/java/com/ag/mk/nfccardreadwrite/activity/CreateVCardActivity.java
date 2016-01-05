@@ -57,6 +57,9 @@ public class CreateVCardActivity extends AppCompatActivity {
      * an die GUI Objekte.
      *
      * @param savedInstanceState
+     *
+     * @see NfcAdapter
+     * @see CardWriter
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
