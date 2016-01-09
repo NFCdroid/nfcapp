@@ -2,10 +2,12 @@ package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -13,6 +15,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
@@ -40,7 +43,16 @@ import com.ag.mk.nfccardreadwrite.tools.ContactTools;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.NfcTools;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -51,17 +63,16 @@ import java.util.Locale;
  * und das Importieren von neuen Kontakten,
  * sowie die Android Beam-Funktion, eingeleitet.
  * Ebenso wird hier auch die CreateVCardActivity gerufen.<br><br>
- *
+ * <p>
  * Weiterführend wird immer diese Activity gerufen,
  * wenn eine für diese App gültige NFC Technologie
  * oder der spezielle Mime Type dieser App erkannt wird.
  * (Der Mime Type ist in der Klasse <b>CardWriter</b> einsehbar)
  *
- * @see CardWriter
- *
  * @author Marko Klepatz, Oliver Friedrich
+ * @see CardWriter
  */
-public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener{
+public class MainActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback, TextToSpeech.OnInitListener {
 
     public static final String TAG = "Nfc Card App";
 
@@ -90,16 +101,21 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private SettingsDialog settingsDialog;
 
     private String vCardInformation = null;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     /**
      * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
-     *
+     * <p>
      * Zusätzlich nimmt diese Methode einen von dem Manifest gefilterten Intent entgegen
      * welcher nur dann in dieser ankommt wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist bzw.
      * den Mime Type für diese App besitzt.<br><br>
-     *
+     * <p>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
      * <b>tech.xml</b>
@@ -125,6 +141,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         initIntentFilter();
 
         handleIntent(getIntent());
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
@@ -139,12 +158,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * @see ContactListDialog
      * @see NfcTools
      * @see NfcAdapter
-     *
      */
     private void initImportedClasses() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        new Vibration((Vibrator)getSystemService(Context.VIBRATOR_SERVICE));
+        new Vibration((Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
         Vibration.setVibration(true);
 
         new DataWork(this);
@@ -162,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     /**
      * Diese Methode initialisiert alle Button Objekte und deren Logik.
      */
-    private void initButtons(){
+    private void initButtons() {
 
         contactExportButton = (Button) findViewById(R.id.contactExportButton);
         contactExportButton.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             }
         });
 
-        contactImportButton = (Button)findViewById(R.id.contactImportButton);
+        contactImportButton = (Button) findViewById(R.id.contactImportButton);
         contactImportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             }
         });
 
-        androidBeamButton = (Button)findViewById(R.id.androidBeamButton);
+        androidBeamButton = (Button) findViewById(R.id.androidBeamButton);
         androidBeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,15 +225,15 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     /**
      * Diese Methode initialisiert alle TextView Objekte.
      */
-    private void initTextViews(){
+    private void initTextViews() {
         isVCardTextView = (TextView) findViewById(R.id.startTextView);
     }
 
     /**
      * Diese Methode initialisiert alle ListView Objekte und deren Logik.
      */
-    private void initListViews(){
-        vCardListView = (ListView)findViewById(R.id.vCardlistView);
+    private void initListViews() {
+        vCardListView = (ListView) findViewById(R.id.vCardlistView);
         vCardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -248,6 +266,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         Vibration.setVibration(vibration);
         Voice.setSound(voice);
     }
+
     /**
      * Methode um den eintreffenden Intent zu handhaben.
      * Diese Methode filtert und leitet alle eintreffenden Intents weiter,
@@ -263,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             fillVCardListView(cardContent);
             Voice.speakOut("Ein neuer Kontakt wurde eingelesen.");
 
-        }else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+        } else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
@@ -276,15 +295,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * unter Zuhilfenahme der beiden Methoden <b>readTag</b> aus der Klasse <b>CardReader</b>
      * und <b>extractCardInformation</b> aus der Klasse <b>VCardFormatTools</b> zu.
      *
+     * @param intent übergibt den auszulesenden Intent
      * @see CardReader
      * @see VCardFormatTools
-     *
-     * @param intent übergibt den auszulesenden Intent
      */
-    private void setCardContentFromIntent(Intent intent){
+    private void setCardContentFromIntent(Intent intent) {
 
         String tempCardInformation = CardReader.readTag(intent);
-        if(tempCardInformation!= null) {
+        if (tempCardInformation != null) {
             cardContent = VCardFormatTools.extractCardInformation(tempCardInformation.split("\r\n"));
         }
     }
@@ -295,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      *
      * @param cardContent übergibt den Inhalt des NFC Mediums
      */
-    private void fillVCardListView(ArrayList<String> cardContent){
+    private void fillVCardListView(ArrayList<String> cardContent) {
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, cardContent);
         vCardListView.setAdapter(adapter);
@@ -308,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * Diese Methode macht die vCardListView sichtbar und die isVCardTextView unsichtbar.
      */
     private void setCardListViewVisible() {
-        if(vCardListView.getVisibility() == View.GONE){
+        if (vCardListView.getVisibility() == View.GONE) {
             vCardListView.setVisibility(View.VISIBLE);
             isVCardTextView.setVisibility(View.GONE);
         }
@@ -322,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private void startCreateVCardActivityIntent() {
         Intent intent = new Intent(MainActivity.this, CreateVCardActivity.class);
 
-        if(cardContent!= null) {
+        if (cardContent != null) {
             intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
             intent.putStringArrayListExtra("vci", cardContent);
         }
@@ -337,15 +355,15 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      */
     private void initIntentFilter() {
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        intentFilters = new IntentFilter[] { tech, };
+        intentFilters = new IntentFilter[]{tech,};
 
         // String Array wird mit den Namen der Technologien gefüllt.
-        techLists = new String[][] { new String[] {
+        techLists = new String[][]{new String[]{
                 NfcA.class.getName(),
-        //        IsoDep.class.getName(), Warum zum Geier ist diese Klasse dafür verantwortlich dafür das das verdammte teil ständig neu startet???!!!
+                //        IsoDep.class.getName(), Warum zum Geier ist diese Klasse dafür verantwortlich dafür das das verdammte teil ständig neu startet???!!!
                 MifareUltralight.class.getName(),
                 Ndef.class.getName()}
-                };
+        };
     }
 
     /**
@@ -363,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * Diese Methode empfängt einen von dem Manifest gefilterten Intent,
      * welcher nur dann in dieser ankommt wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist.<br><br>
-     *
+     * <p>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
      * <b>tech.xml</b>
@@ -386,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         //IntentFilter[] intentFilters = new IntentFilter[]{};
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
@@ -407,7 +425,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     /**
      * Diese Methode leitet den Beamvorgang ein.
      */
-    private void startBeamMode(){
+    private void startBeamMode() {
         // Prüfe ob Beam aktiv ist
         if (nfcAdapter.isNdefPushEnabled()) {
             Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();

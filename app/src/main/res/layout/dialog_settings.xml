@@ -10,9 +10,10 @@
         android:id="@+id/vibrationSwitch"
         android:checked="false"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/voiceSwitch"
         android:layout_alignEnd="@+id/voiceSwitch"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/voiceSwitch" />
 
     <Switch
         android:layout_width="wrap_content"
