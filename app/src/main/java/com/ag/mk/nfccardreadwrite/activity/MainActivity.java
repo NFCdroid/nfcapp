@@ -2,12 +2,10 @@ package com.ag.mk.nfccardreadwrite.activity;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -15,9 +13,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,20 +35,14 @@ import com.ag.mk.nfccardreadwrite.cardwork.CardWriter;
 import com.ag.mk.nfccardreadwrite.dialogs.ContactListDialog;
 import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
 import com.ag.mk.nfccardreadwrite.addressbookwork.AddressBookWriter;
+import com.ag.mk.nfccardreadwrite.tools.BeamTools;
 import com.ag.mk.nfccardreadwrite.tools.ContactTools;
 import com.ag.mk.nfccardreadwrite.tools.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.NfcTools;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -92,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     private String[][] techLists;
 
     private CardWriter cardWriter = new CardWriter(null);
+    private BeamTools beamTools;
     private ContactTools contactTools;
     private NfcTools nfcTools;
 
@@ -158,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * @see ContactListDialog
      * @see NfcTools
      * @see NfcAdapter
+     * @see BeamTools
      */
     private void initImportedClasses() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -174,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         settingsDialog = new SettingsDialog(this);
         contactTools = new ContactTools(this);
         nfcTools = new NfcTools(this, nfcAdapter);
-
+        beamTools = new BeamTools(this);
     }
 
     /**
@@ -216,7 +208,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 Vibration.vibrate();
-                startBeamMode();
+                //Prüfe ob bereits ein Kontakt im Textview steht
+                if(cardContent != null) {
+                    beamTools.startBeamMode(nfcAdapter);
+                }else{
+                    Toast.makeText(MainActivity.this, "Es sind leider keine Kontaktdaten zum Beamen vorhanden.\nBitte erst einen Kontakt anlegen/importieren.", Toast.LENGTH_SHORT).show();
+                    Voice.speakOut("Es sind leider keine Kontaktdaten zum Biehmen vorhanden. Bitte erst einen Kontakt anlegen/importieren.");
+                }
             }
         });
 
@@ -420,24 +418,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         nfcAdapter.disableForegroundDispatch(this);
 
         super.onPause();
-    }
-
-    /**
-     * Diese Methode leitet den Beamvorgang ein.
-     */
-    private void startBeamMode() {
-        // Prüfe ob Beam aktiv ist
-        if (nfcAdapter.isNdefPushEnabled()) {
-            Toast.makeText(MainActivity.this, "Beam Modus gestartet...", Toast.LENGTH_SHORT).show();
-            Voice.speakOut("Beam Modus gestartet!");
-            nfcAdapter.setNdefPushMessageCallback(this, this);
-        } else {
-            Toast.makeText(MainActivity.this, "Beam nicht aktiviert!\nBitte Beam in den Settings aktivieren.", Toast.LENGTH_SHORT).show();
-            Voice.speakOut("Beam nicht aktiviert!\nBitte Beam in den Settings aktivieren.");
-            //TODO: Dialog einfügen
-            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-            finish();
-        }
     }
 
     /**
