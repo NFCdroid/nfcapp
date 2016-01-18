@@ -13,7 +13,7 @@ import com.ag.mk.nfccardreadwrite.R;
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
-import com.ag.mk.nfccardreadwrite.tools.DataWork;
+import com.ag.mk.nfccardreadwrite.addons.DataWork;
 
 /**
  * Diese Klasse beinhaltet alle Methoden zum Generieren und Anzeigen des Einstellungs-Dialogs.

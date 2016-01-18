@@ -1,6 +1,5 @@
 package com.ag.mk.nfccardreadwrite.tools;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.provider.Settings;
@@ -10,7 +9,9 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Created by ohli on 14.01.16.
+ * Diese Klasse beinhaltet die Methode zum einleiten des Beamvorgangs.
+ *
+ * @author Oliver Friedrich
  */
 public class BeamTools {
     private MainActivity mainActivity;

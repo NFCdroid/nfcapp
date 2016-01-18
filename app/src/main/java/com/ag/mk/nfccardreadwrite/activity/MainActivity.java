@@ -37,7 +37,7 @@ import com.ag.mk.nfccardreadwrite.dialogs.SettingsDialog;
 import com.ag.mk.nfccardreadwrite.addressbookwork.AddressBookWriter;
 import com.ag.mk.nfccardreadwrite.tools.BeamTools;
 import com.ag.mk.nfccardreadwrite.tools.ContactTools;
-import com.ag.mk.nfccardreadwrite.tools.DataWork;
+import com.ag.mk.nfccardreadwrite.addons.DataWork;
 import com.ag.mk.nfccardreadwrite.tools.NfcTools;
 import com.ag.mk.nfccardreadwrite.tools.VCardFormatTools;
 import com.google.android.gms.appindexing.AppIndex;
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         initImportedClasses();
@@ -205,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 Vibration.vibrate();
+
                 //Prüfe ob bereits ein Kontakt im Textview steht
                 if(cardContent != null) {
                     beamTools.startBeamMode(nfcAdapter);
@@ -339,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             intent.setAction(AppWidgetManager.EXTRA_CUSTOM_EXTRAS);
             intent.putStringArrayListExtra("vci", cardContent);
         }
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
 
@@ -403,6 +405,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
 
+
+
         super.onResume();
     }
 
@@ -425,6 +429,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         NdefMessage ndefMessage = cardWriter.createNdefMessage(vCardInformation);
+
         Voice.speakOut("Beam vorgang läuft!");
         return ndefMessage;
     }
@@ -484,5 +489,25 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+
+            Bundle returnedData = data.getExtras();
+
+            if(returnedData.get("kdata")!= null){
+                this.cardContent = returnedData.getStringArrayList("kdata");
+
+                this.vCardInformation = VCardFormatTools.getFormatedVCardString(cardContent.get(0).replace("Name: ", ""), cardContent.get(1).replace("Telefon-Mobil: ", ""), cardContent.get(2).replace("Telefon-Festnetz: ", ""), cardContent.get(3).replace("E-Mail: ", ""));
+
+
+                fillVCardListView(cardContent);
+            }
+            //initObjectsMA.reConfigObjects(data);
+        }
     }
 }

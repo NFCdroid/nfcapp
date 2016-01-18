@@ -102,6 +102,23 @@ public class CreateVCardActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent returnValues = new Intent();
+                Bundle data = new Bundle();
+
+                ArrayList<String> arrayList = new ArrayList<String>();
+
+                arrayList.add(userNameEditText.getText().toString());
+                arrayList.add(mobileNumberEditText.getText().toString());
+                arrayList.add(homeNumberEditText.getText().toString());
+                arrayList.add(eMailEditText.getText().toString());
+
+                data.putStringArrayList("kdata", arrayList);
+
+                returnValues.putExtras(data);
+
+                setResult(RESULT_OK, returnValues);
+
                 Vibration.vibrate();
                 finish();
             }

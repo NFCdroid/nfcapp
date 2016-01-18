@@ -21,7 +21,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_back"
+        android:text="@string/button_accept"
         android:id="@+id/backToMainAcrivtyButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

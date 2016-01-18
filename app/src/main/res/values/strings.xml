@@ -23,6 +23,7 @@
     <!--CreateVCardActivity -->
     <string name="button_write">Karte beschreiben</string>
     <string name="button_delete">löschen</string>
+    <string name="button_accept">übernehmen</string>
 
     <string name="textview_main_create_vcard_activity">Kontaktdaten\n</string>
 
