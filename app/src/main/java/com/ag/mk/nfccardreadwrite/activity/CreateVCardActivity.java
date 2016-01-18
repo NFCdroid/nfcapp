@@ -28,7 +28,6 @@ import java.util.ArrayList;
 /**
  * Diese Activity beinhaltet die Logik zu den GUI Elementen,
  * die benötigt werden um NFC Medien zu beschreiben.<br><br>
- *
  * Zusätzlich beinhaltet sie eine Methode zum Einlesen gültiger NFC Medien.
  *
  * @author Marko Klepatz, Oliver Friedrich

@@ -53,7 +53,6 @@ import java.util.Locale;
  * und das Importieren von neuen Kontakten,
  * sowie die Android Beam-Funktion, eingeleitet.
  * Ebenso wird hier auch die CreateVCardActivity gerufen.<br><br>
- * <p>
  * Weiterführend wird immer diese Activity gerufen,
  * wenn eine für diese App gültige NFC Technologie
  * oder der spezielle Mime Type dieser App erkannt wird.
