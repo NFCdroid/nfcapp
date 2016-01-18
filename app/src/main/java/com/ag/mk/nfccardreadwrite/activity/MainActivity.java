@@ -238,7 +238,16 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
                 if (position == 0) {
                     contactTools.easterEgg(cardContent.get(0).split(" ")[1]);
                 } else if (position == 1 || position == 2) {
-                    contactTools.callContact(cardContent.get(0).split(" ")[1], cardContent.get(position).split(" ")[1]);
+
+                    String tempNumber = cardContent.get(position);
+
+                    if(tempNumber.contains("Telefon-Mobil:")) {
+                        tempNumber = tempNumber.replace("Telefon-Mobil:", "").trim();
+                    }else if(tempNumber.contains("Telefon-Festnetz:")) {
+                        tempNumber = tempNumber.replace("Telefon-Festnetz:", "").trim();
+                    }
+
+                    contactTools.callContact(cardContent.get(0).split(" ")[1], tempNumber);
                 } else if (position == 3) {
                     contactTools.mailContact(cardContent.get(position).split(" ")[1]);
                 }
@@ -502,10 +511,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             if(returnedData.get("kdata")!= null){
                 this.cardContent = returnedData.getStringArrayList("kdata");
 
+
+
                 this.vCardInformation = VCardFormatTools.getFormatedVCardString(cardContent.get(0).replace("Name: ", ""), cardContent.get(1).replace("Telefon-Mobil: ", ""), cardContent.get(2).replace("Telefon-Festnetz: ", ""), cardContent.get(3).replace("E-Mail: ", ""));
 
 
-                fillVCardListView(cardContent);
+                setVCardInformationOnMainScreen(vCardInformation);
+
+                //fillVCardListView(cardContent);
             }
             //initObjectsMA.reConfigObjects(data);
         }

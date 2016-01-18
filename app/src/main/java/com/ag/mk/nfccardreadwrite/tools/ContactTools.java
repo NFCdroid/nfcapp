@@ -2,6 +2,7 @@ package com.ag.mk.nfccardreadwrite.tools;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
