@@ -51,7 +51,6 @@ public class CreateVCardActivity extends AppCompatActivity {
     /**
      * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
-     *
      * Zusätzlich nimmt sie den aufrufenden Intent von der MainActivty entgegen
      * und prüft ob dieser Daten zum Beschreiben auf ein NFC Medium enthält und leitet diese weiter,
      * an die GUI Objekte.
@@ -163,7 +162,6 @@ public class CreateVCardActivity extends AppCompatActivity {
      * Diese Methode empfängt einen von dem Manifest gefilterten Intent,
      * welcher nur dann in dieser ankommt wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist.<br><br>
-     *
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
      * <b>tech.xml</b>

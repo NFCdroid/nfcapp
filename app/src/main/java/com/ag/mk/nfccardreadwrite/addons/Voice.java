@@ -5,11 +5,9 @@ import android.speech.tts.TextToSpeech;
 /**
  * Diese Klasse ist für die Sprachausgabe, insofern aktiviert,
  * für alle Klassen und Activities zuständig. <br><br>
- *
  * Sie muss einmal über ihren Konstruktor initialisiert werden
  * und ist dann für alle Klassen, durch ihren
  * statischen Charakter verfügbar.<br><br>
- *
  * Vibrator ist die zu initialisierende Klasse mit der die Vibrationsfunktion ausgeführt werden kann. <br><br>
  *
  * @author Marko Klepatz
@@ -32,7 +30,6 @@ public class Voice {
 
     /**
      * Diese Methode ist beim Aufruf für die Sprachausgabe zuständig.<br><br>
-     *
      * Zusätzlich wird geprüft ob die Variable <b>sound</b> auf true oder false gestellt ist.<br><br>
      *
      * true: Sprachausgabe wird ausgeführt<br>

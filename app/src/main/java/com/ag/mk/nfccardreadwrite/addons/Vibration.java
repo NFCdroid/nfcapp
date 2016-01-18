@@ -5,11 +5,9 @@ import android.os.Vibrator;
 /**
  * Diese Klasse ist für die Vibrationsfunktion, insofern aktiviert,
  * für alle Klassen und Activities zuständig. <br><br>
- *
  * Sie muss einmal über ihren Konstruktor initialisiert werden
  * und ist dann für alle Klassen, durch ihren
  * statischen Charakter verfügbar.<br><br>
- *
  * Vibrator ist die zu initialisierende Klasse mit der die Vibrationsfunktion ausgeführt werden kann. <br><br>
  *
  * @author Marko Klepatz
@@ -40,7 +38,6 @@ public class Vibration {
 
     /**
      * Diese Methode ist beim Aufruf dafür zuständig, dass das Gerät 25 Millisekunden vibriert.<br><br>
-     *
      * Zusätzlich wird geprüft ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
      *
      * true: vibriert<br>

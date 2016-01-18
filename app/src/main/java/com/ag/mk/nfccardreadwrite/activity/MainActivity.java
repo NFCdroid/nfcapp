@@ -101,12 +101,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     /**
      * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
-     * <p>
      * Zusätzlich nimmt diese Methode einen von dem Manifest gefilterten Intent entgegen
      * welcher nur dann in dieser ankommt wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist bzw.
      * den Mime Type für diese App besitzt.<br><br>
-     * <p>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
      * <b>tech.xml</b>
@@ -379,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
      * Diese Methode empfängt einen von dem Manifest gefilterten Intent,
      * welcher nur dann in dieser ankommt wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist.<br><br>
-     * <p>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
      * <b>tech.xml</b>
