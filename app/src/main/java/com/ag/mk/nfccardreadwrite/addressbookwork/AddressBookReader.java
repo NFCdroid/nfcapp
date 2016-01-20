@@ -66,7 +66,7 @@ public class AddressBookReader {
 
         Voice.speakOut(name + "wurde ausgewählt!");
 
-        Vibration.vibrate();
+        Vibration.softVibrate();
     }
 
     /**

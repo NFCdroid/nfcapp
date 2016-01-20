@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         contactExportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 AddressBookWriter.writeContact(MainActivity.this, cardContent);
             }
         });
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         createVCardActvivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 startCreateVCardActivityIntent();
 
             }
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             @Override
             public void onClick(View v) {
                 Voice.speakOut("Bitte wählen Sie einen Kontakt aus!");
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 contactListDialog.showDialog();
             }
         });
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
         androidBeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
 
                 //Prüfe ob bereits ein Kontakt im Textview steht
                 if(cardContent != null) {
@@ -287,12 +287,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
             Voice.speakOut("Ein neuer Kontakt wurde eingelesen.");
+            Vibration.hardVibrate();
 
         } else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 
             setCardContentFromIntent(intent);
             fillVCardListView(cardContent);
             Voice.speakOut("NFC Chip erkannt.");
+            Vibration.hardVibrate();
         }
     }
 
@@ -511,16 +513,11 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
             if(returnedData.get("kdata")!= null){
                 this.cardContent = returnedData.getStringArrayList("kdata");
 
-
-
                 this.vCardInformation = VCardFormatTools.getFormatedVCardString(cardContent.get(0).replace("Name: ", ""), cardContent.get(1).replace("Telefon-Mobil: ", ""), cardContent.get(2).replace("Telefon-Festnetz: ", ""), cardContent.get(3).replace("E-Mail: ", ""));
 
+                    setVCardInformationOnMainScreen(vCardInformation);
 
-                setVCardInformationOnMainScreen(vCardInformation);
-
-                //fillVCardListView(cardContent);
             }
-            //initObjectsMA.reConfigObjects(data);
         }
     }
 }

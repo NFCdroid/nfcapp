@@ -15,8 +15,6 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addressbookwork.AddressBookReader;
 import com.ag.mk.nfccardreadwrite.addons.Vibration;
 
-import java.util.ArrayList;
-
 /**
  * Diese Klasse beinhaltet die Methoden zum Initialisieren und Anzeigen des Kontakt-Listen-Dialogs.
  *
@@ -98,7 +96,7 @@ public class ContactListDialog {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 contactListDialog.cancel();
             }
         });

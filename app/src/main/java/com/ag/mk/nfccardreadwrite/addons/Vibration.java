@@ -43,10 +43,24 @@ public class Vibration {
      * true: vibriert<br>
      * false: vibriert nicht<br>
      */
-    public static void vibrate(){
+    public static void softVibrate(){
 
         if(vibration){
             vibrator.vibrate(25);
+        }
+    }
+
+    /**
+     * Diese Methode ist beim Aufruf dafür zuständig, dass das Gerät 500 Millisekunden vibriert.<br><br>
+     * Zusätzlich wird geprüft ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
+     *
+     * true: vibriert<br>
+     * false: vibriert nicht<br>
+     */
+    public static void hardVibrate(){
+
+        if(vibration){
+            vibrator.vibrate(500);
         }
     }
 }

@@ -72,7 +72,7 @@ public class SettingsDialog {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 settingsDialog.cancel();
             }
         });

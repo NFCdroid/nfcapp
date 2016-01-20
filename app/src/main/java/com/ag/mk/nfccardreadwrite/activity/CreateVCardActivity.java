@@ -90,7 +90,7 @@ public class CreateVCardActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 userNameEditText.setText("");
                 mobileNumberEditText.setText("");
                 homeNumberEditText.setText("");
@@ -119,7 +119,7 @@ public class CreateVCardActivity extends AppCompatActivity {
 
                 setResult(RESULT_OK, returnValues);
 
-                Vibration.vibrate();
+                Vibration.softVibrate();
                 finish();
             }
         });
@@ -129,7 +129,7 @@ public class CreateVCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Vibration.vibrate();
+                Vibration.softVibrate();
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
@@ -189,6 +189,7 @@ public class CreateVCardActivity extends AppCompatActivity {
 
         Toast.makeText(CreateVCardActivity.this,"Karte erkannt!", Toast.LENGTH_SHORT).show();
         Voice.speakOut("Es wurde ein zulässiges Medium erkannt!");
+        Vibration.hardVibrate();
 
         this.intent = intent;
 
