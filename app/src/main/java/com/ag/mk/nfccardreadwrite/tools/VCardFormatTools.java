@@ -52,7 +52,7 @@ public class VCardFormatTools {
     }
 
     /**
-     * Diese Methode wird gerufen um eine ArrayIndexOutOfBounds Exception bei leeren Feldern zu vermeiden.
+     * Diese Methode wird gerufen um eine ArrayIndexOutOfBounds Exception, bei leeren Feldern zu vermeiden.
      * Ist das Feld leer so wird ein String mit dem Inhalt "" zurück gegeben.
      *
      * @param result übergibt die rohen V-Card Daten zum Überprüfen

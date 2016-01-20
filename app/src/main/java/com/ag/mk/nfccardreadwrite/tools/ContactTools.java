@@ -8,7 +8,7 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Diese Klasse beinhaltet verschiedene Methoden
+ * Diese Klasse beinhaltet verschiedene Methoden,
  * um die Kontaktdaten direkt an andere Anwendungen im Gerät zu übergeben
  * und zu starten.
  *
@@ -31,7 +31,7 @@ public class ContactTools {
     }
 
     /**
-     * Diese Methode generiert einen Intent
+     * Diese Methode generiert einen Intent,
      * der die E-Mail Adresse des aktuell ausgewählten Kontakts übergibt
      * und startet eine Auswahl mit allen potenziell einsetzbaren E-Mail Programmen auf dem Gerät.
      *
@@ -100,7 +100,7 @@ public class ContactTools {
     }
 
     /**
-     * Diese Methode generiert einen Intent
+     * Diese Methode generiert einen Intent,
      * welcher die Nummer des Kontaktes übergibt
      * und ruft mit diesem direkt das Programm zum Anrufen von Kontakten auf und ruft diesen an.
      *

@@ -127,7 +127,7 @@ public class AddressBookReader {
 
     /**
      * Diese Methode liest alle Kontakte im Adressbuch aus
-     * und schreibt die Namen in die statische <b>listItems</b> Liste aus der <b>ContactListDialog</b> Klasse.
+     * und schreibt die Namen in die statische <b>listItems</b> Liste, aus der <b>ContactListDialog</b> Klasse.
      *
      * @param contentResolver
      *

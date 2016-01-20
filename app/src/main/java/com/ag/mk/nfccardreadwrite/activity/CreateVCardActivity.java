@@ -51,7 +51,7 @@ public class CreateVCardActivity extends AppCompatActivity {
      * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
      * Zusätzlich nimmt sie den aufrufenden Intent von der MainActivty entgegen
-     * und prüft ob dieser Daten zum Beschreiben auf ein NFC Medium enthält und leitet diese weiter,
+     * und prüft ob dieser Daten zum Beschreiben auf ein NFC Medium enthält und leitet diese weiter
      * an die GUI Objekte.
      *
      * @param savedInstanceState
@@ -214,7 +214,7 @@ public class CreateVCardActivity extends AppCompatActivity {
     }
 
     /**
-     * Diese Methode befüllt alle Textfelder mit den Kontakt-Daten die von der MainActivity gesendet wurden.
+     * Diese Methode befüllt alle Textfelder mit den Kontakt-Daten, die von der MainActivity gesendet wurden.
      *
      * @param cardContent übergibt die Kontaktdaten von der MainActivtity
      */

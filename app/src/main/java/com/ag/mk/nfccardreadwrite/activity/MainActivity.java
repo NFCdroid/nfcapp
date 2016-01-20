@@ -47,11 +47,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Diese Activity beinhaltet die Logik zu den GUI Elementen
+ * Diese Activity beinhaltet die Logik zu den GUI Elementen,
  * die benötigt werden um NFC Medien zu lesen und anzuzeigen.<br>
- * Zusätzlich werden hier das Anzeigen von Kontakten aus dem Adressbuch
+ * Zusätzlich wird hier das Anzeigen von Kontakten aus dem Adressbuch
  * und das Importieren von neuen Kontakten,
- * sowie die Android Beam-Funktion, eingeleitet.
+ * sowie die Android Beam-Funktion eingeleitet.
  * Ebenso wird hier auch die CreateVCardActivity gerufen.<br><br>
  * Weiterführend wird immer diese Activity gerufen,
  * wenn eine für diese App gültige NFC Technologie
@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     /**
      * Diese Methode setzt alle relevanten Eigenschaften für die GUI
      * und leitet die Initialisierungen aller Objekte ein.<br><br>
-     * Zusätzlich nimmt diese Methode einen von dem Manifest gefilterten Intent entgegen
-     * welcher nur dann in dieser ankommt wenn das NFC Medium,
-     * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist bzw.
+     * Zusätzlich nimmt diese Methode einen von dem Manifest gefilterten Intent entgegen,
+     * welcher nur dann in dieser ankommt, wenn das NFC Medium,
+     * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist, bzw.
      * den Mime Type für diese App besitzt.<br><br>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>
@@ -274,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     /**
-     * Methode um den eintreffenden Intent zu handhaben.
      * Diese Methode filtert und leitet alle eintreffenden Intents weiter,
      * an die Methoden zum Anzeigen von Kontakten.
      *
@@ -317,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode befüllt die <b>vCardListView</b> mit dem Inhalt des NFC Mediums
-     * und ruft die Methode <b>setCardListViewVisible</b> zum sichtbar machen dieser ListView.
+     * und ruft die Methode <b>setCardListViewVisible</b> zum sichtbar machen dieser ListView auf.
      *
      * @param cardContent übergibt den Inhalt des NFC Mediums
      */
@@ -342,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode generiert einen Intent zum Starten der <b>CreateVCardActivity</b>.
-     * Wenn die <b>cardContent</b> Liste befüllt ist, werden diese Daten mitgeschickt
+     * Wenn die <b>cardContent</b> Liste befüllt ist, werden diese Daten mitgeschickt,
      * um diese dann direkt auf ein NFC-fähiges Medium schreiben zu können.
      */
     private void startCreateVCardActivityIntent() {
@@ -358,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode initialisiert den Intentfilter für den NFC Adapter.
-     * Zusätzlich zum Manifest-Filter überprüft dieser auch noch einmal
+     * Zusätzlich zum Manifest-Filter überprüft dieser auch noch einmal,
      * ob die richtigen Technologien gefiltert wurden.
      */
     private void initIntentFilter() {
@@ -446,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
     }
 
     /**
-     * Diese Methode weist der TextToSpeech Klasse die Sprache zu
+     * Diese Methode weist der TextToSpeech Klasse die Sprache zu,
      * mit welcher dann die Sprachausgabe erfolgt.
      * In diesem Fall wird immer die Standardsprache des Geräts verwendet.
      *

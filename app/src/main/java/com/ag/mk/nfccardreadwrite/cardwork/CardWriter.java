@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 /**
- * Diese Klasse beinhaltet die Methoden die für das Beschreiben eines NFC Chips benötigt werden.
+ * Diese Klasse beinhaltet die Methoden, die für das Beschreiben eines NFC Chips benötigt werden.
  *
  *
  * @author Oliver Friedrich, Marko Klepatz
@@ -31,7 +31,7 @@ public class CardWriter {
     }
 
     /**
-     * Diese Methode formatiert beim Aufruf den Speicher auf dem NFC Chip in das NDEF Format
+     * Diese Methode formatiert beim Aufruf den Speicher auf dem NFC Chip, in das NDEF Format
      * und schreibt danach die Nachricht auf den Chip.
      *
      * @param tag übergibt das Tag-Format

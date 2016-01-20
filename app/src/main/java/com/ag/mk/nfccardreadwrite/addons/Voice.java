@@ -8,7 +8,6 @@ import android.speech.tts.TextToSpeech;
  * Sie muss einmal über ihren Konstruktor initialisiert werden
  * und ist dann für alle Klassen, durch ihren
  * statischen Charakter verfügbar.<br><br>
- * Vibrator ist die zu initialisierende Klasse mit der die Vibrationsfunktion ausgeführt werden kann. <br><br>
  *
  * @author Marko Klepatz
  */
