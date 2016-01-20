@@ -19,7 +19,7 @@ public class Voice {
 
     /**
      * Dieser Konstruktor nimmt die in der MainActivity initialisierte TextToSpeech Klasse entgegen,
-     * die hier benötigt wird um die Sprachausgabe auszuführen.
+     * die hier benötigt wird, um die Sprachausgabe auszuführen.
      *
      * @param textToSpeech übergibt die benötigte TextToSpeech Klasse zum Ausführen der Sprachausgabe
      */
@@ -29,7 +29,7 @@ public class Voice {
 
     /**
      * Diese Methode ist beim Aufruf für die Sprachausgabe zuständig.<br><br>
-     * Zusätzlich wird geprüft ob die Variable <b>sound</b> auf true oder false gestellt ist.<br><br>
+     * Zusätzlich wird geprüft, ob die Variable <b>sound</b> auf true oder false gestellt ist.<br><br>
      *
      * true: Sprachausgabe wird ausgeführt<br>
      * false: Sprachausgabe wird nicht ausgeführt<br>

@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Create
 
     /**
      * Diese Methode empfängt einen von dem Manifest gefilterten Intent,
-     * welcher nur dann in dieser ankommt wenn das NFC Medium,
+     * welcher nur dann in dieser ankommt, wenn das NFC Medium,
      * was an das Gerät gehalten wird, mit den gültigen Technologien ausgestattet ist.<br><br>
      * Die aktuell gültigen Technologien sind in folgenden Dateien einsehbar:<br>
      * <b>AndroidManifest.xml</b><br>

@@ -20,7 +20,7 @@ public class Vibration {
 
     /**
      * Dieser Konstruktor nimmt die in der MainActivity initialisierte Vibrator Klasse entgegen,
-     * die hier benötigt wird um die Vibration auszuführen.
+     * die hier benötigt wird, um die Vibration auszuführen.
      *
      * @param vibrator übergibt die benötigte Vibrator Klasse zum Ausführen der Vibration
      */
@@ -38,7 +38,7 @@ public class Vibration {
 
     /**
      * Diese Methode ist beim Aufruf dafür zuständig, dass das Gerät 25 Millisekunden vibriert.<br><br>
-     * Zusätzlich wird geprüft ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
+     * Zusätzlich wird geprüft, ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
      *
      * true: vibriert<br>
      * false: vibriert nicht<br>
@@ -52,7 +52,7 @@ public class Vibration {
 
     /**
      * Diese Methode ist beim Aufruf dafür zuständig, dass das Gerät 500 Millisekunden vibriert.<br><br>
-     * Zusätzlich wird geprüft ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
+     * Zusätzlich wird geprüft, ob die Variable <b>vibration</b> auf true oder false gestellt ist.<br><br>
      *
      * true: vibriert<br>
      * false: vibriert nicht<br>

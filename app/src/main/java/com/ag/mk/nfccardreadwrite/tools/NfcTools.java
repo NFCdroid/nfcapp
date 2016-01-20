@@ -8,7 +8,7 @@ import com.ag.mk.nfccardreadwrite.activity.MainActivity;
 import com.ag.mk.nfccardreadwrite.addons.Voice;
 
 /**
- * Diese Klasse beinhaltet die Methoden zum Überprüfen ob die NFC Technologie vorhanden und aktiviert ist.
+ * Diese Klasse beinhaltet die Methoden zum Überprüfen, ob die NFC Technologie vorhanden und aktiviert ist.
  *
  * @author Marko Klepatz
  */
@@ -32,8 +32,8 @@ public class NfcTools {
 
 
     /**
-     * Diese Methode überprüft ob die NFC Technologie aktiviert ist
-     * und gibt eine Warnung in Form einer Toast Nachricht aus wenn sie deaktiviert ist.
+     * Diese Methode überprüft, ob die NFC Technologie aktiviert ist
+     * und gibt eine Warnung in Form einer Toast Nachricht aus, wenn sie deaktiviert ist.
      */
     public void checkNFC() {
         if (nfcAdapter.isEnabled()) {
@@ -46,8 +46,8 @@ public class NfcTools {
     }
 
     /**
-     * Diese Methode überprüft ob die NFC Technologie auf dem Gerät vorhanden ist
-     * und gibt eine Toast Nachricht aus wenn sie es nicht ist und beendet die App.
+     * Diese Methode überprüft, ob die NFC Technologie auf dem Gerät vorhanden ist
+     * und gibt eine Toast Nachricht aus, wenn sie es nicht ist und beendet die App.
      */
     public void checkNFCSupport() {
         if (nfcAdapter == null) {

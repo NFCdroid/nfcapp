@@ -25,7 +25,7 @@ public class DataWork {
     }
 
     /**
-     * Diese Methode liest eine Datei mit einer Zeile aus und gibt den Inhalt on Form eines Strings zurück.
+     * Diese Methode liest eine Datei mit einer Zeile aus und gibt den Inhalt in Form eines Strings zurück.
      *
      * @param dataName übergibt den Namen der zu lesenden Datei
      * @return gibt den ausgelesenen String zurück
@@ -63,7 +63,7 @@ public class DataWork {
 
     /**
      * Diese Methode liest eine Datei mit mehreren Zeilen aus
-     * und gibt den Inhalt on Form einer Liste vom Typ String zurück.
+     * und gibt den Inhalt in Form einer Liste vom Typ String zurück.
      *
      * @param dataName übergibt den Namen der zu lesenden Datei
      * @return values gibt die Liste mit dem Inhalt jeder Zeile zurück
